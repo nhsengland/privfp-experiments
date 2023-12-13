@@ -1,0 +1,6 @@
+torch
+transformers
+scispacy
+spacy
+sentencepiece
+protobuf
