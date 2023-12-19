@@ -1,1 +1,4 @@
-langchain==0.0.331
+langchain==0.0.350
+prompttools==0.0.43
+llama_cpp_python==0.2.23
+sentence-transformers==2.2.2
