@@ -1,6 +1,4 @@
-import sys
-
-print(sys.path)
+import json
 
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
@@ -38,6 +36,7 @@ def get_universal_ner_entity(input_text, entity_name, llm):
     )
 
     output = llm(prompt)
+    output = json.loads(output)
 
     return output
 
@@ -46,16 +45,13 @@ def generate_patients_entities(data, entities):
     llm = upload_quantised_universal_ner()
     patients_entities = {}
 
-    for patient_num in range(len(data))[0:5]:
+    for patient_num in range(len(data)):
         input_text = data[patient_num]
         patient_entities = {}
         for entity in entities:
             output = get_universal_ner_entity(input_text, entity, llm)
-            patient_entities[entity] = output
+            patient_entities[entity] = {"output": output, "output_type": type(output)}
 
-        patients_entities[patient_num] = {
-            "text": input_text,
-            "entities": patient_entities,
-        }
+        patients_entities[patient_num] = patient_entities
 
     return patients_entities
