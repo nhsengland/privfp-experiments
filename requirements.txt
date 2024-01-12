@@ -2,3 +2,5 @@ langchain==0.0.350
 prompttools==0.0.43
 llama_cpp_python==0.2.23
 sentence-transformers==2.2.2
+mkdocs-material==9.5.2
+mkdocs-enumerate-headings-plugin==0.6.1
