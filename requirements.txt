@@ -1,0 +1,2 @@
+mkdocs-material==9.5.2
+mkdocs-enumerate-headings-plugin==0.6.1
