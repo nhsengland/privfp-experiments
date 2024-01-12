@@ -2,7 +2,7 @@ import json
 
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from langchain.llms import LlamaCpp
+from langchain.llms import LlamaCpp  # Ollama
 from langchain import LLMChain
 from langchain.prompts import PromptTemplate
 

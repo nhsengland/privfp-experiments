@@ -10,5 +10,7 @@ dependencies:
   - ipykernel
   - jupyter
   - pandas
+  - numpy
+  - matplotlib
   - langchain
   - llama-cpp-python
