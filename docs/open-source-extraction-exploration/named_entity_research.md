@@ -8,6 +8,10 @@ A set of experiments were conducted with a set of medical notes, and a spot-chec
 
 !!! info "Open-source NER Models"
 
+    === "HuggingFace"
+
+        [HuggingFace](https://huggingface.co/models) is a site with a wide range of open-source models that individuals have pre-trained and have made readily availible.
+
     === "Spacy and SciSpacy"
 
         [Spacy](https://pypi.org/project/spacy/) and [SciSpacy](https://pypi.org/project/scispacy/) have a set of pre-trained open-source NER models availible for use. 
@@ -40,6 +44,7 @@ A set of experiments were conducted with a set of medical notes, and a spot-chec
         * span-marker-roberta-large-ontonotes5
         * span-marker-xlm-roberta-large-conll03
         * span-marker-xlm-roberta-large-conll03-doc-context
+
 
 ## Creating your own Entity-Labelled Dataset
 It is also encouraged in the NER space to label your own data with entities you want to specify and then train a foundation model on this smaller dataset to then label the remaining datasets.

@@ -17,6 +17,7 @@ nav:
 
     - open-source-extraction-exploration/index.md
     - Open-source Named-Entity Recognition Models: open-source-extraction-exploration/named_entity_research.md
+    - De-identification Methods: open-source-extraction-exploration/deidentification_research.md
 
 theme:
   name: material
