@@ -5,10 +5,3 @@ sentence-transformers==2.2.2
 mkdocs-material==9.5.2
 mkdocs-enumerate-headings-plugin==0.6.1
 torch==2.2.0
-tqdm==4.66.1
-transformers==4.30.0
-scispacy==0.5.3
-spacy==3.6.1
-sentencepiece==0.1.99
-protobuf==4.25.1
-span-marker==1.5.0
