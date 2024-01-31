@@ -1,6 +1,6 @@
 torch==2.2.0
 tqdm==4.66.1
-transformers==4.30.0
+transformers==4.36.0
 scispacy==0.5.3
 spacy==3.6.1
 sentencepiece==0.1.99
