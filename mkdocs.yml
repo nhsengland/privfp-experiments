@@ -13,11 +13,11 @@ nav:
     - Running inference: open-source-llm-exploration/inference.md
     - Evaluating generated outputs: open-source-llm-exploration/evaluation.md
     - Metrics to assess the quality of generated outputs: open-source-llm-exploration/metrics.md
-  - Unstructured to structured data pipeline:
+  - Open Source Extraction exploration:
 
-    - unstructured-to-structured-data-pipeline/index.md
-    - Initial explorative research: unstructured-to-structured-data-pipeline/research.md
-    - Unstructured to structured roadmap: unstructured-to-structured-data-pipeline/roadmap.md
+    - open-source-extraction-exploration/index.md
+    - Open-source Named-Entity Recognition Models: open-source-extraction-exploration/named_entity_research.md
+    - De-identification Methods: open-source-extraction-exploration/deidentification_research.md
 
 theme:
   name: material
