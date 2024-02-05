@@ -8,7 +8,7 @@ def load_llm_data():
         list: This is a list of a 1000 string outputs created using a large language model to
               generate medical notes from a 1000 patients from a sunthea dataset.
     """
-    with open("../../data/llm_dataset.json") as f:
+    with open("./data/llm_dataset.json") as f:
         data = json.load(f)
 
     return data
