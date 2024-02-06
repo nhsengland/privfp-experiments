@@ -1,0 +1,17 @@
+/* banner style */
+.banner {
+    display: flex;
+
+    background-color: yellow;
+    color: black;
+}
+
+.banner-contents {
+    flex: auto;
+}
+
+.banner-item {
+    margin: 0.6rem 0.8rem;
+
+    font-size: small;
+}
