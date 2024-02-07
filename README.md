@@ -44,7 +44,7 @@ This diagram illustrates the current state of the project and the strcuture of e
 
 ### Built With
 
-[![Python v3.8](https://img.shields.io/badge/python-v3.8-blue.svg)](https://www.python.org/downloads/release/python-380/)
+[![Python v3.11](https://img.shields.io/badge/python-v3.8-blue.svg)](https://www.python.org/downloads/release/python-380/)
 
 ### Getting Started
 
@@ -71,23 +71,24 @@ conda env create -f environment.yml
 conda activate <environment_name>
 ```
 
-#### Usage
+### Usage
 
-### Generative Usage
+#### Generative Usage
 {DESCRIPTION OF CODE}
 
-### Extraction Usage
+#### Extraction Usage
 
-In ./notebooks/extraction_module/ner_exploration there is a set of notebooks exploring how to implement a range of named-entity-recognition models.
+In **./notebooks/extraction_module/ner_exploration** there is a set of notebooks exploring how to implement a range of named-entity-recognition models.
 
-* numind_NER.ipynb explores a NER model created by Numind.
-* spacy_and_scispacy.ipynb explores a range of NER models released by spacy.
-* spanMarker.ipynb explores NER spanMarker model set-up and a possible intergration with spacy models.
-* uniNER_api.ipynb explores the deployment of UniversalNER using an API. (This notebooks requires additional set-up, this involves cloning the [UniversalNER github](https://github.com/universal-ner/universal-ner), and then follow their instructions to server the model locally.)
-* uniNER_quantised.ipynb requires a quantised version of UniversalNER:
+* **numind_NER.ipynb** explores a NER model created by Numind.
+* **spacy_and_scispacy.ipynb** explores a range of NER models released by spacy.
+* **spanMarker.ipynb** explores NER spanMarker model set-up and a possible intergration with spacy models.
+* **uniNER_api.ipynb** explores the deployment of UniversalNER using an API. (This notebooks requires additional set-up, this involves cloning the [UniversalNER github](https://github.com/universal-ner/universal-ner), and then follow their instructions to server the model locally.)
+* **uniNER_quantised.ipynb** requires a quantised version of UniversalNER:
     * This quantised model was created by cloning [llama.cpp repo](https://github.com/ggerganov/llama.cpp) and quantising the model yourself.
 
-The ner_pipeline.ipynb (located in ./notebooks/extraction_module/) runs using the quantised model also used in uniNER_quantised.ipynb. This notebook allows a user to:
+The **ner_pipeline.ipynb** (located in ./notebooks/extraction_module/) runs using the quantised model also used in uniNER_quantised.ipynb. 
+This notebook allows a user to:
 * Define a list of entities they want to extract from a given dataset.
 * Generate a list of entities found in each patient by running on the quantised universalNER model locally.
 * Save these patient's entities and load them back in.
