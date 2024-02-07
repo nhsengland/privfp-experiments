@@ -10,9 +10,10 @@ on:
 
 env:
     BLACK_VERSION: 23.12.1
+    PYTHON_VERSION: 3.11
 
 jobs:
-  linting:
+  black-format:
 
     runs-on: ubuntu-latest
 
@@ -23,3 +24,17 @@ jobs:
          options: "--check --verbose"
          src: "./src"
          version: ${{env.BLACK_VERSION}}
+
+  flake8-lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v3
+      - name: Set up Python environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{env.PYTHON_VERSION}}
+      - name: flake8 Lint
+        uses: py-actions/flake8@v2
+         
