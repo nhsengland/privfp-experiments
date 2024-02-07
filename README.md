@@ -1,4 +1,4 @@
-# {Privacy FingerPrint}
+# Privacy FingerPrint Phase 2
 
 ### About the Project
 
@@ -6,11 +6,13 @@
 
 This repository holds code for Privacy Fingerprint. The aim of this project is to develop a modular tool that could be used to calculate a privacy risk score on unstructured clinical data.
 
-[Link to original project propsoal](https://nhsx.github.io/nhsx-internship-projects/)
+This repository develops on previous work that initially looked at using ChatGPT (for the generative component) and Amazon Comprehend Medical (for the extraction component.)
 
 _**Note:** Only public or fake data are shared in this repository._
 
 ## Project structure
+
+The main sections of this repository are:
 
 ```text
 +---data                              <- Folder where synthetic data is stored.                    
@@ -34,6 +36,11 @@ _**Note:** Only public or fake data are shared in this repository._
 |   pyproject.toml                    <- Configuration file containing package build information
 |   LICENCE                           <- License info for public distribution
 |   README.md                         <- Quick start guide / explanation of your project 
+```
+
+This diagram illustrates the current state of the project and the strcuture of each module.
+
+![Project Diagram](docs/assets/images/privfp_diagram.png)
 
 ### Built With
 
@@ -47,15 +54,45 @@ Assuming you have set up SSH credentials with this repository the package can be
 
 `git clone https://github.com/nhsengland/privfp-gen-experiments.git`
 
+### Generative Dependencies
+
 To create a suitable environment:
+{PYENV EXAMPLE}
 - ```python -m venv _env```
 - `source _env/bin/activate`
 - `pip install -r requirements.txt`
 
-#### Dependencies
+### Extraction Dependencies
+{CONDA ENV EXAMPLE}
+The first line of the `environment.yml` file sets the new environment's name.
 
-### Usage
+```
+conda env create -f environment.yml
+conda activate <environment_name>
+```
+
+#### Usage
+
+### Generative Usage
 {DESCRIPTION OF CODE}
+
+### Extraction Usage
+
+In ./notebooks/extraction_module/ner_exploration there is a set of notebooks exploring how to implement a range of named-entity-recognition models.
+
+* numind_NER.ipynb explores a NER model created by Numind.
+* spacy_and_scispacy.ipynb explores a range of NER models released by spacy.
+* spanMarker.ipynb explores NER spanMarker model set-up and a possible intergration with spacy models.
+* uniNER_api.ipynb explores the deployment of UniversalNER using an API. (This notebooks requires additional set-up, this involves cloning the [UniversalNER github](https://github.com/universal-ner/universal-ner), and then follow their instructions to server the model locally.)
+* uniNER_quantised.ipynb requires a quantised version of UniversalNER:
+    * This quantised model was created by cloning [llama.cpp repo](https://github.com/ggerganov/llama.cpp) and quantising the model yourself.
+
+The ner_pipeline.ipynb (located in ./notebooks/extraction_module/) runs using the quantised model also used in uniNER_quantised.ipynb. This notebook allows a user to:
+* Define a list of entities they want to extract from a given dataset.
+* Generate a list of entities found in each patient by running on the quantised universalNER model locally.
+* Save these patient's entities and load them back in.
+* Validate these entities with a manually labelled dataset.
+
 
 #### Outputs
 {LIST AND DESCRIPTION OF OUTPUTS}
