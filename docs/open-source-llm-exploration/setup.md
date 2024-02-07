@@ -10,19 +10,20 @@ It is possible to run LLMs locally on consumer CPUs or GPUs with usable performa
 
         Note: GGML superseded by GGUF
 
-        Convert LLMs to GGML format and quantise
-        Manifesto: https://github.com/ggerganov/llama.cpp/discussions/205
-        Supports builds for many other LLMs
-        Building from source will require additional software e.g. Make, CMake, Zig or GMake.
+        - Convert LLMs to GGML format and quantise
+        - [Manifesto](https://github.com/ggerganov/llama.cpp/discussions/205)
+        - Supports builds for many other LLMs
+        - Building from source will require additional software e.g. Make, CMake, Zig or GMake.
 
         Important reading:
 
-        GGML format: https://github.com/rustformers/llm/blob/main/crates/ggml/README.md
-        GGML project: https://github.com/ggerganov/ggml
+        - [GGML format](https://github.com/rustformers/llm/blob/main/crates/ggml/README.md)
+        - [GGML project](https://github.com/ggerganov/ggml)
+
         Further reading:
 
-        How llama.cpp is possible: https://finbarr.ca/how-is-llama-cpp-possible/
-        Python bindings for the Transformer models implemented in C/C++ using GGML library: https://github.com/marella/ctransformers
+        - [How llama.cpp is possible](https://finbarr.ca/how-is-llama-cpp-possible/)
+        - [Python bindings for the Transformer models implemented in C/C++ using GGML library](https://github.com/marella/ctransformers)
 
         [GitHub :material-github:](https://github.com/ggerganov/llama.cpp){ .md-button .md-button--primary }
 
@@ -30,32 +31,32 @@ It is possible to run LLMs locally on consumer CPUs or GPUs with usable performa
 
         ![M1 MBP](https://img.shields.io/badge/M1_MBP-Tested-brightgreen?logo=apple)
 
-        Download and run pre-built LLMs locally from a library: https://ollama.ai/library
-        Supports LLMs not in their library by importing GGUF files
+        - Download and run pre-built LLMs locally from the [ollama.ai](https://ollama.ai/library) library
+        - Supports LLMs not in their library by importing GGUF files
 
         [GitHub :material-github:](https://github.com/jmorganca/ollama){ .md-button .md-button--primary }
 
     === "PrivateGPT"
 
-        Production-ready AI project that allows you to ask questions about your documents
+        Production-ready AI project that allows you to ask questions about your documents.
 
         [GitHub :material-github:](https://github.com/imartinez/privateGPT){ .md-button .md-button--primary }
 
     === "GPT4ALL"
 
-        LLMs that run locally on your CPU and nearly any GPU
+        LLMs that run locally on your CPU and nearly any GPU.
         
         [GitHub :material-github:](https://github.com/nomic-ai/gpt4all){ .md-button .md-button--primary }
 
     === "TheBloke"
 
-        Pre-built quantised LLMs on HuggingFace
+        Pre-built quantised LLMs on HuggingFace.
 
         [Hugging Face :hugging:](https://huggingface.co/TheBloke){ .md-button .md-button--primary }
 
     === "ExLlamaV2"
 
-        Inference library for running local LLMs on modern consumer GPUs
+        Inference library for running local LLMs on modern consumer GPUs.
 
         [GitHub :material-github:](https://github.com/turboderp/exllamav2){ .md-button .md-button--primary }
 

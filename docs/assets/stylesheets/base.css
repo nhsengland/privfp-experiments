@@ -1,8 +1,0 @@
-/* force blank template */
-.md-main {
-    max-height: 0;
-}
-
-.md-main__inner {
-    margin: unset;
-}

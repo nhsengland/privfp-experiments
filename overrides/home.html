@@ -1,7 +1,13 @@
-{% extends "main.html" %} {% block tabs %} {{ super() }}
+{% extends "main.html" %}
 
-<link rel="stylesheet" href="assets/stylesheets/base.css" />
-<link rel="stylesheet" href="assets/stylesheets/home.css" />
+<!-- create blank canvas -->
+{% block content %}
+{% endblock %}
+
+{% block tabs %}
+{{ super() }}
+
+<link rel="stylesheet" href="/assets/stylesheets/home.css" />
 
 <section class="hero">
   <div class="hero-contents md-grid">
@@ -25,20 +31,18 @@
 
     <div class="feature-item md-typeset">
       <a class="md-button" href="open-source-llm-exploration/">
-        <h1>Open source exploration</h1>
-        <p>Research on open source LLMs for text generation.</p>
+        <h1>Open source LLMs</h1>
+        <p>Text generation exploration.</p>
       </a>
     </div>
 
     <div class="feature-item md-typeset">
-      <a class="md-button" href="unstructured-to-structured-data-pipeline/">
-        <h1>Data pipeline</h1>
-        <p>Placeholder.</p>
+      <a class="md-button" href="open-source-extraction-exploration/">
+        <h1>Open source NERs</h1>
+        <p>Entity extraction exploration.</p>
       </a>
     </div>
   </div>
 </section>
-{% endblock %}
 
-<!-- create blank canvas -->
-{% block content %} {% endblock %}
+{% endblock %}

@@ -13,8 +13,8 @@ nav:
     - Running inference: open-source-llm-exploration/inference.md
     - Evaluating generated outputs: open-source-llm-exploration/evaluation.md
     - Metrics to assess the quality of generated outputs: open-source-llm-exploration/metrics.md
-  - Open Source Extraction exploration:
 
+  - Open source extraction exploration:
     - open-source-extraction-exploration/index.md
     - Open-source Named-Entity Recognition Models: open-source-extraction-exploration/named_entity_research.md
     - De-identification Methods: open-source-extraction-exploration/deidentification_research.md
