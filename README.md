@@ -54,7 +54,16 @@ Assuming you have set up SSH credentials with this repository the package can be
 
 `git clone https://github.com/nhsengland/privfp-gen-experiments.git`
 
-### Generative Dependencies
+
+#### Datasets
+
+{DESCRIPTION AND LINKS TO DATASETS}
+
+{LINK TO FAKE DATA TO SUPPORT INITAIL CODE RUNS}
+
+## Generative Module 
+
+### Dependencies
 
 To create a suitable environment:
 {PYENV EXAMPLE}
@@ -62,7 +71,17 @@ To create a suitable environment:
 - `source _env/bin/activate`
 - `pip install -r requirements.txt`
 
-### Extraction Dependencies
+### Usage
+{DESCRIPTION OF CODE}
+
+### Outputs
+{LIST AND DESCRIPTION OF OUTPUTS}
+
+{NOTES ON REPRODUCIBILITY OF RESULTS}
+
+## Extraction Module 
+
+### Dependencies
 {CONDA ENV EXAMPLE}
 The first line of the `environment.yml` file sets the new environment's name.
 
@@ -70,13 +89,7 @@ The first line of the `environment.yml` file sets the new environment's name.
 conda env create -f environment.yml
 conda activate <environment_name>
 ```
-
 ### Usage
-
-#### Generative Usage
-{DESCRIPTION OF CODE}
-
-#### Extraction Usage
 
 In **./notebooks/extraction_module/ner_exploration** there is a set of notebooks exploring how to implement a range of named-entity-recognition models.
 
@@ -93,17 +106,6 @@ This notebook allows a user to:
 * Generate a list of entities found in each patient by running on the quantised universalNER model locally.
 * Save these patient's entities and load them back in.
 * Validate these entities with a manually labelled dataset.
-
-
-#### Outputs
-{LIST AND DESCRIPTION OF OUTPUTS}
-
-{NOTES ON REPRODUCIBILITY OF RESULTS}
-
-#### Datasets
-{DESCRIPTION AND LINKS TO DATASETS}
-
-{LINK TO FAKE DATA TO SUPPORT INITAIL CODE RUNS}
 
 ### Roadmap
 
