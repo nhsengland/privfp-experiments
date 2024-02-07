@@ -44,7 +44,7 @@ This diagram illustrates the current state of the project and the strcuture of e
 
 ### Built With
 
-[![Python v3.11](https://img.shields.io/badge/python-v3.8-blue.svg)](https://www.python.org/downloads/release/python-380/)
+[![Python v3.11](https://img.shields.io/badge/python-v3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
 
 ### Getting Started
 
@@ -107,9 +107,6 @@ This notebook allows a user to:
 * Save these patient's entities and load them back in.
 * Validate these entities with a manually labelled dataset.
 
-### Roadmap
-
-See the {LINK TO REPO ISSUES} for a list of proposed features (and known issues).
 
 ## Contributing
 
