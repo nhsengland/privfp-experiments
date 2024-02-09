@@ -12,5 +12,7 @@ dependencies:
   - pandas
   - numpy
   - matplotlib
+  - transformers
+  - torch
   - langchain
   - llama-cpp-python
