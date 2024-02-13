@@ -4,4 +4,5 @@ llama_cpp_python==0.2.23
 sentence-transformers==2.2.2
 mkdocs-material==9.5.2
 mkdocs-enumerate-headings-plugin==0.6.1
-torch==2.2.0
+spacy==3.6.1
+span-marker==1.5.0

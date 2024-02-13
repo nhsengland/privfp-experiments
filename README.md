@@ -15,50 +15,63 @@ _**Note:** Only public or fake data are shared in this repository._
 The main sections of this repository are:
 
 ```text
-+---data                                   <- Folder where synthetic data is stored.                    
++---data                                   <- Folder where synthetic data is stored                    
 |
-+---docs                                   <- Folder to hold further documentation about the project.
-|   +---assets
-|   +---open-source-extraction-exploration <- Folder for mkdoc files on the extraction component.
-|   +---open-source-llm-exploration        <- Fodler for mkdoc files on the llm exploration.
++---docs                                   <- MkDocs root directory
+|   +---assets                             <- Additional assets for MkDocs
+|   +---open-source-extraction-exploration <- Extraction component documentation
+|   +---open-source-llm-exploration        <- LLM exploration documentation
 |
-+---models                                 <- Folder to hold all saved models to help run pipelines faster after configuration has been run.
++---models                                 <- Folder to hold all saved models to help run pipelines faster after configuration has been run
 |
-+---notebooks                              <- Folder containing notebooks to explore each modules' code. 
-|   +---generative_module                  <- Folder containing notebooks that run the generative module.
-|   +---extraction_module                  <- Folder containing notebooks that run the extraction module.
-|     
++---notebooks                              <- Folder containing notebooks to explore each modules' code
+|   +---generative_module                  <- Folder containing notebooks that run the generative module
+|   +---extraction_module                  <- Folder containing notebooks that run the extraction module
 |
-+---src                                    <- Scripts with functions for use in .ipynb notebooks located in the notebooks folder.
-|   +---ner_pipeline                       <- Contains scripts that can be used to run a named-entity-recognition pipeline.
++---overrides                              <- Custom HTML for MkDocs    
+|
++---src                                    <- Scripts with functions for use in ipynb notebooks located in the notebooks folder
+|   +---ner_pipeline                       <- Contains scripts that can be used to run a named-entity-recognition pipeline
 |
 |   .gitignore                             <- Files (& file types) automatically removed from version control for security purposes
-|   mkdocs.yml                             <- Configuration file for building the mkdocs.
-|   requirements.txt                       <- Requirements to run all notebooks except where scispacy is used.
-|   requirements_scispacy.txt              <- Requirements needed to run the scispacy notebook.
-|   pyproject.toml                         <- Configuration file containing package build information
 |   LICENCE                                <- License info for public distribution
-|   README.md                              <- Quick start guide / explanation of your project
+|   mkdocs.yml                             <- MkDocs configurastion file
+|   README.md                              <- Quick start guide / explanation of the project
+|   requirements_scispacy.txt              <- Requirements needed to run the scispacy notebook
+|   requirements.txt                       <- Requirements to run all notebooks except where scispacy is used
 ```
 
 This diagram illustrates the current state of the project and the strcuture of each module.
 
 ![Project Diagram](docs/assets/images/privfp_diagram.png)
 
+## Getting Started
+
 ### Built With
 
 [![Python v3.11](https://img.shields.io/badge/python-v3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
 
-### Getting Started
-
-#### Installation
+### Installation
 
 Assuming you have set up SSH credentials with this repository the package can be installed from Github directly by running:
 
 `git clone https://github.com/nhsengland/privfp-gen-experiments.git`
 
+### Dependencies
 
-#### Datasets
+To create a suitable environment:
+
+- `python3.11 -m venv <virtual_environment_name>`
+- `source <virtual_environment_name>/bin/activate`
+- `pip install -r requirements.txt`
+
+Note that a separate Python 3.9 environment is required to run the scispacy notebooks:
+
+- `python3.9 -m venv <virtual_environment_name>`
+- `source <virtual_environment_name>/bin/activate`
+- `pip install -r requirements_scispacy.txt`
+
+### Datasets
 
 {DESCRIPTION AND LINKS TO DATASETS}
 
@@ -66,49 +79,37 @@ Assuming you have set up SSH credentials with this repository the package can be
 
 ## Generative Module 
 
-### Dependencies
-
-To create a suitable environment:
-{PYENV EXAMPLE}
-- ```python -m venv _env```
-- `source _env/bin/activate`
-- `pip install -r requirements.txt`
-
 ### Usage
-{DESCRIPTION OF CODE}
+
+In **./notebooks/generative_module** there is a set of notebooks exploring how to run inference using different methods for different use cases.
 
 ### Outputs
-{LIST AND DESCRIPTION OF OUTPUTS}
 
-{NOTES ON REPRODUCIBILITY OF RESULTS}
+- Generative example notes
+- Evaluation scores
+
+Note that a seed has not been implemented to reproduce the outputs shown.
 
 ## Extraction Module 
 
-### Dependencies
-{CONDA ENV EXAMPLE}
-The first line of the `environment.yml` file sets the new environment's name.
-
-```
-conda env create -f environment.yml
-conda activate <environment_name>
-```
 ### Usage
 
 In **./notebooks/extraction_module/ner_exploration** there is a set of notebooks exploring how to implement a range of named-entity-recognition models.
 
-* **numind_NER.ipynb** explores a NER model created by Numind.
-* **spacy_and_scispacy.ipynb** explores a range of NER models released by spacy. (A different enviroment will be required to run SciSpacy.)
-* **spanMarker.ipynb** explores NER spanMarker model set-up and a possible intergration with spacy models.
-* **uniNER_api.ipynb** explores the deployment of UniversalNER using an API. (This notebooks requires additional set-up, this involves cloning the [UniversalNER github](https://github.com/universal-ner/universal-ner), and then follow their instructions to server the model locally.)
-* **uniNER_quantised.ipynb** requires a quantised version of UniversalNER:
-    * This quantised model was created by cloning [llama.cpp repo](https://github.com/ggerganov/llama.cpp) and quantising the model yourself.
+- **numind_NER.ipynb** explores a NER model created by Numind.
+- **spacy_and_scispacy.ipynb** explores a range of NER models released by spacy. (A different enviroment will be required to run SciSpacy.)
+- **spanMarker.ipynb** explores NER spanMarker model set-up and a possible intergration with spacy models.
+- **uniNER_api.ipynb** explores the deployment of UniversalNER using an API. (This notebooks requires additional set-up, this involves cloning the [UniversalNER github](https://github.com/universal-ner/universal-ner), and then follow their instructions to server the model locally.)
+- **uniNER_quantised.ipynb** requires a quantised version of UniversalNER:
+    - This quantised model was created by cloning [llama.cpp repo](https://github.com/ggerganov/llama.cpp) and quantising the model yourself.
 
 The **ner_pipeline.ipynb** (located in ./notebooks/extraction_module/) runs using the quantised model also used in uniNER_quantised.ipynb. 
 This notebook allows a user to:
-* Define a list of entities they want to extract from a given dataset.
-* Generate a list of entities found in each patient by running on the quantised universalNER model locally.
-* Save these patient's entities and load them back in.
-* Validate these entities with a manually labelled dataset.
+
+- Define a list of entities they want to extract from a given dataset.
+- Generate a list of entities found in each patient by running on the quantised universalNER model locally.
+- Save these patient's entities and load them back in.
+- Validate these entities with a manually labelled dataset.
 
 
 ## Contributing
