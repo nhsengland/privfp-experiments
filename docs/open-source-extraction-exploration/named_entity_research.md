@@ -31,8 +31,8 @@ A set of experiments were conducted with a set of medical notes, and a spot-chec
 
         There are two ways to prompt the model:
 
-        * One is hosting UniversalNER locally, and then calling an API to extract the entities from this local server.[Example Notebook](https://github.com/nhsengland/privfp-gen-experiments/blob/main/notebooks/unstructured_to_structured_module/ner_exploration/uniNer_api.ipynb)
-        * The other is to quantise the model, and then you can run this model locally.[Example Notebook](https://github.com/nhsengland/privfp-gen-experiments/blob/main/notebooks/unstructured_to_structured_module/ner_exploration/uniNer_quantised.ipynb)
+        * One is hosting UniversalNER locally, and then calling an API to extract the entities from this local server.[Example Notebook](https://github.com/nhsengland/privfp-experiments/blob/main/notebooks/unstructured_to_structured_module/ner_exploration/uniNer_api.ipynb)
+        * The other is to quantise the model, and then you can run this model locally.[Example Notebook](https://github.com/nhsengland/privfp-experiments/blob/main/notebooks/unstructured_to_structured_module/ner_exploration/uniNer_quantised.ipynb)
 
     === "SpanMarkerNER"
 
