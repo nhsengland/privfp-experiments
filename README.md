@@ -34,7 +34,8 @@ The main sections of this repository are:
 |
 |   .gitignore                             <- Files (& file types) automatically removed from version control for security purposes
 |   mkdocs.yml                             <- Configuration file for building the mkdocs.
-|   environment.yml                        <- Conda equivalent of requirements file
+|   requirements.txt                       <- Requirements to run all notebooks except where scispacy is used.
+|   requirements_scispacy.txt              <- Requirements needed to run the scispacy notebook.
 |   pyproject.toml                         <- Configuration file containing package build information
 |   LICENCE                                <- License info for public distribution
 |   README.md                              <- Quick start guide / explanation of your project
