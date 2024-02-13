@@ -1,12 +1,18 @@
-# Privacy FingerPrint Phase 2
+# Privacy FingerPrint (PrivFp) - Phase 2 Experiments
+## NHS England Data Science Team
+
+### :warning: Warning to Users :warning:
+
+**This codebase is a proof of concept and should only be used for demonstration purposes within a controlled environment. The components are not a live product and should not be deployed in a live or production environment.**
 
 ### About the Project
 
 [![status: experimental](https://github.com/GIScience/badges/raw/master/status/experimental.svg)](https://github.com/GIScience/badges#experimental)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-This repository holds code for Privacy Fingerprint. The aim of this project is to develop a modular tool that could be used to calculate a privacy risk score on unstructured clinical data.
+This repository holds code for Privacy FingerPrint (PrivFp) - Phase 2 Experiments. The original proof of concept can be found [here](https://github.com/nhsengland/privfp-poc). The aim of the wider project is to develop a modular tool that could be used to calculate a privacy risk score on unstructured clinical data.
 
-This repository develops on previous work that initially looked at using ChatGPT (for the generative component) and Amazon Comprehend Medical (for the extraction component.)
+This repository develops on previous work that initially looked at using GPT-3.5 (for the generative component) and Amazon Comprehend Medical (for the extraction component), replacing those components with open equivalents.
 
 _**Note:** Only public or fake data are shared in this repository._
 
@@ -35,13 +41,13 @@ The main sections of this repository are:
 |
 |   .gitignore                             <- Files (& file types) automatically removed from version control for security purposes
 |   LICENCE                                <- License info for public distribution
-|   mkdocs.yml                             <- MkDocs configurastion file
+|   mkdocs.yml                             <- MkDocs configuration file
 |   README.md                              <- Quick start guide / explanation of the project
 |   requirements_scispacy.txt              <- Requirements needed to run the scispacy notebook
 |   requirements.txt                       <- Requirements to run all notebooks except where scispacy is used
 ```
 
-This diagram illustrates the current state of the project and the strcuture of each module.
+This diagram illustrates the current state of the project and the structure of each module.
 
 ![Project Diagram](docs/assets/images/privfp_diagram.png)
 
@@ -55,7 +61,7 @@ This diagram illustrates the current state of the project and the strcuture of e
 
 Assuming you have set up SSH credentials with this repository the package can be installed from Github directly by running:
 
-`git clone https://github.com/nhsengland/privfp-gen-experiments.git`
+`git clone https://github.com/nhsengland/privfp-experiments.git`
 
 ### Dependencies
 
@@ -73,7 +79,7 @@ Note that a separate Python 3.9 environment is required to run the scispacy note
 
 ### Pre-commit Installation
 
-This repo uses pre-commit to ensure black and flake8 has been applied. You will need to make sure your virtual environment has been activated.
+This repo uses `pre-commit` to ensure `black` and `flake8` has been applied. You will need to make sure your virtual environment has been activated.
 
 - `source <virtual_environment_name>/bin/activate`
 - `pre-commit install`
@@ -83,7 +89,7 @@ This repo uses pre-commit to ensure black and flake8 has been applied. You will 
 
 {DESCRIPTION AND LINKS TO DATASETS}
 
-{LINK TO FAKE DATA TO SUPPORT INITAIL CODE RUNS}
+{LINK TO FAKE DATA TO SUPPORT INITIAL CODE RUNS}
 
 ## Generative Module
 
@@ -149,9 +155,9 @@ of the [Open Government 3.0][ogl] licence.
 ## Contact
 
 **This repository is maintained by NHS England Data Science Team**.
-To contact us raise an issue on Github or via [email](mailto:datascience@nhs.net)._
+To contact us raise an issue on Github or via [email](mailto:datascience@nhs.net).
 
-## Acknowledgements
+## Contributors
 
 - [Scarlett Kynoch](https://github.com/scarlett-k-nhs)
 - [Xiyao Zhuang](https://github.com/xiyaozhuang)

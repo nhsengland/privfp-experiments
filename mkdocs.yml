@@ -1,6 +1,6 @@
 site_name: Privacy Fingerprint
-repo_url: https://github.com/nhsengland/privfp-gen-experiments
-repo_name: privfp-gen-experiments
+repo_url: https://github.com/nhsengland/privfp-experiments
+repo_name: privfp-experiments
 
 nav:
   - Home: index.md
