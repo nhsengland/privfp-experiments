@@ -53,7 +53,10 @@ def generate_patients_entities(data, entities):
         patient_entities = {}
         for entity in entities:
             output = get_universal_ner_entity(input_text, entity, llm)
-            patient_entities[entity] = {"output": output, "output_type": type(output)}
+            patient_entities[entity] = {
+                "output": output,
+                "output_type": type(output),
+            }
 
         patients_entities[patient_num] = patient_entities
 
@@ -67,7 +70,7 @@ def create_patient_entity_table(patient_entities):
     for id, patient_entities in patient_entities.items():
         text = llm_data[id].strip()
         for entity_name, outputs in patient_entities.items():
-            output_type = outputs["output_type"] == type(list())
+            output_type = isinstance(outputs["output_type"], list)
             if output_type:
                 output_length = len(outputs["output"])
             else:
@@ -85,8 +88,12 @@ def create_patient_entity_table(patient_entities):
             patient_values.append(output)
 
     patient_entity_table = pd.DataFrame(patient_values)
-    patient_entity_table["output_any"] = patient_entity_table["output_length"] >= 1
-    patient_entity_table["output_any"] = patient_entity_table["output_any"].astype(int)
+    patient_entity_table["output_any"] = (
+        patient_entity_table["output_length"] >= 1
+    )
+    patient_entity_table["output_any"] = patient_entity_table[
+        "output_any"
+    ].astype(int)
 
     return patient_entity_table
 
@@ -101,10 +108,16 @@ def load_expected_patient_entities_20():
     expected_patient_df = pd.DataFrame(expected_patient_entities).T
     expected_patient_df = (
         expected_patient_df.reset_index()
-        .melt(id_vars="index", var_name="entity_name", value_name="expected_output")
+        .melt(
+            id_vars="index",
+            var_name="entity_name",
+            value_name="expected_output",
+        )
         .rename(columns={"index": "patient_id"})
     )
-    expected_patient_df["patient_id"] = expected_patient_df["patient_id"].astype(int)
+    expected_patient_df["patient_id"] = expected_patient_df[
+        "patient_id"
+    ].astype(int)
     expected_patient_df["expected_output_length"] = expected_patient_df[
         "expected_output"
     ].apply(len)
