@@ -15,7 +15,7 @@ _**Note:** Only public or fake data are shared in this repository._
 The main sections of this repository are:
 
 ```text
-+---data                                   <- Folder where synthetic data is stored                    
++---data                                   <- Folder where synthetic data is stored
 |
 +---docs                                   <- MkDocs root directory
 |   +---assets                             <- Additional assets for MkDocs
@@ -28,7 +28,7 @@ The main sections of this repository are:
 |   +---generative_module                  <- Folder containing notebooks that run the generative module
 |   +---extraction_module                  <- Folder containing notebooks that run the extraction module
 |
-+---overrides                              <- Custom HTML for MkDocs    
++---overrides                              <- Custom HTML for MkDocs
 |
 +---src                                    <- Scripts with functions for use in ipynb notebooks located in the notebooks folder
 |   +---ner_pipeline                       <- Contains scripts that can be used to run a named-entity-recognition pipeline
@@ -71,13 +71,21 @@ Note that a separate Python 3.9 environment is required to run the scispacy note
 - `source <virtual_environment_name>/bin/activate`
 - `pip install -r requirements_scispacy.txt`
 
+### Pre-commit Installation
+
+This repo uses pre-commit to ensure black and flake8 has been applied. You will need to make sure your virtual environment has been activated.
+
+- `source <virtual_environment_name>/bin/activate`
+- `pre-commit install`
+
+
 ### Datasets
 
 {DESCRIPTION AND LINKS TO DATASETS}
 
 {LINK TO FAKE DATA TO SUPPORT INITAIL CODE RUNS}
 
-## Generative Module 
+## Generative Module
 
 ### Usage
 
@@ -90,7 +98,7 @@ In **./notebooks/generative_module** there is a set of notebooks exploring how t
 
 Note that a seed has not been implemented to reproduce the outputs shown.
 
-## Extraction Module 
+## Extraction Module
 
 ### Usage
 
@@ -103,7 +111,7 @@ In **./notebooks/extraction_module/ner_exploration** there is a set of notebooks
 - **uniNER_quantised.ipynb** requires a quantised version of UniversalNER:
     - This quantised model was created by cloning [llama.cpp repo](https://github.com/ggerganov/llama.cpp) and quantising the model yourself.
 
-The **ner_pipeline.ipynb** (located in ./notebooks/extraction_module/) runs using the quantised model also used in uniNER_quantised.ipynb. 
+The **ner_pipeline.ipynb** (located in ./notebooks/extraction_module/) runs using the quantised model also used in uniNER_quantised.ipynb.
 This notebook allows a user to:
 
 - Define a list of entities they want to extract from a given dataset.
