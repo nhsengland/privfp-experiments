@@ -65,6 +65,12 @@ To create a suitable environment:
 - `source <virtual_environment_name>/bin/activate`
 - `pip install -r requirements.txt`
 
+Note that a separate Python 3.9 environment is required to run the scispacy notebooks:
+
+- `python3.9 -m venv <virtual_environment_name>`
+- `source <virtual_environment_name>/bin/activate`
+- `pip install -r requirements_scispacy.txt`
+
 ### Datasets
 
 {DESCRIPTION AND LINKS TO DATASETS}
