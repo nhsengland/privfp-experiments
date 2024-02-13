@@ -15,27 +15,29 @@ _**Note:** Only public or fake data are shared in this repository._
 The main sections of this repository are:
 
 ```text
-+---data                              <- Folder where synthetic data is stored.                    
++---data                                   <- Folder where synthetic data is stored.                    
 |
-+---docs                              <- Folder to hold further documentation about the project.
-|   |      model_card.md              <- A Markdown that provides more information about the code usage.
++---docs                                   <- Folder to hold further documentation about the project.
+|   +---assets
+|   +---open-source-extraction-exploration <- Folder for mkdoc files on the extraction component.
+|   +---open-source-llm-exploration        <- Fodler for mkdoc files on the llm exploration.
 |
-+---models                            <- Folder to hold all saved models to help run pipelines faster after configuration has been run.
++---models                                 <- Folder to hold all saved models to help run pipelines faster after configuration has been run.
 |
-+---notebooks                         <- Folder containing notebooks to explore each modules' code. 
-|   +---generative_module             <- Folder containing notebooks that run the generative module.
-|   +---extraction_module             <- Folder containing notebooks that run the extraction module.
++---notebooks                              <- Folder containing notebooks to explore each modules' code. 
+|   +---generative_module                  <- Folder containing notebooks that run the generative module.
+|   +---extraction_module                  <- Folder containing notebooks that run the extraction module.
 |     
 |
-+---src                               <- Scripts with functions for use in .ipynb notebooks located in the notebooks folder.
-|   +---ner_pipeline                  <- Contains scripts that can be used to run a named-entity-recognition pipeline.
++---src                                    <- Scripts with functions for use in .ipynb notebooks located in the notebooks folder.
+|   +---ner_pipeline                       <- Contains scripts that can be used to run a named-entity-recognition pipeline.
 |
-|   .gitignore                        <- Files (& file types) automatically removed from version control for security purposes
-|   config.toml                       <- Configuration file with parameters we want to be able to change (e.g. date)
-|   environment.yml                   <- Conda equivalent of requirements file
-|   pyproject.toml                    <- Configuration file containing package build information
-|   LICENCE                           <- License info for public distribution
-|   README.md                         <- Quick start guide / explanation of your project 
+|   .gitignore                             <- Files (& file types) automatically removed from version control for security purposes
+|   mkdocs.yml                             <- Configuration file for building the mkdocs.
+|   environment.yml                        <- Conda equivalent of requirements file
+|   pyproject.toml                         <- Configuration file containing package build information
+|   LICENCE                                <- License info for public distribution
+|   README.md                              <- Quick start guide / explanation of your project
 ```
 
 This diagram illustrates the current state of the project and the strcuture of each module.
@@ -94,7 +96,7 @@ conda activate <environment_name>
 In **./notebooks/extraction_module/ner_exploration** there is a set of notebooks exploring how to implement a range of named-entity-recognition models.
 
 * **numind_NER.ipynb** explores a NER model created by Numind.
-* **spacy_and_scispacy.ipynb** explores a range of NER models released by spacy.
+* **spacy_and_scispacy.ipynb** explores a range of NER models released by spacy. (A different enviroment will be required to run SciSpacy.)
 * **spanMarker.ipynb** explores NER spanMarker model set-up and a possible intergration with spacy models.
 * **uniNER_api.ipynb** explores the deployment of UniversalNER using an API. (This notebooks requires additional set-up, this involves cloning the [UniversalNER github](https://github.com/universal-ner/universal-ner), and then follow their instructions to server the model locally.)
 * **uniNER_quantised.ipynb** requires a quantised version of UniversalNER:
