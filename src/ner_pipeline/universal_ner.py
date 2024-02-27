@@ -1,4 +1,5 @@
 import json
+import ast
 import pandas as pd
 import numpy as np
 from itertools import product
@@ -8,7 +9,7 @@ from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.llms import LlamaCpp
 
-from src.ner_pipeline.data_ingestion import load_llm_data
+from src.ner_pipeline.llm_ingestion import load_llm_data
 
 
 def upload_quantised_universal_ner(n_gpu_layers=1, n_batch=512):
