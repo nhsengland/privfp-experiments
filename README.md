@@ -113,18 +113,15 @@ In **./notebooks/extraction_module/ner_exploration** there is a set of notebooks
 - **numind_NER.ipynb** explores a NER model created by Numind.
 - **spacy_and_scispacy.ipynb** explores a range of NER models released by spacy. (A different enviroment will be required to run SciSpacy.)
 - **spanMarker.ipynb** explores NER spanMarker model set-up and a possible intergration with spacy models.
-- **uniNER_api.ipynb** explores the deployment of UniversalNER using an API. (This notebooks requires additional set-up, this involves cloning the [UniversalNER github](https://github.com/universal-ner/universal-ner), and then follow their instructions to server the model locally.)
 - **uniNER_quantised.ipynb** requires a quantised version of UniversalNER:
-    - This quantised model was created by cloning [llama.cpp repo](https://github.com/ggerganov/llama.cpp) and quantising the model yourself.
 
-The **ner_pipeline.ipynb** (located in ./notebooks/extraction_module/) runs using the quantised model also used in uniNER_quantised.ipynb.
-This notebook allows a user to:
+The quantised model was created by cloning [llama.cpp repo](https://github.com/ggerganov/llama.cpp) and quantising the Universal-NER/UniNER-7B-type locally to a quantized_q4_1.gguf format.
 
-- Define a list of entities they want to extract from a given dataset.
-- Generate a list of entities found in each patient by running on the quantised universalNER model locally.
-- Save these patient's entities and load them back in.
-- Validate these entities with a manually labelled dataset.
+The llama.cpp repo has guidance on their repo in their **Prepare and Quantize** section. Alternatively their is a [medium article](https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-llama-cpp-66e2a7c51300) that goes through all of this in a step-by-step process.
 
+- **uniNER_api.ipynb** explores the deployment of UniversalNER using an API. (This involves using the [llama.cpp repo](https://github.com/ggerganov/llama.cpp) to server a quantised model.)
+
+Extra guidance on serving a model in this repo is outlined in the [llama.cpp serving documentation](https://github.com/ggerganov/llama.cpp/blob/master/examples/server/README.md).
 
 ## Contributing
 
