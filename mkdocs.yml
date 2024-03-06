@@ -5,6 +5,11 @@ repo_name: privfp-experiments
 nav:
   - Home: index.md
   - Background: background.md
+  - Setup:
+    - setup/index.md
+    - Synthea International: setup/synthea.md
+    - Large Language Models: setup/llm.md
+    - CorrectMatch: setup/correctmatch.md
   
   - Open source LLM exploration:
     - open-source-llm-exploration/index.md
