@@ -77,10 +77,11 @@ plugins:
   - search
   - enumerate-headings:
       toc_depth: 2
+      restart_increment_after:
+        - "*index.md"
       exclude:
         - index.md
         - background.md
-      increment_across_pages: false
 
 watch:
   - overrides
