@@ -2,6 +2,7 @@ from .config import (
     path_synthea,
     path_patients,
     path_encounters,
+    path_output_synthea,
     cols_patients,
     cols_encounters,
     cols,
@@ -74,16 +75,20 @@ def df_to_json(df_input):
     return output
 
 
-def save(path, data):
+def write(data, path):
     os.makedirs(os.path.dirname(path), exist_ok=True)
 
     with open(path, "w") as f:
         f.write(data)
 
 
-def load_synthea_output(path):
-    with open(path) as file:
-        data = json.load(file)
+def load_output_synthea(output_synthea, load_file):
+    if load_file:
+        with open(path_output_synthea) as file:
+            data = json.load(file)
+
+    else:
+        data = json.loads(output_synthea)
 
     batch = []
 
