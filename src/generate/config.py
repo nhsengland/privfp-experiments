@@ -2,7 +2,8 @@ path_synthea = "../../synthea"
 path_csv = path_synthea + "/output/csv"
 path_patients = path_csv + "/patients.csv"
 path_encounters = path_csv + "/encounters.csv"
-path_synthea_output = "../data/synthea.json"
+path_output_synthea = "../data/synthea.json"
+path_output_llm = "../data/llm.json"
 
 cols_patients = ["Id", "BIRTHDATE", "FIRST", "LAST"]
 cols_encounters = ["PATIENT", "ENCOUNTERCLASS", "REASONDESCRIPTION"]
@@ -13,5 +14,3 @@ cols = {
     "LAST": "FAMILY_NAME",
     "REASONDESCRIPTION": "DIAGNOSIS",
 }
-
-path_llm_output = "../data/llm.json"
