@@ -1,0 +1,24 @@
+[data-md-color-scheme=default],
+[data-md-color-scheme=slate][data-md-color-primary=indigo] {
+    --md-primary-fg-color: #005EB8;
+    --md-accent-fg-color: #00A9CE;
+    --md-typeset-a-color: #005EB8;
+}
+
+/* banner style */
+.banner {
+    display: flex;
+
+    background-color: yellow;
+    color: black;
+}
+
+.banner-contents {
+    flex: auto;
+}
+
+.banner-item {
+    margin: 0.6rem 0.8rem;
+
+    font-size: small;
+}

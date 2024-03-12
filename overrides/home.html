@@ -1,0 +1,48 @@
+{% extends "main.html" %}
+
+<!-- create blank canvas -->
+{% block content %}
+{% endblock %}
+
+{% block tabs %}
+{{ super() }}
+
+<link rel="stylesheet" href="assets/stylesheets/home.css" />
+
+<section class="hero">
+  <div class="hero-contents md-grid">
+    <div class="hero-teaser md-typeset">
+      <h1>Privacy FingerPrint</h1>
+      <p>A proof of concept modular tool to score privacy risk of healthcare free-text data.</p>
+      <a class="md-button md-button--primary" href="background/">Get started</a>
+      <a class="md-button" href="https://github.com/nhsengland/privfp-experiments">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<section class="feature">
+  <div class="feature-contents md-grid">
+    <div class="feature-item md-typeset">
+      <a class="md-button" href="background/">
+        <h1>Background</h1>
+        <p>Links and related resources.</p>
+      </a>
+    </div>
+
+    <div class="feature-item md-typeset">
+      <a class="md-button" href="open-source-llm-exploration/">
+        <h1>Open source LLMs</h1>
+        <p>Text generation exploration.</p>
+      </a>
+    </div>
+
+    <div class="feature-item md-typeset">
+      <a class="md-button" href="open-source-extraction-exploration/">
+        <h1>Open source NERs</h1>
+        <p>Entity extraction exploration.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

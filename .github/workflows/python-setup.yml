@@ -1,0 +1,26 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+
+name: Python Setup
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+    BLACK_VERSION: 23.12.1
+    PYTHON_VERSION: 3.11
+
+jobs:
+  black-format:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: psf/black@stable
+      with:
+         options: "--check --verbose"
+         src: "./src"
+         version: ${{env.BLACK_VERSION}}         
