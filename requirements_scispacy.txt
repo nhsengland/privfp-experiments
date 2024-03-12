@@ -1,7 +1,0 @@
-# Requires Python 3.9 or earlier
-scispacy==0.5.3
-span-marker==1.5.0
-
-# To install models for scispacy please see https://allenai.github.io/scispacy/
-# An example for en_core_sci_sm is given below
-https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.3/en_core_sci_sm-0.5.3.tar.gz
