@@ -1,5 +1,4 @@
-from .config import path_synthea_output, path_llm_output
-from .utils import load_synthea_output, save
+from .utils import load_output_synthea
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.llms import Ollama
@@ -7,8 +6,16 @@ from langchain.prompts import PromptTemplate
 import json
 
 
-def run(model, template):
-    batch = load_synthea_output(path_synthea_output)
+def run(model, template, input=None, load_file=False):
+    if input is None and not load_file:
+        print("Either input or load_file must be provided.")
+        return
+
+    elif input is not None and load_file:
+        print("Both input and load_file cannot be provided at the same time.")
+        return
+
+    batch = load_output_synthea(input, load_file)
 
     callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 
@@ -17,5 +24,6 @@ def run(model, template):
     chain = prompt | llm
 
     results = chain.batch(batch)
-    data = json.dumps(results)
-    save(path_llm_output, data)
+    output = json.dumps(results)
+
+    return output
