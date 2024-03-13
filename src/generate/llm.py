@@ -1,21 +1,24 @@
-from .utils import load_output_synthea
+from ..utils import load_json
+
+import json
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.llms import Ollama
 from langchain.prompts import PromptTemplate
-import json
 
 
-def run(model, template, input=None, load_file=False):
-    if input is None and not load_file:
-        print("Either input or load_file must be provided.")
-        return
+def get_batch(from_variable, from_path):
+    data = load_json(from_variable, from_path)
+    batch = []
 
-    elif input is not None and load_file:
-        print("Both input and load_file cannot be provided at the same time.")
-        return
+    for i in range(len(data)):
+        batch.append({"data": json.dumps(data[i])})
 
-    batch = load_output_synthea(input, load_file)
+    return batch
+
+
+def run(model, template, data_variable=False, data_path=False):
+    batch = get_batch(data_variable, data_path)
 
     callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 
