@@ -2,25 +2,37 @@
 
 name: Python Setup
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request]
 
 env:
     BLACK_VERSION: 23.12.1
-    PYTHON_VERSION: 3.11
+    PYTHON_VERSION: 3.11.6
+
+permissions:
+  contents: read
 
 jobs:
-  black-format:
+  build:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    - uses: psf/black@stable
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
       with:
-         options: "--check --verbose"
-         src: "./src"
-         version: ${{env.BLACK_VERSION}}         
+        python-version: ${{env.PYTHON_VERSION}}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python${{env.PYTHON_VERSION}} -m pip install -r requirements.txt
+    - name: Install Linting Dependences
+      run: |
+        python${{env.PYTHON_VERSION}} -m  pip install black==${{env.BLACK_VERSION}}
+        python${{env.PYTHON_VERSION}} -m  pip install flake8
+
+    - name: Lint
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 src --max-line-length=127
+        black --check *.py
