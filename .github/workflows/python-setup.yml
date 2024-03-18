@@ -5,7 +5,7 @@ name: Python Setup
 on: [push, pull_request]
 
 env:
-    PYTHON_VERSION: 3.11.6
+    PYTHON_VERSION: 3.11.7
 
 permissions:
   contents: read
@@ -24,6 +24,9 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+
+    - name: Install pre-commit and dependencies
+      run: |
         python -m pip install pre-commit jupyter
 
     - name: Install dependencies
