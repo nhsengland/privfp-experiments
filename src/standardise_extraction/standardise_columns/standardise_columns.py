@@ -2,10 +2,24 @@ import pandas as pd
 
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import LabelEncoder
-from typing import Tuple, Dict
+from typing import Tuple, Dict, Any, List
 
 
-def standardise_preprocess_output(df, standardise_functions_per_entity=dict()):
+def standardise_preprocess_output(
+    df: pd.DataFrame, standardise_functions_per_entity: Dict[str, Any] = dict()
+) -> Tuple[pd.DataFrame, Dict[str, Dict[str, int]]]:
+    """This takes in a dataframe, and for each given column name provided in the standardise_functions_per_entity dictionary,
+        it applies the function given to each colun.
+
+    Args:
+        df (pd.DataFrame): This is a dataframe we want to transform given columns on.
+        standardise_functions_per_entity (Dict[str, Any], optional): This is a dictionary of column names to a function
+                                                                     that can be applied across columns. Defaults to dict().
+
+    Returns:
+        Tuple[pd.DataFrame, Dict[str, Dict[str, int]]]: Returns a dataframe that has had columns transformed and has been encoded,
+                                                        with an encoded lookup dictionary to help transform results back.
+    """
 
     for column_name, func in standardise_functions_per_entity.items():
         df = func(df, column_name)
@@ -18,8 +32,13 @@ def standardise_preprocess_output(df, standardise_functions_per_entity=dict()):
 def encode(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, Dict[str, int]]]:
     """Encode a dataset for processing by pycorrectmatch
 
-    :param df: Table of data
-    :returns: Table of encoded data and lookup dictionary"""
+    Args:
+        df (pd.DataFrame): This is a dataframe we want to encode column values.
+
+    Returns:
+        Tuple[pd.DataFrame, Dict[str, Dict[str, int]]]: Table of encoded data and lookup dictionary.
+    """
+
     output = df.fillna(0)
     for col in output.columns:
         if len(set([type(i) for i in output[col].tolist()])) > 1:
