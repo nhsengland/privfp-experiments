@@ -112,6 +112,20 @@ def return_list_of_entities_from_person(
     entity_type: str,
     cleaning_functions: List[Callable] = list(),
 ) -> List[str]:
+    """
+    This function filters a list of person entities to extract only the entities of a specified type,
+    applies optional cleaning functions to each extracted entity, and returns a list of cleaned entities.
+
+    Args:
+        person_entity (List[Dict[str, Any]]): A list of dictionaries representing person entities.
+        entity_type (str): The type of entity to extract from the person entities.
+        cleaning_functions (List[Callable], optional): A list of cleaning functions to apply to each
+                                                       extracted entity. Defaults to an empty list.
+
+    Returns:
+        List[str]: A list of cleaned entity values extracted from the person entities.
+
+    """
     person_entity = get_entity_values(person_entity, entity_type)
     entity_list = []
     for entity in person_entity:
