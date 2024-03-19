@@ -6,8 +6,8 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.llms import LlamaCpp
 from typing import List, Dict, Any, Optional, Tuple
 
-from ..utils import load_json_from_path_or_variable, save_json, load_json
-from ..config import entity_list, universal_ner_path
+from src.utils import load_json_from_path_or_variable, save_json, load_json
+from src.config import entity_list, universal_ner_path
 
 
 class Extraction:

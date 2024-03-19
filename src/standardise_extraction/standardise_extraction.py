@@ -72,7 +72,7 @@ class StandardiseExtraction:
             preprocess_functions_per_entity,
         )
 
-        # This standardises given columns that have been extracted out from the dataframe.
+        # This standardises columns that have been extracted out from the dataframe.
         standardised_df, _ = standardise_preprocess_output(
             df, standardise_functions_per_entity
         )

@@ -1,5 +1,8 @@
 from src.standardise_extraction.preprocess_functions import clean_name
-from src.standardise_extraction.standardise_columns import standardise_dates
+from src.standardise_extraction.standardise_columns.standardise_columns import (
+    extract_first_entity_from_list,
+)
+from src.standardise_extraction.standardise_columns import normalise_columns
 
 ### COMPONENT OUTPUT PATHS ###
 data_folder = "../data"
@@ -29,10 +32,16 @@ cols = {
 
 ### EXTRACTION CONFIG: ENTITIES EXTRACTED ###
 entity_list = ["person", "nhs number", "date of birth", "diagnosis"]
-univeral_ner_path = "../models/quantized_q4_1.gguf"
+universal_ner_path = "../models/quantized_q4_1.gguf"
 
 ### STANDARDISATION CONFIG: PREPROCESSING AND STANDARDISATION DICTIONARY ###
 extra_preprocess_functions_per_entity = {"person": [clean_name.remove_titles]}
 standardise_functions_per_entity = {
-    "date of birth": standardise_dates.normalise_date_column
+    "person": [extract_first_entity_from_list],
+    "nhs number": [extract_first_entity_from_list],
+    "date of birth": [
+        extract_first_entity_from_list,
+        normalise_columns.normalise_date_column,
+    ],
+    "diagnosis": [extract_first_entity_from_list],
 }
