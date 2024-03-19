@@ -20,7 +20,7 @@ This model is not suitable to provide privacy guarantees in a production environ
 
 ## Training Data
 
-Experiments in this repository are run against: 
+Experiments in this repository are run against:
 
 {LIST AND LINK DATA SOURCES}
 
