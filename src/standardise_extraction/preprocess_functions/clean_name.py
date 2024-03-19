@@ -1,14 +1,18 @@
 import re
 
 
-def remove_titles(name):
-    # Define a list of common titles to remove
-    titles = ["Mrs", "Mr", "Ms", "Dr", "Prof", "Miss", "Doctor"]
+def remove_titles(name: str):
+    """
 
-    # Create a regular expression pattern to match any title followed by an optional dot and space.
+    Args:
+        name (str): An entity that has been extracted from the model.
+
+    Returns:
+        (str) : Returns a name that has had titles removed.
+    """
+
+    titles = ["Mrs", "Mr", "Ms", "Dr", "Prof", "Miss", "Doctor", "Patient"]
     pattern = r"^(?:" + "|".join(titles) + r")(?:\.\s)?(?:\.)?"
-
-    # Replace all occurrences of titles with an empty string
     cleaned_name = re.sub(pattern, "", name, flags=re.IGNORECASE)
 
     return cleaned_name
