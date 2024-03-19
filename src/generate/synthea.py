@@ -1,4 +1,4 @@
-from .config import (
+from src.config import (
     path_synthea,
     path_patients,
     path_encounters,
@@ -9,9 +9,10 @@ from .config import (
 
 import nhs_number
 import pandas as pd
-import json
 import os
 import subprocess
+
+from src.utils import save_json, load_json
 
 
 def append_nhs_numbers(df_input):
@@ -58,12 +59,29 @@ def df_to_json(df_input):
     for i in range(len(df_input)):
         array.append(df_input.iloc[i].to_dict())
 
-    output = json.dumps(array)
-
-    return output
+    return array
 
 
-def run(*commands):
+class GenerateSynthea:
+    def __init__(self, save_output=False, path_output=None):
+        self.save_output = save_output
+        self.path_output = path_output
+
+    def run(self, *commands):
+
+        output = create_synthea_output(commands)
+
+        if self.save_output:
+            save_json(output, self.path_output)
+
+        return output
+
+    def load(self):
+        output = load_json(self.path_output)
+        return output
+
+
+def create_synthea_output(commands):
     cwd = os.getcwd()
     os.chdir(path_synthea)
 
@@ -75,5 +93,4 @@ def run(*commands):
 
     df = csvs_to_df()
     output = df_to_json(df)
-
     return output
