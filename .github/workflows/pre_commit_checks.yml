@@ -1,8 +1,10 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 
-name: Python Setup
+name: Pre-commit Checks
 
-on: [push, pull_request]
+on:
+  pull_request:
+    branches: [ main ]
 
 env:
     PYTHON_VERSION: 3.11.7
