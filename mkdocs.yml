@@ -11,7 +11,7 @@ nav:
     - Large Language Models: setup/llm.md
     - Entity extraction: setup/extraction.md
     - CorrectMatch: setup/correctmatch.md
-  
+
   - Open source LLM exploration:
     - open-source-llm-exploration/index.md
     - Searching for open source LLMs: open-source-llm-exploration/search.md
