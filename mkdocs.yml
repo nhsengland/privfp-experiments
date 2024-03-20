@@ -9,6 +9,7 @@ nav:
     - setup/index.md
     - Synthea International: setup/synthea.md
     - Large Language Models: setup/llm.md
+    - Entity extraction: setup/extraction.md
     - CorrectMatch: setup/correctmatch.md
   
   - Open source LLM exploration:
