@@ -16,7 +16,7 @@ This section will provide details for setting up and running this repository and
 
     ---
 
-    This project is built using Python 3.11.7 release.
+    This project is built using Python 3.11 release.
 
     [:material-arrow-right: Python](https://www.python.org/)
 
