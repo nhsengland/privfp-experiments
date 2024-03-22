@@ -2,6 +2,9 @@ name: documentation
 
 on:
   push:
+    branches:
+      - main
+
     paths:
       - 'mkdocs.yml'
       - 'docs/**'
@@ -28,4 +31,4 @@ jobs:
 
       - name: Build and deploy documentation
         run: |
-          mkdocs gh-deploy --help
+          mkdocs gh-deploy
