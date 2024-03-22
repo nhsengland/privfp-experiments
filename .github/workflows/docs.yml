@@ -31,5 +31,4 @@ jobs:
 
       - name: Build and deploy documentation
         run: |
-          git status
-          git log
+          mkdocs gh-deploy --force
