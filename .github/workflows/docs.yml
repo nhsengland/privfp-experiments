@@ -31,4 +31,5 @@ jobs:
 
       - name: Build and deploy documentation
         run: |
-          mkdocs gh-deploy
+          git status
+          git log
