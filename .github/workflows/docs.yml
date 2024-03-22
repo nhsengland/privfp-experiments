@@ -2,13 +2,11 @@ name: documentation
 
 on:
   push:
-    branches:
-      - main
-
     paths:
       - 'mkdocs.yml'
       - 'docs/**'
       - 'overrides/**'
+      - '.github/workflows/docs.yml'
 
 jobs:
   deploy:
@@ -30,4 +28,4 @@ jobs:
 
       - name: Build and deploy documentation
         run: |
-          mkdocs gh-deploy
+          mkdocs gh-deploy --help
