@@ -57,11 +57,26 @@ This diagram illustrates the current state of the project and the structure of e
 
 [![Python v3.11](https://img.shields.io/badge/python-v3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
 
-### Installation
+### Repo Installation
 
 Assuming you have set up SSH credentials with this repository the package can be installed from Github directly by running:
 
 `git clone https://github.com/nhsengland/privfp-experiments.git`
+
+### Julia Install
+
+This repo Requires [Julia](https://github.com/JuliaLang/julia) to run. This particular setup was tested with [Julia version 1.8.5](https://julialang.org/downloads/) on an M1 MBP.
+
+[CorrectMatch](https://github.com/computationalprivacy/pycorrectmatch) is used via a thin Python wrapper for the Julia module CorrectMatch.jl to estimate uniqueness from small population samples.
+
+Open a new terminal and install the recommended [julia installer](https://julialang.org/downloads/)
+
+- `curl -fsSL https://install.julialang.org | sh`
+- `juliaup add 1.8.5`
+- `juliaup default 1.8.5`
+
+Next you need to install the CorrectMatch package
+- `julia -e 'using Pkg; Pkg.add("CorrectMatch")'`
 
 ### Dependencies
 
@@ -84,6 +99,17 @@ This repo uses `pre-commit` to ensure `black` and `flake8` has been applied. You
 - `source <virtual_environment_name>/bin/activate`
 - `pre-commit install`
 
+### Download a quantised UniversalNER model
+
+This HuggingFace [repository](https://huggingface.co/yuuko-eth/UniNER-7B-all-GGUF/tree/main) holds a range of quantized UniversalNER Models. Any of these models can be downloaded, but make sure you download a model that your RAM can handle.
+
+``` shell title="Download the smallest Quantised UniversalNER model from Huggingface"
+cd privfp-experiments
+source .venv/bin/activate
+huggingface-cli download yuuko-eth/UniNER-7B-all-GGUF UniversalNER-7B-all-Q4_0.gguf --local-dir ./models
+```
+
+Then you just need to ensure your universal_ner_path is set to the path of the model.
 
 ### Datasets
 

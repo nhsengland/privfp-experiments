@@ -6,33 +6,20 @@
 
 [CorrectMatch](https://github.com/computationalprivacy/pycorrectmatch) is used via a thin Python wrapper for the Julia module CorrectMatch.jl to estimate uniqueness from small population samples.
 
-## Install CorrectMatch in Julia
+## Install Julia
 
-``` shell title="Change working directory to privfp-experiments"
-cd privfp-experiments
-julia
+Open a new terminal and install the recommended [julia installer](https://julialang.org/downloads/)
+``` shell title="Install Julia"
+curl -fsSL https://install.julialang.org | sh
 ```
 
-``` julia title="Add CorrectMatch package"
-using Pkg
-Pkg.add("CorrectMatch")
+``` shell title="Download Julia version 1.8.5 and set default to 1.8.5"
+juliaup add 1.8.5
+juliaup default 1.8.5
 ```
 
-## Install PyCorrectMatch dependencies
-
-``` shell title="Create Python virtual environment"
-python3.11 -m venv .venv
-source .venv/bin/activate
-```
-
-``` shell title="Install correctmatch package"
-pip install correctmatch
-python
-```
-
-``` python title="Install Julia dependencies through virtual environment"
-import julia
-julia.install()
+``` julia title="Add CorrectMatch package to Julia"
+julia -e 'using Pkg; Pkg.add("CorrectMatch")'
 ```
 
 ## Verify installlation
@@ -40,6 +27,13 @@ julia.install()
 ``` python title="Run correctmatch"
 import numpy as np
 import correctmatch
+import julia
+from julia.api import Julia
+import os
+
+path_julia = os.popen("which julia").read().strip()
+julia.install(julia=path_julia)
+Julia(compiled_modules=False, runtime=path_julia)
 
 arr = np.random.randint(1, 5, size=(1000, 5))
 correctmatch.precompile()  # precompile the Julia module
