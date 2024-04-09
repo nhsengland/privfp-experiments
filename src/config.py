@@ -32,7 +32,7 @@ cols = {
 
 ### EXTRACTION CONFIG: ENTITIES EXTRACTED ###
 entity_list = ["person", "nhs number", "date of birth", "diagnosis"]
-universal_ner_path = "../models/quantized_q4_1.gguf"
+universal_ner_path = "../models/UniversalNER-7B-all-Q4_0.gguf"
 
 ### STANDARDISATION CONFIG: PREPROCESSING AND STANDARDISATION DICTIONARY ###
 extra_preprocess_functions_per_entity = {"person": [clean_name.remove_titles]}
