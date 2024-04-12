@@ -1,4 +1,4 @@
-# How does Shapley Work and How can it be Applied
+# How does SHAP Work and can be Applied?
 
 SHAP uses classic Shapley values from a branch of mathematics called game theory and their related extensions.
 
