@@ -25,6 +25,18 @@ nav:
     - Open-source Named-Entity Recognition Models: open-source-extraction-exploration/named_entity_research.md
     - De-identification Methods: open-source-extraction-exploration/deidentification_research.md
 
+  - (Py)Correct Match (Scorer Component):
+    - correct-match/index.md
+    - What is Correct Match?: correct-match/what-is-correct-match.md
+    - How does Correct Match Work?: correct-match/how-correct-match-works.md
+
+  - Shapley (Explainer Component):
+    - shapley-explainer/index.md
+    - What is Shapley and Why use it?: shapley-explainer/what-is-shap-and-why-use-it.md
+    - How does Shapley Work and How can it be Applied?: shapley-explainer/how-does-shap-work-and-be-applied.md
+    - Additional Resources: shapley-explainer/additional-reads.md
+
+
 theme:
   name: material
   custom_dir: overrides

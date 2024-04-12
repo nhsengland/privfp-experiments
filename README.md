@@ -82,21 +82,21 @@ Next you need to install the CorrectMatch package
 
 To create a suitable environment:
 
-- `python3.11 -m venv <virtual_environment_name>`
-- `source <virtual_environment_name>/bin/activate`
+- `python3.11 -m venv .venv`
+- `source .venv`
 - `pip install -r requirements.txt`
 
 Note that a separate Python 3.9 environment is required to run the scispacy notebooks:
 
-- `python3.9 -m venv <virtual_environment_name>`
-- `source <virtual_environment_name>/bin/activate`
+- `python3.9 -m venv .venv_scispacy`
+- `source .venv_scispacy/bin/activate`
 - `pip install -r requirements_scispacy.txt`
 
 ### Pre-commit Installation
 
 This repo uses `pre-commit` to ensure `black` and `flake8` has been applied. You will need to make sure your virtual environment has been activated.
 
-- `source <virtual_environment_name>/bin/activate`
+- `source .venv/bin/activate`
 - `pre-commit install`
 
 ### Download a quantised UniversalNER model
