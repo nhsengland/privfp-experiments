@@ -7,10 +7,12 @@ nav:
   - Background: background.md
   - Setup:
     - setup/index.md
-    - Synthea International: setup/synthea.md
-    - Large Language Models: setup/llm.md
-    - Entity extraction: setup/extraction.md
-    - CorrectMatch: setup/correctmatch.md
+    - 1. HomeBrew Installation: setup/homebrew-install.md
+    - 2. Julia Installation: setup/julia-install.md
+    - 3. Environment Set-up: setup/environment-setup.md
+    - 4. Setting up Synthea International: setup/synthea.md
+    - 5. Install Ollama and set-up Large Language Models: setup/llm.md
+    - 6. Install UniversalNER Locally: setup/extraction.md
 
   - Open source LLM exploration:
     - open-source-llm-exploration/index.md
