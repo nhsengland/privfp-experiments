@@ -163,6 +163,26 @@
 
         </a>
 </li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../correct-match/">
+          
+  
+    
+  
+  (Py)Correct Match (Scorer Component)
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../shap-explainer/">
+          
+  
+    
+  
+  SHAP(Explainer Component)
+
+        </a>
+</li>
 </ul>
 </div>
 </nav>
@@ -275,21 +295,14 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#install-correctmatch-in-julia">5.1 
+<a class="md-nav__link" href="#install-julia">5.1 
 <span class="md-ellipsis">
-      Install CorrectMatch in Julia
+      Install Julia
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#install-pycorrectmatch-dependencies">5.2 
-<span class="md-ellipsis">
-      Install PyCorrectMatch dependencies
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#verify-installlation">5.3 
+<a class="md-nav__link" href="#verify-installlation">5.2 
 <span class="md-ellipsis">
       Verify installlation
     </span>
@@ -392,6 +405,83 @@
 </ul>
 </nav>
 </li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../correct-match/">
+<span class="md-ellipsis">
+    (Py)Correct Match (Scorer Component)
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            (Py)Correct Match (Scorer Component)
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../correct-match/what-is-correct-match/">
+<span class="md-ellipsis">
+    What is Correct Match?
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../correct-match/how-correct-match-works/">
+<span class="md-ellipsis">
+    How does Correct Match Work?
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../shap-explainer/">
+<span class="md-ellipsis">
+    SHAP(Explainer Component)
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            SHAP(Explainer Component)
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../shap-explainer/what-is-shap-and-why-use-it/">
+<span class="md-ellipsis">
+    What is SHAP and Why use it?
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../shap-explainer/how-does-shap-work-and-be-applied/">
+<span class="md-ellipsis">
+    How does SHAP Work and can be Applied?
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../shap-explainer/additional-reads/">
+<span class="md-ellipsis">
+    Additional Resources
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
 </ul>
 </nav>
 </div>
@@ -407,21 +497,14 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#install-correctmatch-in-julia">5.1 
+<a class="md-nav__link" href="#install-julia">5.1 
 <span class="md-ellipsis">
-      Install CorrectMatch in Julia
+      Install Julia
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#install-pycorrectmatch-dependencies">5.2 
-<span class="md-ellipsis">
-      Install PyCorrectMatch dependencies
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#verify-installlation">5.3 
+<a class="md-nav__link" href="#verify-installlation">5.2 
 <span class="md-ellipsis">
       Verify installlation
     </span>
@@ -440,26 +523,25 @@
 <p>Requires <a href="https://github.com/JuliaLang/julia">Julia</a> to run. This particular setup was tested with <a href="https://julialang.org/downloads/">Julia version 1.8.5</a> on an M1 MBP.</p>
 </div>
 <p><a href="https://github.com/computationalprivacy/pycorrectmatch">CorrectMatch</a> is used via a thin Python wrapper for the Julia module CorrectMatch.jl to estimate uniqueness from small population samples.</p>
-<h2 id="install-correctmatch-in-julia"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1</span> Install CorrectMatch in Julia</h2>
-<div class="highlight"><span class="filename">Change working directory to privfp-experiments</span><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>privfp-experiments
-julia
+<h2 id="install-julia"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1</span> Install Julia</h2>
+<p>Open a new terminal and install the recommended <a href="https://julialang.org/downloads/">julia installer</a>
+<div class="highlight"><span class="filename">Install Julia</span><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://install.julialang.org<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</code></pre></div></p>
+<div class="highlight"><span class="filename">Download Julia version 1.8.5 and set default to 1.8.5</span><pre><span></span><code>juliaup<span class="w"> </span>add<span class="w"> </span><span class="m">1</span>.8.5
+juliaup<span class="w"> </span>default<span class="w"> </span><span class="m">1</span>.8.5
 </code></pre></div>
-<div class="highlight"><span class="filename">Add CorrectMatch package</span><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="n">Pkg</span>
-<span class="n">Pkg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">"CorrectMatch"</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Add CorrectMatch package to Julia</span><pre><span></span><code><span class="n">julia</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="err">'</span><span class="k">using</span><span class="w"> </span><span class="n">Pkg</span><span class="p">;</span><span class="w"> </span><span class="n">Pkg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">"CorrectMatch"</span><span class="p">)</span><span class="o">'</span>
 </code></pre></div>
-<h2 id="install-pycorrectmatch-dependencies"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2</span> Install PyCorrectMatch dependencies</h2>
-<div class="highlight"><span class="filename">Create Python virtual environment</span><pre><span></span><code>python3.11<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
-<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
-</code></pre></div>
-<div class="highlight"><span class="filename">Install correctmatch package</span><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>correctmatch
-python
-</code></pre></div>
-<div class="highlight"><span class="filename">Install Julia dependencies through virtual environment</span><pre><span></span><code><span class="kn">import</span> <span class="nn">julia</span>
-<span class="n">julia</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
-</code></pre></div>
-<h2 id="verify-installlation"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3</span> Verify installlation</h2>
+<h2 id="verify-installlation"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2</span> Verify installlation</h2>
 <div class="highlight"><span class="filename">Run correctmatch</span><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">correctmatch</span>
+<span class="kn">import</span> <span class="nn">julia</span>
+<span class="kn">from</span> <span class="nn">julia.api</span> <span class="kn">import</span> <span class="n">Julia</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">path_julia</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s2">"which julia"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="n">julia</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">julia</span><span class="o">=</span><span class="n">path_julia</span><span class="p">)</span>
+<span class="n">Julia</span><span class="p">(</span><span class="n">compiled_modules</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">path_julia</span><span class="p">)</span>
 
 <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">correctmatch</span><span class="o">.</span><span class="n">precompile</span><span class="p">()</span>  <span class="c1"># precompile the Julia module</span>

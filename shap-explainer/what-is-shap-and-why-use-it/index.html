@@ -5,25 +5,25 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="../setup/correctmatch/" rel="prev"/>
-<link href="search/" rel="next"/>
-<link href="../assets/images/favicon.png" rel="icon"/>
+<link href="../" rel="prev"/>
+<link href="../how-does-shap-work-and-be-applied/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.5.3, mkdocs-material-9.5.2" name="generator"/>
-<title>Open source LLM exploration - Privacy Fingerprint</title>
-<link href="../assets/stylesheets/main.50c56a3b.min.css" rel="stylesheet"/>
-<link href="../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<title>What is SHAP and Why use it? - Privacy Fingerprint</title>
+<link href="../../assets/stylesheets/main.50c56a3b.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-<link href="../assets/stylesheets/extra.css" rel="stylesheet"/>
-<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../../assets/stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 </head>
 <body data-md-color-accent="indigo" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#open-source-llm-exploration">1. 
+<a class="md-skip" href="#what-is-shap-and-why-use-it">2. 
           Skip to content
         </a>
 </div>
@@ -31,7 +31,7 @@
 </div>
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
 <nav aria-label="Header" class="md-header__inner md-grid">
-<a aria-label="Privacy Fingerprint" class="md-header__button md-logo" data-md-component="logo" href=".." title="Privacy Fingerprint">
+<a aria-label="Privacy Fingerprint" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Privacy Fingerprint">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
@@ -47,7 +47,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Open source LLM exploration
+              What is SHAP and Why use it?
             
           </span>
 </div>
@@ -114,7 +114,7 @@
 <div class="md-grid">
 <ul class="md-tabs__list">
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="..">
+<a class="md-tabs__link" href="../..">
         
   
     
@@ -124,7 +124,7 @@
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../background/">
+<a class="md-tabs__link" href="../../background/">
         
   
     
@@ -134,7 +134,7 @@
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../setup/">
+<a class="md-tabs__link" href="../../setup/">
           
   
     
@@ -143,8 +143,8 @@
 
         </a>
 </li>
-<li class="md-tabs__item md-tabs__item--active">
-<a class="md-tabs__link" href="./">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../open-source-llm-exploration/">
           
   
     
@@ -154,7 +154,7 @@
         </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../open-source-extraction-exploration/">
+<a class="md-tabs__link" href="../../open-source-extraction-exploration/">
           
   
     
@@ -164,7 +164,7 @@
         </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../correct-match/">
+<a class="md-tabs__link" href="../../correct-match/">
           
   
     
@@ -173,8 +173,8 @@
 
         </a>
 </li>
-<li class="md-tabs__item">
-<a class="md-tabs__link" href="../shap-explainer/">
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../">
           
   
     
@@ -206,7 +206,7 @@
 <div class="md-sidebar__inner">
 <nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
-<a aria-label="Privacy Fingerprint" class="md-nav__button md-logo" data-md-component="logo" href=".." title="Privacy Fingerprint">
+<a aria-label="Privacy Fingerprint" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Privacy Fingerprint">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
 </a>
     Privacy Fingerprint
@@ -223,14 +223,14 @@
 </div>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="..">
+<a class="md-nav__link" href="../..">
 <span class="md-ellipsis">
     Home
   </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../background/">
+<a class="md-nav__link" href="../../background/">
 <span class="md-ellipsis">
     Background
   </span>
@@ -239,7 +239,7 @@
 <li class="md-nav__item md-nav__item--section md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
-<a class="md-nav__link" href="../setup/">
+<a class="md-nav__link" href="../../setup/">
 <span class="md-ellipsis">
     Setup
   </span>
@@ -255,28 +255,28 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../setup/synthea/">
+<a class="md-nav__link" href="../../setup/synthea/">
 <span class="md-ellipsis">
     Synthea International
   </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../setup/llm/">
+<a class="md-nav__link" href="../../setup/llm/">
 <span class="md-ellipsis">
     Large Language Models
   </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../setup/extraction/">
+<a class="md-nav__link" href="../../setup/extraction/">
 <span class="md-ellipsis">
     Entity extraction
   </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../setup/correctmatch/">
+<a class="md-nav__link" href="../../setup/correctmatch/">
 <span class="md-ellipsis">
     CorrectMatch
   </span>
@@ -285,54 +285,54 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
-<a class="md-nav__link md-nav__link--active" href="./">
+<a class="md-nav__link" href="../../open-source-llm-exploration/">
 <span class="md-ellipsis">
     Open source LLM exploration
   </span>
 </a>
-<label class="md-nav__link md-nav__link--active" for="__nav_4" id="__nav_4_label" tabindex="">
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
 <span class="md-nav__icon md-icon"></span>
 </label>
 </div>
-<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_4">
 <span class="md-nav__icon md-icon"></span>
             Open source LLM exploration
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="search/">
+<a class="md-nav__link" href="../../open-source-llm-exploration/search/">
 <span class="md-ellipsis">
     Searching for open source LLMs
   </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="setup/">
+<a class="md-nav__link" href="../../open-source-llm-exploration/setup/">
 <span class="md-ellipsis">
     Setting up open source LLMs
   </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="inference/">
+<a class="md-nav__link" href="../../open-source-llm-exploration/inference/">
 <span class="md-ellipsis">
     Running inference
   </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="evaluation/">
+<a class="md-nav__link" href="../../open-source-llm-exploration/evaluation/">
 <span class="md-ellipsis">
     Evaluating generated outputs
   </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="metrics/">
+<a class="md-nav__link" href="../../open-source-llm-exploration/metrics/">
 <span class="md-ellipsis">
     Metrics to assess the quality of generated outputs
   </span>
@@ -344,7 +344,7 @@
 <li class="md-nav__item md-nav__item--section md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
-<a class="md-nav__link" href="../open-source-extraction-exploration/">
+<a class="md-nav__link" href="../../open-source-extraction-exploration/">
 <span class="md-ellipsis">
     Open source extraction exploration
   </span>
@@ -360,14 +360,14 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../open-source-extraction-exploration/named_entity_research/">
+<a class="md-nav__link" href="../../open-source-extraction-exploration/named_entity_research/">
 <span class="md-ellipsis">
     Open-source Named-Entity Recognition Models
   </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../open-source-extraction-exploration/deidentification_research/">
+<a class="md-nav__link" href="../../open-source-extraction-exploration/deidentification_research/">
 <span class="md-ellipsis">
     De-identification Methods
   </span>
@@ -379,7 +379,7 @@
 <li class="md-nav__item md-nav__item--section md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
-<a class="md-nav__link" href="../correct-match/">
+<a class="md-nav__link" href="../../correct-match/">
 <span class="md-ellipsis">
     (Py)Correct Match (Scorer Component)
   </span>
@@ -395,14 +395,14 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../correct-match/what-is-correct-match/">
+<a class="md-nav__link" href="../../correct-match/what-is-correct-match/">
 <span class="md-ellipsis">
     What is Correct Match?
   </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../correct-match/how-correct-match-works/">
+<a class="md-nav__link" href="../../correct-match/how-correct-match-works/">
 <span class="md-ellipsis">
     How does Correct Match Work?
   </span>
@@ -411,10 +411,10 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--section md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
-<a class="md-nav__link" href="../shap-explainer/">
+<a class="md-nav__link" href="../">
 <span class="md-ellipsis">
     SHAP(Explainer Component)
   </span>
@@ -423,28 +423,57 @@
 <span class="md-nav__icon md-icon"></span>
 </label>
 </div>
-<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="true" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_7">
 <span class="md-nav__icon md-icon"></span>
             SHAP(Explainer Component)
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../shap-explainer/what-is-shap-and-why-use-it/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    What is SHAP and Why use it?
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
 <span class="md-ellipsis">
     What is SHAP and Why use it?
   </span>
 </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-is-shap">2.1 
+<span class="md-ellipsis">
+      What is SHAP?
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../shap-explainer/how-does-shap-work-and-be-applied/">
+<a class="md-nav__link" href="#why-use-shap">2.2 
+<span class="md-ellipsis">
+      Why use SHAP?
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../how-does-shap-work-and-be-applied/">
 <span class="md-ellipsis">
     How does SHAP Work and can be Applied?
   </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../shap-explainer/additional-reads/">
+<a class="md-nav__link" href="../additional-reads/">
 <span class="md-ellipsis">
     Additional Resources
   </span>
@@ -462,15 +491,45 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-is-shap">2.1 
+<span class="md-ellipsis">
+      What is SHAP?
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-use-shap">2.2 
+<span class="md-ellipsis">
+      Why use SHAP?
+    </span>
+</a>
+</li>
+</ul>
 </nav>
 </div>
 </div>
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="open-source-llm-exploration"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.</span> Open source LLM exploration</h1>
-<p>This section explores the use of open source LLMs for generating unstructured text from structured synthetic data as an extension to the <a href="https://github.com/nhsengland/privfp-poc">Privacy Fingerprint (PrivFp) Proof of Concept</a> with a focus on running models locally.</p>
-<p>Experiments and example notebooks for the generative component of PrivFp are available in the <a href="https://github.com/nhsengland/privfp-experiments/tree/XZ-generative-component">privfp-experiments</a> repository.</p>
+<h1 id="what-is-shap-and-why-use-it"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.</span> What is SHAP and Why use it?</h1>
+<h2 id="what-is-shap"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.1</span> What is SHAP?</h2>
+<p>SHAP is proposed as a unified measure of feature importance of a machine learning model by assigning each feature an importance value for each prediction.</p>
+<p>The sum of SHAP values for all features is equal to an individual prediction minus the prediction for some baseline values. The graph below illustrates an example for whether a team would have a player win the Man of the Match award in a game of football.</p>
+<p><img alt="Shapley: Explainer Graph" src="../assets/images/shap_explainer_graph.png"/></p>
+<p>SHAP is an open source Python library which implements the methods described in the original paper.</p>
+<ul>
+<li><strong>SHAP</strong>: https://github.com/shap/shap</li>
+<li>A Unified Approach to Interpreting Model Predictions: https://papers.nips.cc/paper_files/paper/2017/hash/8a20a8621978632d76c43dfd28b67767-Abstract.html</li>
+<li>More citations: https://github.com/shap/shap?tab=readme-ov-file#citations</li>
+</ul>
+<h2 id="why-use-shap"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.2</span> Why use SHAP?</h2>
+<p>It is important to be able to interpret the results of machine learning models and by understanding feature contributions to individual predictions, we can gain insight into how models arrive at specific outcomes. This is crucial for building trust in complex models that are often difficult to interpret.</p>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
@@ -482,7 +541,7 @@
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: CorrectMatch" class="md-footer__link md-footer__link--prev" href="../setup/correctmatch/">
+<a aria-label="Previous: SHAP (Explainer Module)" class="md-footer__link md-footer__link--prev" href="../">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
@@ -491,17 +550,17 @@
                 Previous
               </span>
 <div class="md-ellipsis">
-                CorrectMatch
+                SHAP (Explainer Module)
               </div>
 </div>
 </a>
-<a aria-label="Next: Searching for open source LLMs" class="md-footer__link md-footer__link--next" href="search/">
+<a aria-label="Next: How does SHAP Work and can be Applied?" class="md-footer__link md-footer__link--next" href="../how-does-shap-work-and-be-applied/">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 Next
               </span>
 <div class="md-ellipsis">
-                Searching for open source LLMs
+                How does SHAP Work and can be Applied?
               </div>
 </div>
 <div class="md-footer__button md-icon">
@@ -531,7 +590,7 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "..", "features": ["navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "header.autohide", "content.code.copy"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
-<script src="../assets/javascripts/bundle.d7c377c4.min.js"></script>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "header.autohide", "content.code.copy"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
 </body>
 </html>
