@@ -1,89 +1,109 @@
 # HomeBrew Installation
 
-This codebase suuports both Apple users and those who have installed WSL on a windows machine.
+[![Platform](https://img.shields.io/badge/Platform-UNIX%20%28Apple%20users%29%20%7C%20WSL%20%28Windows%20users%29-blue)](https://shields.io/)
 
-## WSL Users
+This codebase supports both UNIX (Apple users) and Windows users who have installed Windows Subsystem for Linux (WSL).
 
-### Install Windows Subsystem for Linux (WSL)
+HomeBrew is the recommended installer used in this repository and will need to be installed. For the official installation guidance [click here](https://docs.brew.sh/Installation).
 
-If you haven't already done so, install WSL by following the official documentation provided by Microsoft: [Windows Subsystem for Linux Installation Guide.](https://learn.microsoft.com/en-us/windows/wsl/install)
+If you are using a Windows machine you will need to install Windows Subsystem for Linux (WSL) to use HomeBrew. This is a more complicated process and would require you to:
 
-```shell
-wsl --install
-```
+1. Install WSL. For guidance [click here](https://learn.microsoft.com/en-us/windows/wsl/install).
+2. Set-up a Sudo User Account.
+3. Grant Sudo Permissions to the User Account.
+4. Sign-in to your new Sudo User Account to install HomeBrew. (This is because HomeBrew **cannot** be installed on the root sudo user.)
 
-### Set up a Sudo User Account
+For more detailed guidance, we have provided more detail below.
 
-* Launch your WSL distribution and open a terminal window.
-* Run the following command and replace **username** with your desired username, to create a user.
+<details>
+<summary>Recommended Homebrew Set-up for WSL users</summary>
+<h2>WSL Users</h2>
 
-```bash
-sudo adduser <username>
-```
+<h3>Install Windows Subsystem for Linux (WSL)</h3>
 
-* Follow the prompts to set a password and fill in any additional information as required.
+<p>If you haven't already done so, install WSL by following the official documentation provided by Microsoft: <a href="https://learn.microsoft.com/en-us/windows/wsl/install">Windows Subsystem for Linux Installation Guide.</a></p>
 
-### Grant Sudo Permissions to the User Account
+<pre><code class="language-shell">wsl --install</code></pre>
 
-* Run the following command and replace **username** with your desired username, to add your user account to the sudo group.
+<h3>Set up a Sudo User Account</h3>
 
-```bash
-sudo usermod -aG sudo <username>
-```
+<ul>
+<li>Launch your WSL distribution and open a terminal window.</li>
+<li>Run the following command and replace <strong>username</strong> with your desired username, to create a user.</li>
+</ul>
 
-### Switch to Your New User Account
+<pre><code class="language-bash">sudo adduser &lt;username&gt;</code></pre>
 
-* Log out of the current session by typing logout and press Enter.
+<p>Follow the prompts to set a password and fill in any additional information as required.</p>
 
-```bash
-logout
-```
+<h3>Grant Sudo Permissions to the User Account</h3>
 
-* Log back in using the newly created user account credentials.
+<ul>
+<li>Run the following command and replace <strong>username</strong> with your desired username, to add your user account to the sudo group.</li>
+</ul>
 
-```bash
-su <username>
-```
+<pre><code class="language-bash">sudo usermod -aG sudo &lt;username&gt;</code></pre>
 
-### Install Homebrew
+<h3>Switch to Your New User Account</h3>
 
-* With your WSL terminal open and logged in as your newly created user, run the following command to install Homebrew:
+<ul>
+<li>Log out of the current session by typing logout and press Enter.</li>
+</ul>
 
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
+<pre><code class="language-bash">logout</code></pre>
 
-* Then follow the Next Steps given to you when you install HomeBrew to add Homebrew to your PATH.
+<ul>
+<li>Log back in using the newly created user account credentials.</li>
+</ul>
 
-### Verify HomeBrew Installation
+<pre><code class="language-bash">su &lt;username&gt;</code></pre>
 
-* Close and reopen your WSL terminal to apply any changes to the shell configuration.
-* Run the following command to verify that Homebrew is installed and configured correctly:
+<h3>Install Homebrew</h3>
 
-```bash
-brew --version
+<ul>
+<li>With your WSL terminal open and logged in as your newly created user, run the following command to install Homebrew:</li>
+</ul>
+
+<pre><code class="language-bash">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
+
+<p>Then follow the Next Steps given to you when you install HomeBrew to add Homebrew to your PATH.</p>
+
+<h3>Verify HomeBrew Installation</h3>
+
+<ul>
+<li>Close and reopen your WSL terminal to apply any changes to the shell configuration.</li>
+<li>Run the following command to verify that Homebrew is installed and configured correctly:</li>
+</ul>
+
+<pre><code class="language-bash">brew --version
+brew update</code></pre>
+</details>
+
+<details>
+<summary>Recommend HomeBrew set-up for Apple Users</summary>
+
+<h3>1. Install Homebrew</h3>
+
+<ul>
+  <li>With your WSL terminal open and logged in as your newly created user, run the following command to install Homebrew:</li>
+</ul>
+
+<pre><code class="language-bash">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+</code></pre>
+
+<ul>
+  <li>Then follow the Next Steps given to you when you install HomeBrew to add Homebrew to your PATH.</li>
+</ul>
+
+<h3>2. Verify HomeBrew Installation:</h3>
+
+<ul>
+  <li>Close and reopen your WSL terminal to apply any changes to the shell configuration.</li>
+  <li>Run the following command to verify that Homebrew is installed and configured correctly:</li>
+</ul>
+
+<pre><code class="language-bash">brew --version
 brew update
-```
+</code></pre>
 
-
-## Apple Users
-
-### 1. Install Homebrew
-
-* With your WSL terminal open and logged in as your newly created user, run the following command to install Homebrew:
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-* Then follow the Next Steps given to you when you install HomeBrew to add Homebrew to your PATH.
-
-### 2. Verify HomeBrew Installation:
-
-* Close and reopen your WSL terminal to apply any changes to the shell configuration.
-* Run the following command to verify that Homebrew is installed and configured correctly:
-
-```bash
-brew --version
-brew update
-```
+</details>
