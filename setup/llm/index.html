@@ -9,7 +9,7 @@
 <link href="../extraction/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.5.3, mkdocs-material-9.5.2" name="generator"/>
-<title>Large Language Models - Privacy Fingerprint</title>
+<title>5. Install Ollama and set-up Large Language Models - Privacy Fingerprint</title>
 <link href="../../assets/stylesheets/main.50c56a3b.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -23,7 +23,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#large-language-models">3. 
+<a class="md-skip" href="#install-ollama-and-set-up-large-language-models">6. 
           Skip to content
         </a>
 </div>
@@ -47,7 +47,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Large Language Models
+              5. Install Ollama and set-up Large Language Models
             
           </span>
 </div>
@@ -255,9 +255,30 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
+<a class="md-nav__link" href="../homebrew-install/">
+<span class="md-ellipsis">
+    1. HomeBrew Installation
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../julia-install/">
+<span class="md-ellipsis">
+    2. Julia Installation
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../environment-setup/">
+<span class="md-ellipsis">
+    3. Environment Set-up
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../synthea/">
 <span class="md-ellipsis">
-    Synthea International
+    4. Setting up Synthea International
   </span>
 </a>
 </li>
@@ -265,13 +286,13 @@
 <input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
 <span class="md-ellipsis">
-    Large Language Models
+    5. Install Ollama and set-up Large Language Models
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
 <span class="md-ellipsis">
-    Large Language Models
+    5. Install Ollama and set-up Large Language Models
   </span>
 </a>
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
@@ -281,21 +302,28 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#start-ollama">3.1 
+<a class="md-nav__link" href="#ollama-installation">6.1 
+<span class="md-ellipsis">
+      Ollama Installation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#start-ollama">6.2 
 <span class="md-ellipsis">
       Start Ollama
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#ollama-models">3.2 
+<a class="md-nav__link" href="#ollama-models">6.3 
 <span class="md-ellipsis">
       Ollama models
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#other-models">3.3 
+<a class="md-nav__link" href="#other-models">6.4 
 <span class="md-ellipsis">
       Other models
     </span>
@@ -307,14 +335,7 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../extraction/">
 <span class="md-ellipsis">
-    Entity extraction
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../correctmatch/">
-<span class="md-ellipsis">
-    CorrectMatch
+    6. Install UniversalNER Locally
   </span>
 </a>
 </li>
@@ -504,21 +525,28 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#start-ollama">3.1 
+<a class="md-nav__link" href="#ollama-installation">6.1 
+<span class="md-ellipsis">
+      Ollama Installation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#start-ollama">6.2 
 <span class="md-ellipsis">
       Start Ollama
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#ollama-models">3.2 
+<a class="md-nav__link" href="#ollama-models">6.3 
 <span class="md-ellipsis">
       Ollama models
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#other-models">3.3 
+<a class="md-nav__link" href="#other-models">6.4 
 <span class="md-ellipsis">
       Other models
     </span>
@@ -531,18 +559,22 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="large-language-models"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.</span> Large Language Models</h1>
+<h1 id="install-ollama-and-set-up-large-language-models"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.</span> Install Ollama and set-up Large Language Models</h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Requires <a href="https://github.com/ollama/ollama">Ollama</a> to run. This particular setup was tested with <a href="https://ollama.com/download">Ollama version 0.1.27</a> on an M1 MBP.</p>
+<p>Requires <a href="https://github.com/ollama/ollama">Ollama</a> to run. This particular setup was tested with <a href="https://ollama.com/download">Ollama version 0.1.27</a>.</p>
 </div>
 <p><a href="https://github.com/ollama/ollama">Ollama</a> is used for the unstructured generative component of Privacy Fingerprint. It provides a simple interface to download quantised models and run inference locally.</p>
-<h2 id="start-ollama"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.1</span> Start Ollama</h2>
+<h2 id="ollama-installation"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.1</span> Ollama Installation</h2>
+<p>Install Ollama using the curl command.
+<div class="highlight"><pre><span></span><code>curl https://ollama.ai/install.sh | sh
+</code></pre></div></p>
+<h2 id="start-ollama"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.2</span> Start Ollama</h2>
 <p>Either open up the desktop application or a terminal and enter <code>ollama serve</code>.</p>
-<h2 id="ollama-models"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.2</span> Ollama models</h2>
+<h2 id="ollama-models"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3</span> Ollama models</h2>
 <p>To download a model open a terminal and enter <code>ollama pull &lt;model_name&gt;</code>. The example notebooks in this repository currently use <code>llama2:latest fe938a131f40</code>.</p>
 <p>See the <a href="https://ollama.com/library">Ollama model library</a> for all available models.</p>
-<h2 id="other-models"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.3</span> Other models</h2>
+<h2 id="other-models"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.4</span> Other models</h2>
 <p>It is possible to use your own models not specified in the Ollama model library. Ollama supports the <code>.gguf</code> format and many quantised and non-quantised models can be found on the <a href="https://huggingface.co/models">Hugging Face Hub</a>.</p>
 <p>To quantise a model, check out the resources on <a href="../../open-source-llm-exploration/setup/">setting up open source LLMs</a> with <a href="https://github.com/ggerganov/llama.cpp">llama.cpp</a> and the introductory reading around quantisation.</p>
 </article>
@@ -556,7 +588,7 @@
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: Synthea International" class="md-footer__link md-footer__link--prev" href="../synthea/">
+<a aria-label="Previous: 4. Setting up Synthea International" class="md-footer__link md-footer__link--prev" href="../synthea/">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
@@ -565,17 +597,17 @@
                 Previous
               </span>
 <div class="md-ellipsis">
-                Synthea International
+                4. Setting up Synthea International
               </div>
 </div>
 </a>
-<a aria-label="Next: Entity extraction" class="md-footer__link md-footer__link--next" href="../extraction/">
+<a aria-label="Next: 6. Install UniversalNER Locally" class="md-footer__link md-footer__link--next" href="../extraction/">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 Next
               </span>
 <div class="md-ellipsis">
-                Entity extraction
+                6. Install UniversalNER Locally
               </div>
 </div>
 <div class="md-footer__button md-icon">

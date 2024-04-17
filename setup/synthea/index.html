@@ -5,11 +5,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="../" rel="prev"/>
+<link href="../environment-setup/" rel="prev"/>
 <link href="../llm/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.5.3, mkdocs-material-9.5.2" name="generator"/>
-<title>Synthea International - Privacy Fingerprint</title>
+<title>4. Setting up Synthea International - Privacy Fingerprint</title>
 <link href="../../assets/stylesheets/main.50c56a3b.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -23,7 +23,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#synthea-international">2. 
+<a class="md-skip" href="#setting-up-synthea-international">5. 
           Skip to content
         </a>
 </div>
@@ -47,7 +47,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Synthea International
+              4. Setting up Synthea International
             
           </span>
 </div>
@@ -254,17 +254,38 @@
             Setup
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../homebrew-install/">
+<span class="md-ellipsis">
+    1. HomeBrew Installation
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../julia-install/">
+<span class="md-ellipsis">
+    2. Julia Installation
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../environment-setup/">
+<span class="md-ellipsis">
+    3. Environment Set-up
+  </span>
+</a>
+</li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
 <span class="md-ellipsis">
-    Synthea International
+    4. Setting up Synthea International
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
 <span class="md-ellipsis">
-    Synthea International
+    4. Setting up Synthea International
   </span>
 </a>
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
@@ -274,23 +295,37 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#clone-repositories">2.1 
+<a class="md-nav__link" href="#install-openjdk-via-homebrew">5.1 
+<span class="md-ellipsis">
+      Install openjdk via HomeBrew
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#clone-repositories">5.2 
 <span class="md-ellipsis">
       Clone repositories
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#modify-synthea">2.2 
+<a class="md-nav__link" href="#modify-synthea">5.3 
 <span class="md-ellipsis">
       Modify Synthea
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#verify-installation">2.3 
+<a class="md-nav__link" href="#verify-installation">5.4 
 <span class="md-ellipsis">
       Verify installation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#modify-synthea-properties">5.5 
+<span class="md-ellipsis">
+      Modify Synthea Properties
     </span>
 </a>
 </li>
@@ -300,21 +335,14 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../llm/">
 <span class="md-ellipsis">
-    Large Language Models
+    5. Install Ollama and set-up Large Language Models
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../extraction/">
 <span class="md-ellipsis">
-    Entity extraction
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../correctmatch/">
-<span class="md-ellipsis">
-    CorrectMatch
+    6. Install UniversalNER Locally
   </span>
 </a>
 </li>
@@ -504,23 +532,37 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#clone-repositories">2.1 
+<a class="md-nav__link" href="#install-openjdk-via-homebrew">5.1 
+<span class="md-ellipsis">
+      Install openjdk via HomeBrew
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#clone-repositories">5.2 
 <span class="md-ellipsis">
       Clone repositories
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#modify-synthea">2.2 
+<a class="md-nav__link" href="#modify-synthea">5.3 
 <span class="md-ellipsis">
       Modify Synthea
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#verify-installation">2.3 
+<a class="md-nav__link" href="#verify-installation">5.4 
 <span class="md-ellipsis">
       Verify installation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#modify-synthea-properties">5.5 
+<span class="md-ellipsis">
+      Modify Synthea Properties
     </span>
 </a>
 </li>
@@ -531,18 +573,30 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="synthea-international"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.</span> Synthea International</h1>
+<h1 id="setting-up-synthea-international"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.</span> Setting up Synthea International</h1>
+<p><a href="https://github.com/synthetichealth/synthea">Synthea</a> is used for the structured generative component of Privacy Fingerprint with UK adaptation from <a href="https://github.com/synthetichealth/synthea-international">Synthea International</a>.</p>
+<h2 id="install-openjdk-via-homebrew"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1</span> Install openjdk via HomeBrew</h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Requires <a href="https://github.com/openjdk/jdk">OpenJDK</a> to run. This particular setup was tested with <a href="https://formulae.brew.sh/formula/openjdk">Homebrew openjdk@17</a> on an M1 MBP.</p>
+<p>This particular setup was tested with <a href="https://formulae.brew.sh/formula/openjdk">Homebrew openjdk@17</a>.</p>
 </div>
-<p><a href="https://github.com/synthetichealth/synthea">Synthea</a> is used for the structured generative component of Privacy Fingerprint with UK adaptation from <a href="https://github.com/synthetichealth/synthea-international">Synthea International</a>.</p>
-<h2 id="clone-repositories"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.1</span> Clone repositories</h2>
+<p>You will need to ensure <a href="../homebrew-install/">HomeBrew</a> is set-up correctly, then you can run:
+<div class="highlight"><span class="filename">Install openjdk@17</span><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+brew<span class="w"> </span>install<span class="w"> </span>openjdk@17
+</code></pre></div></p>
+<p>You can then verify OpenJDK 17 is installed by checking the version
+<div class="highlight"><pre><span></span><code>java<span class="w"> </span>-version
+</code></pre></div></p>
+<h2 id="clone-repositories"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2</span> Clone repositories</h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you are using WSL, ensure you git clone Synthea using WSL. If you want to work in your local C: drive you can access this drive via the /mnt/c folder in your wsl terminal. For more information click <a href="https://learn.microsoft.com/en-us/windows/wsl/faq">here</a>.</p>
+</div>
 <div class="highlight"><span class="filename">Open a terminal in a projects directory</span><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/nhsengland/privfp-experiments.git
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/synthetichealth/synthea.git
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/synthetichealth/synthea-international.git
 </code></pre></div>
-<h2 id="modify-synthea"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.2</span> Modify Synthea</h2>
+<h2 id="modify-synthea"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3</span> Modify Synthea</h2>
 <div class="highlight"><span class="filename">Checkout compatible versions</span><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>synthea
 git<span class="w"> </span>checkout<span class="w"> </span>fb43d3957762465211e70daeeb2bc00e0dbd1c1d
 
@@ -552,9 +606,11 @@ git<span class="w"> </span>checkout<span class="w"> </span>b4cd9a30f106957ae8f26
 <div class="highlight"><span class="filename">Copy UK adaptation</span><pre><span></span><code>cp<span class="w"> </span>-R<span class="w"> </span>gb/*<span class="w"> </span>../synthea
 <span class="nb">cd</span><span class="w"> </span>../synthea
 </code></pre></div>
-<h2 id="verify-installation"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.3</span> Verify installation</h2>
+<h2 id="verify-installation"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.4</span> Verify installation</h2>
 <div class="highlight"><span class="filename">Run Synthea</span><pre><span></span><code>./run_synthea<span class="w"> </span><span class="s2">"West Yorkshire"</span>
 </code></pre></div>
+<h2 id="modify-synthea-properties"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.5</span> Modify Synthea Properties</h2>
+<p>You will need to replace the file inside the synthea repository (synthea/src/main/resources/synthea.properties) with the file located locally in this repository (privfp-experiments/src/generate/synthea_properties/synthea.properties).</p>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
@@ -566,7 +622,7 @@ git<span class="w"> </span>checkout<span class="w"> </span>b4cd9a30f106957ae8f26
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: Setup" class="md-footer__link md-footer__link--prev" href="../">
+<a aria-label="Previous: 3. Environment Set-up" class="md-footer__link md-footer__link--prev" href="../environment-setup/">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
@@ -575,17 +631,17 @@ git<span class="w"> </span>checkout<span class="w"> </span>b4cd9a30f106957ae8f26
                 Previous
               </span>
 <div class="md-ellipsis">
-                Setup
+                3. Environment Set-up
               </div>
 </div>
 </a>
-<a aria-label="Next: Large Language Models" class="md-footer__link md-footer__link--next" href="../llm/">
+<a aria-label="Next: 5. Install Ollama and set-up Large Language Models" class="md-footer__link md-footer__link--next" href="../llm/">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 Next
               </span>
 <div class="md-ellipsis">
-                Large Language Models
+                5. Install Ollama and set-up Large Language Models
               </div>
 </div>
 <div class="md-footer__button md-icon">
