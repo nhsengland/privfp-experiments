@@ -1,4 +1,4 @@
-# Entity extraction
+# Install UniversalNER Locally
 
 !!! warning
 
@@ -13,8 +13,9 @@ cd privfp-experiments
 source .venv/bin/activate
 huggingface-cli download yuuko-eth/UniNER-7B-all-GGUF UniversalNER-7B-all-Q4_0.gguf --local-dir ./models
 ```
+!!! warning
 
-Then you just need to ensure your universal_ner_path is set to the path of the model.
+    You may need to change the universal_ner_path set in the ./src/config.py file.
 
 ## Quantising the UniversalNER model yourself
 The quantised model was created by cloning the [llama.cpp](https://github.com/ggerganov/llama.cpp) repository and quantising the `Universal-NER/UniNER-7B-type` locally to `q4_1.gguf` format.

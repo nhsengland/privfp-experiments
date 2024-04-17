@@ -1,4 +1,4 @@
-# CorrectMatch
+# Installing Julia
 
 !!! warning
 
@@ -9,15 +9,15 @@
 ## Install Julia
 
 Open a new terminal and install the recommended [julia installer](https://julialang.org/downloads/)
-``` shell title="Install Julia"
+``` bash title="Install Julia"
 curl -fsSL https://install.julialang.org | sh
 ```
 
-``` shell title="Download Julia version 1.8.5 and set default to 1.8.5"
+``` bash title="Download Julia version 1.8.5 and set default to 1.8.5"
 juliaup add 1.8.5
 juliaup default 1.8.5
 ```
 
-``` julia title="Add CorrectMatch package to Julia"
+```bash title="Add CorrectMatch package to Julia"
 julia -e 'using Pkg; Pkg.add("CorrectMatch")'
 ```

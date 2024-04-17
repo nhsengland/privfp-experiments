@@ -1,10 +1,16 @@
-# Large Language Models
+# Install Ollama and set-up Large Language Models
 
 !!! warning
 
-    Requires [Ollama](https://github.com/ollama/ollama) to run. This particular setup was tested with [Ollama version 0.1.27](https://ollama.com/download) on an M1 MBP.
+    Requires [Ollama](https://github.com/ollama/ollama) to run. This particular setup was tested with [Ollama version 0.1.27](https://ollama.com/download).
 
 [Ollama](https://github.com/ollama/ollama) is used for the unstructured generative component of Privacy Fingerprint. It provides a simple interface to download quantised models and run inference locally.
+
+## Ollama Installation
+Install Ollama using the curl command.
+```
+curl https://ollama.ai/install.sh | sh
+```
 
 ## Start Ollama
 

@@ -49,7 +49,7 @@ The main sections of this repository are:
 
 This diagram illustrates the current state of the project and the structure of each module.
 
-![Project Diagram](docs/assets/images/privfp_diagram.png)
+![Project Diagram](docs/assets/images/overall_diagram.png)
 
 ## Getting Started
 
@@ -63,53 +63,16 @@ Assuming you have set up SSH credentials with this repository the package can be
 
 `git clone https://github.com/nhsengland/privfp-experiments.git`
 
-### Julia Install
+### Set-up
 
-This repo Requires [Julia](https://github.com/JuliaLang/julia) to run. This particular setup was tested with [Julia version 1.8.5](https://julialang.org/downloads/) on an M1 MBP.
+All of the set-up for this repository is located on the mkdocs. In brief the docs covers installations on:
 
-[CorrectMatch](https://github.com/computationalprivacy/pycorrectmatch) is used via a thin Python wrapper for the Julia module CorrectMatch.jl to estimate uniqueness from small population samples.
-
-Open a new terminal and install the recommended [julia installer](https://julialang.org/downloads/)
-
-- `curl -fsSL https://install.julialang.org | sh`
-- `juliaup add 1.8.5`
-- `juliaup default 1.8.5`
-
-Next you need to install the CorrectMatch package
-- `julia -e 'using Pkg; Pkg.add("CorrectMatch")'`
-
-### Dependencies
-
-To create a suitable environment:
-
-- `python3.11 -m venv .venv`
-- `source .venv`
-- `pip install -r requirements.txt`
-
-Note that a separate Python 3.9 environment is required to run the scispacy notebooks:
-
-- `python3.9 -m venv .venv_scispacy`
-- `source .venv_scispacy/bin/activate`
-- `pip install -r requirements_scispacy.txt`
-
-### Pre-commit Installation
-
-This repo uses `pre-commit` to ensure `black` and `flake8` has been applied. You will need to make sure your virtual environment has been activated.
-
-- `source .venv/bin/activate`
-- `pre-commit install`
-
-### Download a quantised UniversalNER model
-
-This HuggingFace [repository](https://huggingface.co/yuuko-eth/UniNER-7B-all-GGUF/tree/main) holds a range of quantized UniversalNER Models. Any of these models can be downloaded, but make sure you download a model that your RAM can handle.
-
-``` shell title="Download the smallest Quantised UniversalNER model from Huggingface"
-cd privfp-experiments
-source .venv/bin/activate
-huggingface-cli download yuuko-eth/UniNER-7B-all-GGUF UniversalNER-7B-all-Q4_0.gguf --local-dir ./models
-```
-
-Then you just need to ensure your universal_ner_path is set to the path of the model.
+1. HomeBrew Installation
+2. Julia Installation
+3. Enviroment Set-up
+4. Setting up Synthea International
+5. Install Ollama and set-up Large Languag Models
+6. Install UniversalNER Locally
 
 ### Datasets
 
