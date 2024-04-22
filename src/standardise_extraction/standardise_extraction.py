@@ -51,8 +51,6 @@ class StandardiseExtraction:
         Returns:
             pd.DataFrame: Dataframe of the first entity extracted for a given entity type.
         """
-
-        # TODO: FIX THIS - THIS WON'T WORK? MAYBE TRY AND SAVE AS A NUMPY ARRAY AND CONVERT BACK?
         patient_entities = load_json_from_path_or_variable(
             self.extraction_input, self.extraction_path
         )

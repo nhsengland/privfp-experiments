@@ -11,3 +11,5 @@ julia==0.6.2
 CorrectMatch==0.1.1
 shap==0.45.0
 gliner-spacy
+scipy==1.12
+sentencepiece
