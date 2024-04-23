@@ -1,13 +1,21 @@
 import json
 import re
+import os
 
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from langchain.llms import LlamaCpp
-from typing import List, Dict, Any, Optional, Tuple
+from langchain.llms import LlamaCpp, Ollama
+from langchain.prompts import PromptTemplate
+from typing import List, Dict, Any, Optional, Tuple, Callable, Union
+from gliner import GLiNER
 
-from src.utils import load_json_from_path_or_variable, save_json, load_json
-from src.config import entity_list, universal_ner_path
+from src.utils import (
+    load_json_from_path_or_variable,
+    save_json,
+    load_json,
+    download_llm_model_from_hf,
+)
+from src.config import entity_list
 
 
 class Extraction:
@@ -35,9 +43,23 @@ class Extraction:
         self.save_output = save_output
         self.path_output = path_output
 
-    def run(self) -> List[Dict[str, Any]]:
+    def run(
+        self,
+        model_type: str,
+        prompt_template: PromptTemplate = None,
+        local_hf_repo_id: str = None,
+        local_hf_filename: str = None,
+        ollama_ner_model: str = None,
+    ) -> List[Dict[str, Any]]:
         """This returns a list of dictionaries that has an 'Entities' property of a
         list of entity dictionaries for each person.
+
+        Args:
+            model_type (str): This is the type of model used. Options being "gliner", "local", and "ollama".
+            prompt_template (PromptTemplate): This is the template used in type of models "local" or "ollama"
+            local_hf_repo_id (str, optional): The location of a repo on hugging face that has a .gguf model we want to download. Defaults to None.
+            local_hf_filename (str, optional): The name of the filename inside the local_hf_repo_id. Defaults to None.
+            ollama_ner_model (str, optional): The ollama model pulled from ollama. Defaults to None.
 
         Returns:
             List[Dict[str, Any]]: List of dictionaries that has an 'Entities' property of a
@@ -46,7 +68,15 @@ class Extraction:
 
         data = load_json_from_path_or_variable(self.llm_input, self.llm_path)
 
-        patients_entities = create_patients_entities(data, entity_list)
+        patients_entities = create_patients_entities(
+            data,
+            entity_list,
+            model_type,
+            prompt_template,
+            local_hf_filename=local_hf_filename,
+            local_hf_repo_id=local_hf_repo_id,
+            ollama_ner_model=ollama_ner_model,
+        )
 
         if self.save_output:
             save_json(data=patients_entities, path=self.path_output)
@@ -81,25 +111,18 @@ def find_string_matches(text: str, entity_string: str) -> List[Tuple]:
     return indices
 
 
-def load_quantised_universal_ner(
-    n_gpu_layers: int = 1, n_batch: int = 512
-) -> LlamaCpp:
+def load_local_ner_model(local_ner_path: str) -> LlamaCpp:
     """
-
     Args:
-        n_gpu_layers (int, optional): This is the number of gpu's used to run the model.
-                                      Defaults to 1, as the majority of machines have 1.
-        n_batch (int, optional): This determines how the prompt tokens is batched up and
-                                 processed by the model.
-
+        local_ner_path (str): Path to the location of where a local model has been installed to.
     Returns:
-        LlamaCpp: Returns a llamacpp object to run universal NER locally.
+        LlamaCpp: Returns a llamacpp object to run a generative NER model locally.
     """
     callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
     llm = LlamaCpp(
-        model_path=universal_ner_path,
-        n_gpu_layers=n_gpu_layers,
-        n_batch=n_batch,
+        model_path=local_ner_path,
+        n_gpu_layers=1,
+        n_batch=512,
         f16_kv=True,
         callback_manager=callback_manager,
         verbose=True,
@@ -108,26 +131,36 @@ def load_quantised_universal_ner(
     return llm
 
 
-def get_universal_ner_entity(
-    input_text: str, entity_name: str, llm: LlamaCpp
+def load_ollama_ner_model(ollama_ner_model: str) -> Ollama:
+    """
+    Args:
+        ollama_ner_model: The name of an ollama model that can be pulled from ollama.
+
+    Returns:
+        Ollama: Returns a llamacpp object to run universal NER locally.
+    """
+    callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
+    llm = Ollama(model=ollama_ner_model, callback_manager=callback_manager)
+
+    return llm
+
+
+def get_entity_from_generative_ner_model(
+    input_text: str,
+    entity_name: str,
+    llm: Union[LlamaCpp, Ollama],
+    prompt_template: PromptTemplate = None,
 ) -> List[Any]:
     """
-    Uses the LLamaCpp object to extract entities, for a given entity name, from the input text provided.
+    Uses the LLamaCpp OR Ollama to extract entities, for a given entity name, from the input text provided.
 
     Args:
         input_text (str): This is a llm generated medical record.
         entity_name (str): This is the name of the entity given to universal NER to help extrct.
-        llm (LlamaCpp): This reutrns a configured LlamaCpp pipeline to run universal NER.
+        llm (Union[LlamaCpp, Ollama]): This returns a configured LlamaCpp or Ollama pipeline to run a generative NER model.
 
     Returns:
         List[Any]: Returns a list of entities that have been extracted with the given entity_name.
-    """
-
-    prompt_template = """
-    USER: Text: {input_text}
-    ASSISTANT: I’ve read this text.
-    USER: What describes {entity_name} in the text?
-    ASSISTANT: (model's predictions in JSON format)
     """
     input_text = input_text.strip()
 
@@ -141,37 +174,154 @@ def get_universal_ner_entity(
     return output
 
 
+def create_entity_output(
+    output: List[str], entity: str, match_indices: List[Tuple[int]]
+) -> List[Dict[str, Any]]:
+    """Takes the outputs from universalNER and reformats to fit the Gliner structure.
+
+    Args:
+        output (List[str]): List of strings that have been extracted from the text for a given entity name.
+        entity (str): Name of the entity you want to extract out from the text.
+        match_indices (List[Tuple[int]]): List of indexes of where the given entity text exists in the given document.
+
+    Returns:
+        List[Dict[str, Any]]: List of dictionaries with key values for each entity extracted.
+    """
+
+    entity_output = []
+    for start, end in match_indices:
+        entity_output.append(
+            {
+                "start": start,
+                "end": end,
+                "text": output,
+                "label": entity,
+                "score": 1,
+            }
+        )
+    return entity_output
+
+
+def create_patient_entities_from_generative_llm(
+    model: Union[LlamaCpp, Ollama],
+    input_text: str,
+    entity_list: List[str],
+    prompt_template: PromptTemplate,
+) -> List[Dict[str, Any]]:
+    """Function used to create entities from a generative LLM that produces a list of entity outputs.
+
+    Args:
+        model (Callable): A generative LLM model from localised downloaded model OR Ollama.
+        input_text (str): The document fed into the model.
+        entity_list (List[str]): The list of entities you want to get out of the model.
+        prompt_template (PromptTemplate): This is a prompt that is fed to the ollama or LlamaCPP pipeline.
+
+    Returns:
+        List[Dict[str, Any]]: Returns a list of entity dictionaries extracted out of the model.
+    """
+    patient_entities = []
+    for entity in entity_list:
+        outputs = get_entity_from_generative_ner_model(
+            input_text, entity, model, prompt_template
+        )
+        for output in outputs:
+            match_indices = find_string_matches(input_text, output)
+            each_output = create_entity_output(output, entity, match_indices)
+            patient_entities += each_output
+    return patient_entities
+
+
+def load_ner_model(
+    model_type: str,
+    local_hf_repo_id: str = None,
+    local_hf_filename: str = None,
+    ollama_ner_model: str = None,
+) -> Union[LlamaCpp, Ollama, GLiNER]:
+    """A function to load a specific type of NER model.
+
+    Args:
+        model_type (str): This is the type of model. Options being "gliner", "local", and "ollama".
+        local_hf_repo_id (str, optional): The location of a repo on hugging face that has a .gguf model we want to download. Defaults to None.
+        local_hf_filename (str, optional): The name of the filename inside the local_hf_repo_id. Defaults to None.
+        ollama_ner_model (str, optional): The ollama model pulled from ollama. Defaults to None.
+
+    Raises:
+        ValueError: Raises an error if "gliner", "local", or "ollama" is not given as the model type,
+                    or if corresponding `local_ner_path` or `ollama_ner_model` is None when required.
+
+    Returns:
+        Union[LlamaCpp, Ollama, GLiNER]: _description_
+    """
+    if model_type == "gliner":
+        model = GLiNER.from_pretrained("urchade/gliner_medium-v2.1")
+    elif model_type == "local":
+        if local_hf_repo_id is None or local_hf_filename is None:
+            raise ValueError(
+                "For 'local' model type, 'local_hf_repo_id' and 'local_hf_filename' must be provided."
+            )
+        download_llm_model_from_hf(
+            repo_id=local_hf_repo_id, filename=local_hf_filename
+        )
+        local_ner_path = f"../models/{local_hf_filename}"
+        model = load_local_ner_model(local_ner_path)
+    elif model_type == "ollama":
+        if ollama_ner_model is None:
+            raise ValueError(
+                "For 'ollama' model type, 'ollama_ner_model' must be provided."
+            )
+        model = load_ollama_ner_model(ollama_ner_model)
+    else:
+        raise ValueError(
+            "No valid input provided. Please specify 'model_type' as 'gliner', 'local', or 'ollama'"
+        )
+
+    return model
+
+
 def create_patients_entities(
-    data: List[str], entity_list: List[str]
+    data: List[str],
+    entity_list: List[str],
+    model_type: str,
+    prompt_template: PromptTemplate = None,
+    local_hf_repo_id: str = None,
+    local_hf_filename: str = None,
+    ollama_ner_model: str = None,
 ) -> List[Dict[str, Any]]:
     """This creates the patient entities JSON from the list of llm generated medical notes.
 
     Args:
         data (List[str]): This is a list of llm generated medical notes.
         entity_list (List[str]): This is a list of entity names given to the model.
+        model_type (str): This is the type of model used. Options being "gliner", "local", and "ollama".
+        prompt_template (PromptTemplate): This is the template used in type of models "local" or "ollama"
+        local_hf_repo_id (str, optional): The location of a repo on hugging face that has a .gguf model we want to download. Defaults to None.
+        local_hf_filename (str, optional): The name of the filename inside the local_hf_repo_id. Defaults to None.
+        ollama_ner_model (str, optional): The ollama model pulled from ollama. Defaults to None.
 
     Returns:
         List[Dict[str, Any]]: This returns a list of a dictionary with an Entities property
                               which is a list of each entity.
     """
-    llm = load_quantised_universal_ner()
-    patients_entities = []
+    model = load_ner_model(
+        model_type,
+        local_hf_repo_id=local_hf_repo_id,
+        local_hf_filename=local_hf_filename,
+        ollama_ner_model=ollama_ner_model,
+    )
+
+    total_patients_entities = []
 
     for patient_num in range(len(data)):
         input_text = data[patient_num]
-        patient_entities = []
-        for entity in entity_list:
-            outputs = get_universal_ner_entity(input_text, entity, llm)
-            for output in outputs:
-                match_indices = find_string_matches(input_text, output)
-                each_output = {
-                    "Text": output,
-                    "Type": entity,
-                    "Match_Count": len(match_indices),
-                    "Match_Indices": match_indices,
-                }
-                patient_entities.append(each_output)
+        if model_type == "gliner":
+            patient_entities = model.predict_entities(
+                input_text, entity_list, threshold=0.5
+            )
+        else:
+            patient_entities = create_patient_entities_from_generative_llm(
+                model, input_text, entity_list, prompt_template
+            )
 
-        patients_entities.append({"Entities": patient_entities})
+        total_patients_entities.append({"Entities": patient_entities})
 
-    return patients_entities
+    return total_patients_entities
