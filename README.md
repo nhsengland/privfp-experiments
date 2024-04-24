@@ -1,4 +1,4 @@
-# Privacy FingerPrint (PrivFp) - Phase 2 Experiments
+# Privacy FingerPrint (PrivFp) - Experiments (Phase 2)
 ## NHS England Data Science Team
 
 ### :warning: Warning to Users :warning:
@@ -36,15 +36,15 @@ The main sections of this repository are:
 |
 +---overrides                              <- Custom HTML for MkDocs
 |
-+---src                                    <- Scripts with functions for use in ipynb notebooks located in the notebooks folder
++---src                                    <- Scripts with functions for use in .ipynb notebooks located in the notebooks folder
 |   +---ner_pipeline                       <- Contains scripts that can be used to run a named-entity-recognition pipeline
 |
 |   .gitignore                             <- Files (& file types) automatically removed from version control for security purposes
 |   LICENCE                                <- License info for public distribution
 |   mkdocs.yml                             <- MkDocs configuration file
 |   README.md                              <- Quick start guide / explanation of the project
-|   requirements_scispacy.txt              <- Requirements needed to run the scispacy notebook
-|   requirements.txt                       <- Requirements to run all notebooks except where scispacy is used
+|   requirements_scispacy.txt              <- Requirements needed to run the scispaCy notebook
+|   requirements.txt                       <- Requirements to run all notebooks except where scispaCy is used
 ```
 
 This diagram illustrates the current state of the project and the structure of each module.
@@ -63,22 +63,18 @@ Assuming you have set up SSH credentials with this repository the package can be
 
 `git clone https://github.com/nhsengland/privfp-experiments.git`
 
+or via HTTPS or the GitHub CLI.
+
 ### Set-up
 
-All of the set-up for this repository is located on the mkdocs. In brief the docs covers installations on:
+All of the set-up for this repository is located on the [mkdocs](https://nhsengland.github.io/privfp-experiments/). In brief, the docs covers installations on:
 
 1. HomeBrew Installation
-2. Julia Installation
-3. Enviroment Set-up
-4. Setting up Synthea International
-5. Install Ollama and set-up Large Languag Models
+2. Julia Installation for (py)CorrectMatch
+3. Environment Set-up
+4. Setting up Synthea
+5. Install Ollama and set-up Large Language Models
 6. Install UniversalNER Locally
-
-### Datasets
-
-{DESCRIPTION AND LINKS TO DATASETS}
-
-{LINK TO FAKE DATA TO SUPPORT INITIAL CODE RUNS}
 
 ## Generative Module
 
@@ -100,11 +96,11 @@ Note that a seed has not been implemented to reproduce the outputs shown.
 In **./notebooks/extraction_module/ner_exploration** there is a set of notebooks exploring how to implement a range of named-entity-recognition models.
 
 - **numind_NER.ipynb** explores a NER model created by Numind.
-- **spacy_and_scispacy.ipynb** explores a range of NER models released by spacy. (A different enviroment will be required to run SciSpacy.)
-- **spanMarker.ipynb** explores NER spanMarker model set-up and a possible intergration with spacy models.
+- **spacy_and_scispacy.ipynb** explores a range of NER models released by spaCy. (A different environment will be required to run SciSpacy.)
+- **spanMarker.ipynb** explores NER spanMarker model set-up and a possible integration with spaCy models.
 - **uniNER_quantised.ipynb** requires a quantised version of UniversalNER:
 
-The quantised model was created by cloning [llama.cpp repo](https://github.com/ggerganov/llama.cpp) and quantising the Universal-NER/UniNER-7B-type locally to a quantized_q4_1.gguf format.
+The quantised model was created by cloning [llama.cpp repo](https://github.com/ggerganov/llama.cpp) and quantising the Universal-NER/UniNER-7B-type locally to a `quantized_q4_1.gguf` format.
 
 The llama.cpp repo has guidance on their repo in their **Prepare and Quantize** section. Alternatively their is a [medium article](https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-llama-cpp-66e2a7c51300) that goes through all of this in a step-by-step process.
 
@@ -125,7 +121,7 @@ Contributions are what make the open source community such an amazing place to l
 
 _See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidance._
 
-## License
+## Licence
 
 Unless stated otherwise, the codebase is released under [the MIT Licence][mit].
 This covers both the codebase and any sample code in the documentation.
