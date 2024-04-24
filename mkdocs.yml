@@ -4,7 +4,7 @@ repo_name: privfp-experiments
 
 nav:
   - Home: index.md
-  - Background: 
+  - Background:
     - 1. PrivFp Background: background/privfp-background.md
     - 2. Decision Log: background/decision-log.md
   - Setup:

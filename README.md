@@ -49,7 +49,7 @@ The main sections of this repository are:
 
 This diagram illustrates the current state of the project and the structure of each module.
 
-![Project Diagram](docs/assets/images/overall_diagram.png)
+![Project Diagram](./docs/assets/images/privfp_overview_240424.png)
 
 ## Getting Started
 
