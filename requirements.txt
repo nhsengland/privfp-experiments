@@ -13,3 +13,4 @@ shap==0.45.0
 gliner-spacy
 scipy==1.12
 sentencepiece
+gliner
