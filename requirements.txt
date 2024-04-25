@@ -1,6 +1,7 @@
 langchain==0.0.350
 prompttools==0.0.43
 llama_cpp_python==0.2.23
+scipy==1.12.0
 sentence-transformers==2.2.2
 spacy==3.6.1
 span-marker==1.5.0
@@ -10,7 +11,6 @@ nhs-number==1.3.4
 julia==0.6.2
 CorrectMatch==0.1.1
 shap==0.45.0
-gliner-spacy
 scipy==1.12
-sentencepiece
-gliner
+sentencepiece==0.2.0
+gliner==0.1.12
