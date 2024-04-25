@@ -232,7 +232,7 @@ def create_patient_entities_from_generative_llm(
 
 
 def load_ner_model(
-    model_type: str,
+    server_model_type: str,
     local_hf_repo_id: str = None,
     local_hf_filename: str = None,
     ollama_ner_model: str = None,
@@ -240,7 +240,7 @@ def load_ner_model(
     """A function to load a specific type of NER model.
 
     Args:
-        model_type (str): This is the type of model. Options being "gliner", "local", and "ollama".
+        server_model_type (str): This is the type of way a model is served. Options being "gliner", "local", and "ollama".
         local_hf_repo_id (str, optional): The location of a repo on hugging face that has a .gguf model we want to download. Defaults to None.
         local_hf_filename (str, optional): The name of the filename inside the local_hf_repo_id. Defaults to None.
         ollama_ner_model (str, optional): The ollama model pulled from ollama. Defaults to None.
@@ -252,9 +252,9 @@ def load_ner_model(
     Returns:
         Union[LlamaCpp, Ollama, GLiNER]: _description_
     """
-    if model_type == "gliner":
+    if server_model_type == "gliner":
         model = GLiNER.from_pretrained("urchade/gliner_medium-v2.1")
-    elif model_type == "local":
+    elif server_model_type == "local":
         if local_hf_repo_id is None or local_hf_filename is None:
             raise ValueError(
                 "For 'local' model type, 'local_hf_repo_id' and 'local_hf_filename' must be provided."
@@ -264,7 +264,7 @@ def load_ner_model(
         )
         local_ner_path = f"../models/{local_hf_filename}"
         model = load_local_ner_model(local_ner_path)
-    elif model_type == "ollama":
+    elif server_model_type == "ollama":
         if ollama_ner_model is None:
             raise ValueError(
                 "For 'ollama' model type, 'ollama_ner_model' must be provided."
@@ -272,7 +272,7 @@ def load_ner_model(
         model = load_ollama_ner_model(ollama_ner_model)
     else:
         raise ValueError(
-            "No valid input provided. Please specify 'model_type' as 'gliner', 'local', or 'ollama'"
+            "No valid input provided. Please specify 'server_model_type' as 'gliner', 'local', or 'ollama'"
         )
 
     return model
@@ -281,7 +281,7 @@ def load_ner_model(
 def create_patients_entities(
     data: List[str],
     entity_list: List[str],
-    model_type: str,
+    server_model_type: str,
     prompt_template: PromptTemplate = None,
     local_hf_repo_id: str = None,
     local_hf_filename: str = None,
@@ -292,7 +292,7 @@ def create_patients_entities(
     Args:
         data (List[str]): This is a list of llm generated medical notes.
         entity_list (List[str]): This is a list of entity names given to the model.
-        model_type (str): This is the type of model used. Options being "gliner", "local", and "ollama".
+        server_model_type (str): This is the type of model used. Options being "gliner", "local", and "ollama".
         prompt_template (PromptTemplate): This is the template used in type of models "local" or "ollama"
         local_hf_repo_id (str, optional): The location of a repo on hugging face that has a .gguf model we want to download. Defaults to None.
         local_hf_filename (str, optional): The name of the filename inside the local_hf_repo_id. Defaults to None.
@@ -303,7 +303,7 @@ def create_patients_entities(
                               which is a list of each entity.
     """
     model = load_ner_model(
-        model_type,
+        server_model_type,
         local_hf_repo_id=local_hf_repo_id,
         local_hf_filename=local_hf_filename,
         ollama_ner_model=ollama_ner_model,
@@ -313,7 +313,7 @@ def create_patients_entities(
 
     for patient_num in range(len(data)):
         input_text = data[patient_num]
-        if model_type == "gliner":
+        if server_model_type == "gliner":
             patient_entities = model.predict_entities(
                 input_text, entity_list, threshold=0.5
             )
