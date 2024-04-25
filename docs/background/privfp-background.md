@@ -1,10 +1,11 @@
 ---
 hide:
-  - navigation
   - toc
 ---
 
-# Background
+# Privacy Fingerprint
+
+The aim of the Privacy Fingerprint (PrivFp) project is to develop a modular tool that could be used to calculate a privacy risk score on unstructured clinical data.
 
 ## Links
 
