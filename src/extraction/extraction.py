@@ -45,7 +45,7 @@ class Extraction:
 
     def run(
         self,
-        model_type: str,
+        server_model_type: str,
         prompt_template: PromptTemplate = None,
         local_hf_repo_id: str = None,
         local_hf_filename: str = None,
@@ -55,7 +55,7 @@ class Extraction:
         list of entity dictionaries for each person.
 
         Args:
-            model_type (str): This is the type of model used. Options being "gliner", "local", and "ollama".
+            server_model_type (str): This is the type of model used. Options being "gliner", "local", and "ollama".
             prompt_template (PromptTemplate): This is the template used in type of models "local" or "ollama"
             local_hf_repo_id (str, optional): The location of a repo on hugging face that has a .gguf model we want to download. Defaults to None.
             local_hf_filename (str, optional): The name of the filename inside the local_hf_repo_id. Defaults to None.
@@ -71,7 +71,7 @@ class Extraction:
         patients_entities = create_patients_entities(
             data,
             entity_list,
-            model_type,
+            server_model_type,
             prompt_template,
             local_hf_filename=local_hf_filename,
             local_hf_repo_id=local_hf_repo_id,
