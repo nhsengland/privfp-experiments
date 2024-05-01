@@ -67,7 +67,9 @@ class GenerateLLM:
         self.save_output = save_output
         self.path_output = path_output
 
-    def run(self, model: Any, template: str, verbose: bool=True) -> List[str]:
+    def run(
+        self, model: Any, template: str, verbose: bool = True
+    ) -> List[str]:
         """
         Generate synthetic medical notes from Synthea data.
 
