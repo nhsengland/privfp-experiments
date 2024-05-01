@@ -67,13 +67,14 @@ class GenerateLLM:
         self.save_output = save_output
         self.path_output = path_output
 
-    def run(self, model: Any, template: str) -> List[str]:
+    def run(self, model: Any, template: str, verbose: bool=True) -> List[str]:
         """
         Generate synthetic medical notes from Synthea data.
 
         Args:
             model (Any): Language model to use for generation.
             template (str): Template for language model prompts.
+            verbose (bool): Decides whether verbose is true or false.
 
         Returns:
             List[str]: Generated a list of synthetic medical notes.
@@ -81,7 +82,10 @@ class GenerateLLM:
 
         batch = get_batch(self.synthea_input, self.synthea_path)
 
-        callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
+        callback_manager = CallbackManager([])
+
+        if verbose:
+            callback_manager.add_handler(StreamingStdOutCallbackHandler())
 
         llm = Ollama(model=model, callback_manager=callback_manager)
 

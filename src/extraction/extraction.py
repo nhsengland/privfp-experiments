@@ -50,6 +50,7 @@ class Extraction:
         local_hf_repo_id: str = None,
         local_hf_filename: str = None,
         ollama_ner_model: str = None,
+        verbose: bool = True,
     ) -> List[Dict[str, Any]]:
         """This returns a list of dictionaries that has an 'Entities' property of a
         list of entity dictionaries for each person.
@@ -60,6 +61,7 @@ class Extraction:
             local_hf_repo_id (str, optional): The location of a repo on hugging face that has a .gguf model we want to download. Defaults to None.
             local_hf_filename (str, optional): The name of the filename inside the local_hf_repo_id. Defaults to None.
             ollama_ner_model (str, optional): The ollama model pulled from ollama. Defaults to None.
+            verbose (bool): Determines whether a model ran using langchain is verbose to the user. Defaults to True.
 
         Returns:
             List[Dict[str, Any]]: List of dictionaries that has an 'Entities' property of a
@@ -76,6 +78,7 @@ class Extraction:
             local_hf_filename=local_hf_filename,
             local_hf_repo_id=local_hf_repo_id,
             ollama_ner_model=ollama_ner_model,
+            verbose=verbose
         )
 
         if self.save_output:
@@ -111,14 +114,19 @@ def find_string_matches(text: str, entity_string: str) -> List[Tuple]:
     return indices
 
 
-def load_local_ner_model(local_ner_path: str) -> LlamaCpp:
+def load_local_ner_model(local_ner_path: str, verbose:bool = True) -> LlamaCpp:
     """
     Args:
         local_ner_path (str): Path to the location of where a local model has been installed to.
+        verbose (bool): Set to True if you want verbose on.
     Returns:
         LlamaCpp: Returns a llamacpp object to run a generative NER model locally.
     """
-    callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
+    callback_manager = CallbackManager([])
+
+    if verbose:
+        callback_manager.add_handler(StreamingStdOutCallbackHandler())
+
     llm = LlamaCpp(
         model_path=local_ner_path,
         n_gpu_layers=1,
@@ -131,7 +139,7 @@ def load_local_ner_model(local_ner_path: str) -> LlamaCpp:
     return llm
 
 
-def load_ollama_ner_model(ollama_ner_model: str) -> Ollama:
+def load_ollama_ner_model(ollama_ner_model: str, verbose:bool=True) -> Ollama:
     """
     Args:
         ollama_ner_model: The name of an ollama model that can be pulled from ollama.
@@ -139,7 +147,11 @@ def load_ollama_ner_model(ollama_ner_model: str) -> Ollama:
     Returns:
         Ollama: Returns a llamacpp object to run universal NER locally.
     """
-    callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
+    callback_manager = CallbackManager([])
+
+    if verbose:
+        callback_manager.add_handler(StreamingStdOutCallbackHandler())
+
     llm = Ollama(model=ollama_ner_model, callback_manager=callback_manager)
 
     return llm
@@ -236,6 +248,7 @@ def load_ner_model(
     local_hf_repo_id: str = None,
     local_hf_filename: str = None,
     ollama_ner_model: str = None,
+    verbose: bool = True,
 ) -> Union[LlamaCpp, Ollama, GLiNER]:
     """A function to load a specific type of NER model.
 
@@ -244,6 +257,7 @@ def load_ner_model(
         local_hf_repo_id (str, optional): The location of a repo on hugging face that has a .gguf model we want to download. Defaults to None.
         local_hf_filename (str, optional): The name of the filename inside the local_hf_repo_id. Defaults to None.
         ollama_ner_model (str, optional): The ollama model pulled from ollama. Defaults to None.
+        verbose (bool): define verbose on whether you want to print outputs to the user. Defaults to True.
 
     Raises:
         ValueError: Raises an error if "gliner", "local", or "ollama" is not given as the model type,
@@ -263,13 +277,13 @@ def load_ner_model(
             repo_id=local_hf_repo_id, filename=local_hf_filename
         )
         local_ner_path = f"../models/{local_hf_filename}"
-        model = load_local_ner_model(local_ner_path)
+        model = load_local_ner_model(local_ner_path, verbose)
     elif server_model_type == "ollama":
         if ollama_ner_model is None:
             raise ValueError(
                 "For 'ollama' model type, 'ollama_ner_model' must be provided."
             )
-        model = load_ollama_ner_model(ollama_ner_model)
+        model = load_ollama_ner_model(ollama_ner_model, verbose)
     else:
         raise ValueError(
             "No valid input provided. Please specify 'server_model_type' as 'gliner', 'local', or 'ollama'"
@@ -286,6 +300,7 @@ def create_patients_entities(
     local_hf_repo_id: str = None,
     local_hf_filename: str = None,
     ollama_ner_model: str = None,
+    verbose: bool = True,
 ) -> List[Dict[str, Any]]:
     """This creates the patient entities JSON from the list of llm generated medical notes.
 
@@ -297,6 +312,7 @@ def create_patients_entities(
         local_hf_repo_id (str, optional): The location of a repo on hugging face that has a .gguf model we want to download. Defaults to None.
         local_hf_filename (str, optional): The name of the filename inside the local_hf_repo_id. Defaults to None.
         ollama_ner_model (str, optional): The ollama model pulled from ollama. Defaults to None.
+        verbose (bool, optional): This determines whether models run using langchain need verbose on or off.
 
     Returns:
         List[Dict[str, Any]]: This returns a list of a dictionary with an Entities property
@@ -307,6 +323,7 @@ def create_patients_entities(
         local_hf_repo_id=local_hf_repo_id,
         local_hf_filename=local_hf_filename,
         ollama_ner_model=ollama_ner_model,
+        verbose = verbose,
     )
 
     total_patients_entities = []
