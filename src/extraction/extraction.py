@@ -78,7 +78,7 @@ class Extraction:
             local_hf_filename=local_hf_filename,
             local_hf_repo_id=local_hf_repo_id,
             ollama_ner_model=ollama_ner_model,
-            verbose=verbose
+            verbose=verbose,
         )
 
         if self.save_output:
@@ -114,7 +114,9 @@ def find_string_matches(text: str, entity_string: str) -> List[Tuple]:
     return indices
 
 
-def load_local_ner_model(local_ner_path: str, verbose:bool = True) -> LlamaCpp:
+def load_local_ner_model(
+    local_ner_path: str, verbose: bool = True
+) -> LlamaCpp:
     """
     Args:
         local_ner_path (str): Path to the location of where a local model has been installed to.
@@ -139,7 +141,9 @@ def load_local_ner_model(local_ner_path: str, verbose:bool = True) -> LlamaCpp:
     return llm
 
 
-def load_ollama_ner_model(ollama_ner_model: str, verbose:bool=True) -> Ollama:
+def load_ollama_ner_model(
+    ollama_ner_model: str, verbose: bool = True
+) -> Ollama:
     """
     Args:
         ollama_ner_model: The name of an ollama model that can be pulled from ollama.
@@ -323,7 +327,7 @@ def create_patients_entities(
         local_hf_repo_id=local_hf_repo_id,
         local_hf_filename=local_hf_filename,
         ollama_ner_model=ollama_ner_model,
-        verbose = verbose,
+        verbose=verbose,
     )
 
     total_patients_entities = []
