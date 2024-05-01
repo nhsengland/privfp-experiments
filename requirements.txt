@@ -1,7 +1,7 @@
 langchain==0.0.350
 prompttools==0.0.43
 llama_cpp_python==0.2.23
-scipy==1.12.0
+scipy==1.12
 sentence-transformers==2.2.2
 spacy==3.6.1
 span-marker==1.5.0
