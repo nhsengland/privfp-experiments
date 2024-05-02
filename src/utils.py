@@ -3,6 +3,8 @@ import json
 import pandas as pd
 from typing import Union, List, Dict, Any
 
+from huggingface_hub import hf_hub_download
+
 
 def save_json(
     data: Union[List[str], Dict[str, int], List[Dict[str, int]]], path: str
@@ -118,3 +120,46 @@ def load_dataframe_from_csv(path: str) -> pd.DataFrame:
     """
     dataframe = pd.read_csv(path)
     return dataframe
+
+
+def create_folder_if_not_exists(folder_path: str) -> None:
+    """
+    Create a folder if it doesn't exist.
+
+    Args:
+        folder_path (str): The path of the folder to create.
+    """
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+        print(f"Folder '{folder_path}' created successfully.")
+    else:
+        print(f"Folder '{folder_path}' already exists.")
+
+
+def download_llm_model_from_hf(repo_id: str, filename: str):
+    """This installs a local model from huggingface when the repo_id and filename is given in the config file.
+
+    Args:
+        repo_id (str): This is the repo's ID on hugging face.
+        filename (str): This is a given filename that must end in the .gguf format.
+    """
+    model_folder = "../models"
+    create_folder_if_not_exists(model_folder)
+
+    # Check if filename ends with ".gguf"
+    if not filename.endswith(".gguf"):
+        raise ValueError(
+            "Invalid filename format. Filename must end with '.gguf'."
+        )
+
+    file_path = os.path.join(model_folder, filename)
+    if not os.path.exists(file_path):
+        hf_hub_download(
+            repo_id=repo_id,
+            filename=filename,
+            local_dir=model_folder,
+        )
+    else:
+        print(
+            f"The file '{filename}' already exists in '{model_folder}'. Skipping download."
+        )
