@@ -1,0 +1,19 @@
+
+outputs:
+  experiment_name: experiment1
+
+synthea:
+  population_num: '50'
+
+generate:
+  model_name: llama2
+  prompt_template_path: universal_ner_template.json
+
+extraction:
+  serving_model_type: gliner
+  local_features:
+    hf_repo_id: yuuko-eth/UniNER-7B-all-GGUF
+    hf_filename: UniversalNER-7B-all-Q4_K_M.gguf
+  ollama_features:
+    ollama_ner_model: zeffmuks/universal-ner
+  prompt_template_path: llama2_template.json

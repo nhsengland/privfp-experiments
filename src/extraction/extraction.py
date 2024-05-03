@@ -15,7 +15,7 @@ from src.utils import (
     load_json,
     download_llm_model_from_hf,
 )
-from src.config import entity_list
+from src.old_config import entity_list
 
 
 class Extraction:

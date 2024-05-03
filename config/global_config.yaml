@@ -1,0 +1,11 @@
+
+output_path:
+  output_folder: ../outputs
+  extraction_template: ../src/config/templates/extraction/
+  generate_template: ../src/config/templates/generate/
+
+synthea_paths:
+  path_synthea: ../../synthea
+  path_csv: /output/csv
+  path_patients: /patients.csv
+  path_encounters: /encounters.csv

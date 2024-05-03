@@ -1,10 +1,5 @@
-from src.config import (
+from src.old_config import (
     path_synthea,
-    path_patients,
-    path_encounters,
-    cols_patients,
-    cols_encounters,
-    cols,
 )
 
 import nhs_number
@@ -14,6 +9,21 @@ import subprocess
 from typing import Any, Dict, List, Tuple
 
 from src.utils import save_json, load_json
+
+path_csv = path_synthea + "/output/csv"
+path_patients = path_csv + "/patients.csv"
+path_encounters = path_csv + "/encounters.csv"
+
+
+cols_patients = ["Id", "BIRTHDATE", "FIRST", "LAST"]
+cols_encounters = ["PATIENT", "ENCOUNTERCLASS", "REASONDESCRIPTION"]
+cols = {
+    "NHS_NUMBER": "NHS_NUMBER",
+    "BIRTHDATE": "DATE_OF_BIRTH",
+    "FIRST": "GIVEN_NAME",
+    "LAST": "FAMILY_NAME",
+    "REASONDESCRIPTION": "DIAGNOSIS",
+}
 
 
 def append_nhs_numbers(df_input: pd.DataFrame) -> pd.DataFrame:
