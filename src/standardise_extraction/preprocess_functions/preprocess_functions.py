@@ -104,7 +104,7 @@ def get_entity_values(
     Returns:
         List[Dict[str, Any]]: A list of dictionaries representing the entities of the specified type extracted from the person entities.
     """
-    return [dict for dict in person_entities if dict["Type"] == entity_type]
+    return [dict for dict in person_entities if dict["label"] == entity_type]
 
 
 def return_list_of_entities_from_person(
@@ -129,7 +129,7 @@ def return_list_of_entities_from_person(
     person_entity = get_entity_values(person_entity, entity_type)
     entity_list = []
     for entity in person_entity:
-        entity_output = entity["Text"]
+        entity_output = entity["text"]
         for func in cleaning_functions:
             entity_output = func(entity_output)
         if entity_output != "":

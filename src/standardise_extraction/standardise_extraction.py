@@ -51,8 +51,6 @@ class StandardiseExtraction:
         Returns:
             pd.DataFrame: Dataframe of the first entity extracted for a given entity type.
         """
-
-        # TODO: FIX THIS - THIS WON'T WORK? MAYBE TRY AND SAVE AS A NUMPY ARRAY AND CONVERT BACK?
         patient_entities = load_json_from_path_or_variable(
             self.extraction_input, self.extraction_path
         )
@@ -82,7 +80,7 @@ class StandardiseExtraction:
             save_dataframe_to_csv(standardised_df, self.path_output)
 
         # This converts the values into a numpy array
-        return standardised_df.values
+        return standardised_df
 
     def load(self) -> pd.DataFrame:
         """Loads the standardised dataframe from file.
@@ -91,4 +89,4 @@ class StandardiseExtraction:
             pd.DataFrame: Dataframe of the first entity extracted for a given entity type.
         """
         standardised_df = load_dataframe_from_csv(self.path_output)
-        return standardised_df.values
+        return standardised_df

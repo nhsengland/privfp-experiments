@@ -32,7 +32,17 @@ cols = {
 
 ### EXTRACTION CONFIG: ENTITIES EXTRACTED ###
 entity_list = ["person", "nhs number", "date of birth", "diagnosis"]
-universal_ner_path = "../models/quantized_q4_1.gguf"
+extraction_model_type = "local"  # Options: "local" OR "ollama" OR "gliner"
+ollama_ner_model = "zeffmuks/universal-ner"
+universalner_prompt_template = """
+    USER: Text: {input_text}
+    ASSISTANT: I’ve read this text.
+    USER: What describes {entity_name} in the text?
+    ASSISTANT: (model's predictions in JSON format)
+    """
+
+hf_repo_id = "yuuko-eth/UniNER-7B-all-GGUF"
+hf_filename = "UniversalNER-7B-all-Q4_K_M.gguf"
 
 ### STANDARDISATION CONFIG: PREPROCESSING AND STANDARDISATION DICTIONARY ###
 extra_preprocess_functions_per_entity = {"person": [clean_name.remove_titles]}
