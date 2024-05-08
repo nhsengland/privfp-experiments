@@ -29,6 +29,7 @@ class Extraction:
         llm_path: Optional[str] = None,
         save_output: Optional[bool] = False,
         path_output: Optional[str] = None,
+        ent_list: Optional[list] = entity_list,
     ):
         """Self-defined arguments
 
@@ -42,6 +43,7 @@ class Extraction:
         self.llm_path = llm_path
         self.save_output = save_output
         self.path_output = path_output
+        self.ent_list = ent_list
 
     def run(
         self,
@@ -72,7 +74,7 @@ class Extraction:
 
         patients_entities = create_patients_entities(
             data,
-            entity_list,
+            self.ent_list,
             server_model_type,
             prompt_template,
             local_hf_filename=local_hf_filename,
