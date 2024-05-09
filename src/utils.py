@@ -6,6 +6,18 @@ from typing import Union, List, Dict, Any
 from huggingface_hub import hf_hub_download
 
 
+def file_exists(file_path: str) -> bool:
+    """Checks if a file exists
+
+    Args:
+        file_path (str): The file path.
+
+    Returns:
+        bool: Returns a boolean on whether the file exists or not.
+    """
+    return os.path.isfile(file_path)
+
+
 def save_json(
     data: Union[List[str], Dict[str, int], List[Dict[str, int]]], path: str
 ) -> None:

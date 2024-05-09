@@ -3,9 +3,10 @@ output_path:
   output_folder: ../outputs
   extraction_template: ../src/config/templates/extraction/
   generate_template: ../src/config/templates/generate/
+  synthea_prefix: synthea
+  generate_prefix: generate
+  extraction_prefix: extraction
+  standardise_prefix: standardise
 
-synthea_paths:
+synthea:
   path_synthea: ../../synthea
-  path_csv: /output/csv
-  path_patients: /patients.csv
-  path_encounters: /encounters.csv

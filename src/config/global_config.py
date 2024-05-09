@@ -1,24 +1,25 @@
-from pydantic import BaseModel
 import yaml
-from typing import Dict
+
+from pydantic import BaseModel
 
 
-class OutputPath(BaseModel):
+class OutputSettings(BaseModel):
     output_folder: str
     extraction_template: str
     generate_template: str
+    synthea_prefix: str
+    generate_prefix: str
+    extraction_prefix: str
+    standardise_prefix: str
 
 
-class SyntheaPaths(BaseModel):
+class SyntheaSettings(BaseModel):
     path_synthea: str
-    path_csv: str
-    path_patients: str
-    path_encounters: str
 
 
 class GlobalConfig(BaseModel):
-    output_path: OutputPath
-    synthea_paths: SyntheaPaths
+    output_path: OutputSettings
+    synthea: SyntheaSettings
 
 
 def load_global_config() -> GlobalConfig:

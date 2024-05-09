@@ -1,19 +1,19 @@
-from src.old_config import (
-    path_synthea,
-)
-
 import nhs_number
 import pandas as pd
 import os
 import subprocess
 from typing import Any, Dict, List, Tuple
 
-from src.utils import save_json, load_json
+from src.utils import save_json, load_json, file_exists
+from src.config.global_config import load_global_config
+from src.config.experimental_config import SyntheaConfig
 
-path_csv = path_synthea + "/output/csv"
-path_patients = path_csv + "/patients.csv"
-path_encounters = path_csv + "/encounters.csv"
+global_config = load_global_config()
 
+path_patients = global_config.synthea.path_synthea + "/output/csv/patients.csv"
+path_encounters = (
+    global_config.synthea.path_synthea + "/output/csv/encounters.csv"
+)
 
 cols_patients = ["Id", "BIRTHDATE", "FIRST", "LAST"]
 cols_encounters = ["PATIENT", "ENCOUNTERCLASS", "REASONDESCRIPTION"]
@@ -119,49 +119,50 @@ class GenerateSynthea:
     Class for generating Synthea data and managing output.
 
     Methods:
-        run: Run Synthea generation with specified commands.
-        load: Load previously generated Synthea output from file.
+        run: Run Synthea generation with specified commands or load if the data alreadys exists.
     """
 
-    def __init__(
-        self, save_output: bool = False, path_output: str = None
-    ) -> None:
+    def __init__(self, SyntheaConfig: SyntheaConfig) -> None:
         """
         Initializes GenerateSynthea object.
 
         Args:
-            save_output (bool): Whether to save the output to a file.
+            population_num (str): The number of synthetic patients you want to generate.
             path_output (str): Path to the output file.
         """
-        self.save_output = save_output
-        self.path_output = path_output
+        self.population_num = SyntheaConfig.population_num
+        self.county = SyntheaConfig.county
+        self.path_output = SyntheaConfig.path_output
 
-    def run(self, *commands: List[str]) -> List[Dict[str, Any]]:
+    def run_or_load(
+        self, extra_commands: List[str] = list(), resave: bool = False
+    ) -> List[Dict[str, Any]]:
         """
-        Run Synthea generation with specified commands.
+        Run Synthea generation with specific commands, or loads a model from path given.
 
         Args:
-            *commands (List[str]): List of commands to run Synthea.
+            commands (List[str]): List of commands to run Synthea.
+            resave (bool): Whether to resave the output.
 
         Returns:
             List[Dict[str, Any]]: Synthea output as a list of dictionaries.
         """
 
-        output = create_synthea_output(commands)
+        if file_exists(self.path_output) and resave is False:
+            output = load_json(self.path_output)
+        else:
+            # Defines the fixed commands handle by configuration, and allows a user to add additional commands.
+            commands = [
+                "./run_synthea",
+                "-p",
+                self.population_num,
+                self.county,
+            ] + extra_commands
+            output = create_synthea_output(commands)
 
-        if self.save_output:
-            save_json(output, self.path_output)
+            if resave or file_exists(self.path_output) is False:
+                save_json(output, self.path_output)
 
-        return output
-
-    def load(self) -> List[Dict[str, Any]]:
-        """
-        Load previously generated Synthea output from file.
-
-        Returns:
-            List[Dict[str, Any]]: Loaded Synthea output as a list of dictionaries.
-        """
-        output = load_json(self.path_output)
         return output
 
 
@@ -176,13 +177,16 @@ def create_synthea_output(commands: List[str]) -> List[Dict[str, Any]]:
         List[Dict[str, Any]]: Synthea output as a list of dictionaries.
     """
     cwd = os.getcwd()
-    os.chdir(path_synthea)
+    os.chdir(global_config.synthea.path_synthea)
 
-    subprocess.run(
-        commands, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT
-    )
-
-    os.chdir(cwd)
+    try:
+        subprocess.run(
+            commands, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT
+        )
+    except e as e:
+        raise (e)
+    finally:
+        os.chdir(cwd)
 
     df = csvs_to_df()
     output = df_to_json(df)

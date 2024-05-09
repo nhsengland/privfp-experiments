@@ -1,13 +1,15 @@
 
 outputs:
   experiment_name: experiment1
+  save: false
 
 synthea:
   population_num: '50'
+  county: 'West Yorkshire'
 
 generate:
-  model_name: llama2
-  prompt_template_path: universal_ner_template.json
+  llm_model_name: llama2
+  prompt_template_path: llama2_template.json
 
 extraction:
   serving_model_type: gliner
@@ -16,4 +18,4 @@ extraction:
     hf_filename: UniversalNER-7B-all-Q4_K_M.gguf
   ollama_features:
     ollama_ner_model: zeffmuks/universal-ner
-  prompt_template_path: llama2_template.json
+  prompt_template_path: universal_ner_template.json

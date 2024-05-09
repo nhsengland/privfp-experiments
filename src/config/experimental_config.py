@@ -3,22 +3,43 @@ import yaml
 from typing import Dict, Optional
 
 
-class Generate(BaseModel):
-    model_name: str
-    prompt_template_path: str
+class LocalFeaturesConfig(BaseModel):
+    hf_repo_id: str
+    hf_filename: str
 
 
-class Extraction(BaseModel):
+class OllamaFeaturesConfig(BaseModel):
+    ollama_ner_model: str
+
+
+class ExtractionConfig(BaseModel):
     serving_model_type: str
-    local_features: Dict[str, str]
-    ollama_features: Dict[str, str]
+    local_features: LocalFeaturesConfig
+    ollama_features: OllamaFeaturesConfig
     prompt_template_path: str
+
+
+class GenerateConfig(BaseModel):
+    llm_model_name: str
+    prompt_template_path: str
+
+
+class SyntheaConfig(BaseModel):
+    population_num: str
+    county: str
+    path_output: Optional[str] = None
+
+
+class OutputsConfig(BaseModel):
+    experiment_name: str
+    save: bool
 
 
 class ExperimentalConfig(BaseModel):
-    experiment_name: str
-    generate: Optional[Generate]
-    extraction: Optional[Extraction]
+    outputs: OutputsConfig
+    synthea: SyntheaConfig
+    generate: GenerateConfig
+    extraction: ExtractionConfig
 
 
 def load_experimental_config() -> ExperimentalConfig:
