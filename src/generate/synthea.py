@@ -122,17 +122,19 @@ class GenerateSynthea:
         run: Run Synthea generation with specified commands or load if the data alreadys exists.
     """
 
-    def __init__(self, SyntheaConfig: SyntheaConfig) -> None:
+    def __init__(self, syntheaconfig: SyntheaConfig) -> None:
         """
         Initializes GenerateSynthea object.
 
         Args:
-            population_num (str): The number of synthetic patients you want to generate.
-            path_output (str): Path to the output file.
+            SyntheaConfig (SyntheaConfig): This is a pydantic typed class which has values for
+                                           population_num, county, and path_output
         """
-        self.population_num = SyntheaConfig.population_num
-        self.county = SyntheaConfig.county
-        self.path_output = SyntheaConfig.path_output
+        SyntheaConfig.model_validate(syntheaconfig.model_dump())
+
+        self.population_num = syntheaconfig.population_num
+        self.county = syntheaconfig.county
+        self.path_output = syntheaconfig.path_output
 
     def run_or_load(
         self, extra_commands: List[str] = list(), resave: bool = False
@@ -142,7 +144,7 @@ class GenerateSynthea:
 
         Args:
             commands (List[str]): List of commands to run Synthea.
-            resave (bool): Whether to resave the output.
+            resave (bool): Whether to resave the output. Defaults to False.
 
         Returns:
             List[Dict[str, Any]]: Synthea output as a list of dictionaries.

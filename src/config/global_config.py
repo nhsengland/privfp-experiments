@@ -18,7 +18,7 @@ class SyntheaSettings(BaseModel):
 
 
 class GlobalConfig(BaseModel):
-    output_path: OutputSettings
+    output_paths: OutputSettings
     synthea: SyntheaSettings
 
 

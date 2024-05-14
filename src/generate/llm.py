@@ -7,6 +7,15 @@ from langchain.llms import Ollama
 from langchain.prompts import PromptTemplate
 from typing import List, Dict, Any, Union
 
+from src.config.experimental_config import GenerateConfig
+from src.config.prompt_template_handler import (
+    load_and_validate_generate_prompt_template,
+)
+from src.utils import file_exists
+from src.config.global_config import load_global_config
+
+global_config = load_global_config()
+
 
 def get_batch(
     from_variable: List[Dict[str, Any]], from_path: str
@@ -42,71 +51,68 @@ class GenerateLLM:
     Class for generating language model outputs based on Synthea data.
 
     Methods:
-        run: Generate language model outputs based on Synthea data.
-        load: Load previously generated language model outputs from file.
+        run_or_load: Generates or Loads a language model outputs based on Synthea data.
     """
 
     def __init__(
         self,
+        generateconfig: GenerateConfig,
         synthea_input: Union[str, List[Dict[str, Any]]] = None,
-        synthea_path: str = None,
-        save_output: bool = False,
-        path_output: str = None,
     ) -> None:
         """
         Initializes GenerateLLM object.
 
         Args:
+            generateconfig (GenerateConfig): A pydantic typed config model with values of llm_model_name,
+                                             prompt_template_path, synthea_path, and path_output.
             synthea_input (List[Dict[str, Any]]): Synthea output data or variable name containing Synthea output data.
-            synthea_path (str): File path to load Synthea output data from.
-            save_output (bool): Whether to save the output to a file.
-            path_output (str): Path to the output file.
         """
-        self.synthea_input = synthea_input
-        self.synthea_path = synthea_path
-        self.save_output = save_output
-        self.path_output = path_output
+        GenerateConfig.model_validate(generateconfig.model_dump())
 
-    def run(
-        self, model: Any, template: str, verbose: bool = True
+        self.synthea_input = synthea_input
+        self.llm_model_name = generateconfig.llm_model_name
+        self.synthea_path = generateconfig.synthea_path
+        self.path_output = generateconfig.path_output
+
+        full_template_path = f"{global_config.output_path.generate_template}/{generateconfig.prompt_template_path}"
+        self.prompt_template = load_and_validate_generate_prompt_template(
+            full_template_path
+        )
+
+    def run_or_load(
+        self, verbose: bool = False, resave: bool = False
     ) -> List[str]:
         """
-        Generate synthetic medical notes from Synthea data.
+        Generate or Load synthetic medical notes from Synthea data.
 
         Args:
-            model (Any): Language model to use for generation.
-            template (str): Template for language model prompts.
-            verbose (bool): Decides whether verbose is true or false.
+            verbose (bool): Decides whether verbose is true or false. Defaults to False.
+            resave (bool): Decides whether to resave a model or not. Defaults to False.
 
         Returns:
             List[str]: Generated a list of synthetic medical notes.
         """
 
-        batch = get_batch(self.synthea_input, self.synthea_path)
+        if file_exists(self.path_output) and resave is False:
+            output = load_json(self.path_output)
+        else:
+            batch = get_batch(self.synthea_input, self.synthea_path)
 
-        callback_manager = CallbackManager([])
+            callback_manager = CallbackManager([])
 
-        if verbose:
-            callback_manager.add_handler(StreamingStdOutCallbackHandler())
+            if verbose:
+                callback_manager.add_handler(StreamingStdOutCallbackHandler())
 
-        llm = Ollama(model=model, callback_manager=callback_manager)
+            llm = Ollama(
+                model=self.llm_model_name, callback_manager=callback_manager
+            )
 
-        prompt = PromptTemplate.from_template(template)
-        chain = prompt | llm
+            prompt = PromptTemplate.from_template(self.prompt_template)
+            chain = prompt | llm
 
-        results = chain.batch(batch)
+            output = chain.batch(batch)
 
-        if self.save_output:
-            save_json(results, self.path_output)
+            if resave or file_exists(self.path_output) is False:
+                save_json(output, self.path_output)
 
-        return results
-
-    def load(self) -> List[str]:
-        """
-        Load previously generated language model outputs from file.
-
-        Returns:
-            List[str]: Loaded language model outputs.
-        """
-        output = load_json(self.path_output)
         return output

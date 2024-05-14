@@ -1,6 +1,6 @@
 
 outputs:
-  experiment_name: experiment1
+  experiment_name: default
   save: false
 
 synthea:
@@ -8,14 +8,16 @@ synthea:
   county: 'West Yorkshire'
 
 generate:
-  llm_model_name: llama2
-  prompt_template_path: llama2_template.json
+  llm_model_features:
+    llm_model_name: llama2
+    prompt_template_path: llama2_template.json
 
 extraction:
-  serving_model_type: gliner
+  server_model_type: gliner
   local_features:
     hf_repo_id: yuuko-eth/UniNER-7B-all-GGUF
     hf_filename: UniversalNER-7B-all-Q4_K_M.gguf
+    prompt_template_path: universal_ner_template.json
   ollama_features:
     ollama_ner_model: zeffmuks/universal-ner
-  prompt_template_path: universal_ner_template.json
+    prompt_template_path: universal_ner_template.json

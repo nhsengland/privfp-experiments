@@ -1,5 +1,5 @@
 
-output_path:
+output_paths:
   output_folder: ../outputs
   extraction_template: ../src/config/templates/extraction/
   generate_template: ../src/config/templates/generate/
