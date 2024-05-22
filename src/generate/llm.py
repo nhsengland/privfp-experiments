@@ -70,11 +70,11 @@ class GenerateLLM:
         GenerateConfig.model_validate(generateconfig.model_dump())
 
         self.synthea_input = synthea_input
-        self.llm_model_name = generateconfig.llm_model_name
+        self.llm_model_name = generateconfig.llm_model_features.llm_model_name
         self.synthea_path = generateconfig.synthea_path
         self.path_output = generateconfig.path_output
 
-        full_template_path = f"{global_config.output_path.generate_template}/{generateconfig.prompt_template_path}"
+        full_template_path = f"{global_config.output_paths.generate_template}/{generateconfig.llm_model_features.prompt_template_path}"
         self.prompt_template = load_and_validate_generate_prompt_template(
             full_template_path
         )

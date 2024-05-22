@@ -1,14 +1,132 @@
 import copy
 import itertools
-from typing import List, Tuple, Any
+import json
+from typing import List, Tuple, Any, Dict, Union
 
 from src.config.experimental_config import (
     load_experimental_config,
     reload_as_experimental_config,
     ExperimentalConfig,
+    SyntheaConfig,
+    GenerateConfig,
+    ExtractionConfig,
 )
 from src.config.global_config import load_global_config
 from src.utils import save_json, load_json
+
+
+class ExperimentalConfigHandler:
+    def __init__(
+        self, iter_overrides: dict = dict(), combine_overrides: dict = dict()
+    ):
+        """
+        Initialize the ExperimentalConfigHandler.
+
+        Args:
+            iter_overrides (dict, optional): Overrides to define to override each experimental config. Defaults to dict().
+            combine_overrides (dict, optional): Configuration to combine before iterating across the config. Defaults to dict().
+        """
+        self.iter_overrides = iter_overrides
+        self.combine_overrides = combine_overrides
+        self.experimental_configs = self.create_experimental_config_list()
+
+    def create_experimental_config_list(
+        self,
+    ) -> Dict[
+        str, List[Union[SyntheaConfig, GenerateConfig, ExtractionConfig]]
+    ]:
+        """
+        Create a dictionary which holds all the unique configuration you need to run at each point.
+
+        Returns:
+            Dict[str, List[Union(SyntheaConfig, GenerateConfig, ExtractionConfig)]]
+        """
+        experimental_configs = generate_experimental_config_list(
+            iter_overrides=self.iter_overrides,
+            combine_overrides=self.combine_overrides,
+        )
+
+        synthea_list = list()
+        generate_list = list()
+        extraction_list = list()
+
+        for config in experimental_configs:
+            synthea_list.append(config.synthea)
+            generate_list.append(config.generate)
+            extraction_list.append(config.extraction)
+
+        experimental_config_dict = {
+            "synthea": remove_duplicates(synthea_list, SyntheaConfig),
+            "generate": remove_duplicates(generate_list, GenerateConfig),
+            "extraction": remove_duplicates(extraction_list, ExtractionConfig),
+        }
+        self.experimental_configs = (
+            experimental_config_dict  # Update experimental_configs attribute
+        )
+        return experimental_config_dict
+
+    def load_experimental_config(
+        self, component_type: str
+    ) -> List[Union[SyntheaConfig, GenerateConfig, ExtractionConfig]]:
+        """
+        Load experimental configs based on the specified component type.
+
+        Args:
+            component_type (str): The type of component to load.
+
+        Returns:
+            List[Union[SyntheaConfig, GenerateConfig, ExtractionConfig]]: List of experimental configs of the specified component type.
+        """
+        if component_type == "synthea":
+            return self.experimental_configs["synthea"]
+        elif component_type == "generate":
+            return self.experimental_configs["generate"]
+        elif component_type == "extraction":
+            return self.experimental_configs["extraction"]
+        else:
+            raise ValueError(
+                "Invalid component type. Must be synthea, generate, or extraction."
+            )
+
+    def update_iter_overrides(self, new_iter_overrides: dict):
+        """
+        Update the iter_overrides with new values. If a key already exists, append the value to a list.
+
+        Args:
+            new_iter_overrides (dict): New iter_overrides to update.
+        """
+        for key, value in new_iter_overrides.items():
+            if key in self.iter_overrides:
+                if isinstance(self.iter_overrides[key], list):
+                    self.iter_overrides[key].append(value)
+                else:
+                    self.iter_overrides[key] = [
+                        self.iter_overrides[key],
+                        value,
+                    ]
+            else:
+                self.iter_overrides[key] = value
+        self.create_experimental_config_list()  # Update experimental config after updating iter_overrides
+
+    def update_combine_overrides(self, new_combine_overrides: dict):
+        """
+        Update the combine_overrides with new values. If a key already exists, append the value to a list.
+
+        Args:
+            new_combine_overrides (dict): New combine_overrides to update.
+        """
+        for key, value in new_combine_overrides.items():
+            if key in self.combine_overrides:
+                if isinstance(self.combine_overrides[key], list):
+                    self.combine_overrides[key].append(value)
+                else:
+                    self.combine_overrides[key] = [
+                        self.combine_overrides[key],
+                        value,
+                    ]
+            else:
+                self.combine_overrides[key] = value
+        self.create_experimental_config_list()  # Update experimental config after updating combine_overrides
 
 
 def get_nested_keys_with_list(dictionary: dict):
@@ -447,3 +565,92 @@ def generate_experimental_config_list(
         experimental_config_list.append(override_config)
 
     return experimental_config_list
+
+
+def get_unique_dicts(
+    configurations: List[Dict[str, Any]]
+) -> List[Dict[str, Any]]:
+    """
+    Removes duplicate dictionaries from a list of dictionaries.
+
+    Args:
+        configurations (List[Dict[str, Any]]): List of dictionaries to be checked for duplicates.
+
+    Returns:
+        List[Dict[str, Any]]: List of unique dictionaries.
+    """
+    seen = set()
+    result = []
+    for d in configurations:
+        # Convert dictionary to a string
+        str_d = json.dumps(d, sort_keys=True)
+        if str_d not in seen:
+            seen.add(str_d)
+            # Convert string back to dictionary
+            result.append(json.loads(str_d))
+    return result
+
+
+def remove_duplicates(
+    configurations: List[
+        Union[SyntheaConfig, GenerateConfig, ExtractionConfig]
+    ],
+    pydantic_config: Union[SyntheaConfig, GenerateConfig, ExtractionConfig],
+) -> List[Union[SyntheaConfig, GenerateConfig, ExtractionConfig]]:
+    """
+    Removes duplicate configurations based on their model dumps.
+
+    Args:
+        configurations (List[Union[SyntheaConfig, GenerateConfig, ExtractionConfig]]): List of configurations.
+        pydantic_config (Union[SyntheaConfig, GenerateConfig, ExtractionConfig]): An instance of a Pydantic configuration model.
+
+    Returns:
+        List[Union[SyntheaConfig, GenerateConfig, ExtractionConfig]]: List of unique configurations.
+    """
+    # Convert models to dictionaries
+    configuration_dicts = [config.model_dump() for config in configurations]
+
+    # Get unique dictionaries
+    unique_dicts = get_unique_dicts(configuration_dicts)
+
+    # Convert unique dictionaries back to Pydantic models
+    unique_configurations = [
+        pydantic_config(**config) for config in unique_dicts
+    ]
+
+    return unique_configurations
+
+
+def create_experimental_config_list(
+    iter_overrides: dict = dict(), combine_overrides: dict = dict()
+) -> Dict[str, List[Union[SyntheaConfig, GenerateConfig, ExtractionConfig]]]:
+    """Create a dictionary which holds all the unique configuration you need to run at each point.
+
+    Args:
+        iter_overrides (dict, optional): This is the overrides you want to define to override each experimental config. Defaults to dict().
+        combine_overrides (dict, optional): This is config you want to combine before iterating across the config. Defaults to dict().
+
+    Returns:
+        Dict[str, List[Union(SyntheaConfig, GenerateConfig, ExtractionConfig)]]
+    """
+
+    experimental_configs = generate_experimental_config_list(
+        iter_overrides=iter_overrides, combine_overrides=combine_overrides
+    )
+
+    synthea_list = list()
+    generate_list = list()
+    extraction_list = list()
+
+    for config in experimental_configs:
+        synthea_list.append(config.synthea)
+        generate_list.append(config.generate)
+        extraction_list.append(config.extraction)
+
+    experimental_config_dict = {
+        "synthea": remove_duplicates(synthea_list, SyntheaConfig),
+        "generate": remove_duplicates(generate_list, GenerateConfig),
+        "extraction": remove_duplicates(extraction_list, ExtractionConfig),
+    }
+
+    return experimental_config_dict

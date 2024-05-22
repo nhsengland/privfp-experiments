@@ -9,6 +9,10 @@ class LocalFeaturesConfig(BaseModel):
     prompt_template_path: Optional[str] = None
 
 
+class GlinerFeaturesConfig(BaseModel):
+    gliner_model: Optional[str] = None
+
+
 class OllamaFeaturesConfig(BaseModel):
     ollama_ner_model: Optional[str] = None
     prompt_template_path: Optional[str] = None
@@ -21,6 +25,7 @@ class GenerateModelFeaturesConfig(BaseModel):
 
 class ExtractionConfig(BaseModel):
     server_model_type: str
+    gliner_features: Optional[GlinerFeaturesConfig]
     local_features: Optional[LocalFeaturesConfig]
     ollama_features: Optional[OllamaFeaturesConfig]
     entity_list: Optional[List] = None

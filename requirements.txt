@@ -16,3 +16,7 @@ gliner>=0.1.12
 hydra-core==1.3.2
 omegaconf==2.3.0
 pydantic
+graphviz
+mplcursors
+networkx
+plotly
