@@ -12,7 +12,7 @@ from src.config.experimental_config import (
     ExtractionConfig,
 )
 from src.config.global_config import load_global_config
-from src.utils import save_json, load_json
+from src.config.experimental_config_visualisation import draw_dag_graph
 
 
 class ExperimentalConfigHandler:
@@ -28,7 +28,9 @@ class ExperimentalConfigHandler:
         """
         self.iter_overrides = iter_overrides
         self.combine_overrides = combine_overrides
-        self.experimental_configs = self.create_experimental_config_list()
+        self.experimental_configs, self.output_path = (
+            self.create_experimental_config_list()
+        )
 
     def create_experimental_config_list(
         self,
@@ -41,7 +43,7 @@ class ExperimentalConfigHandler:
         Returns:
             Dict[str, List[Union(SyntheaConfig, GenerateConfig, ExtractionConfig)]]
         """
-        experimental_configs = generate_experimental_config_list(
+        experimental_configs, output_path = generate_experimental_config_list(
             iter_overrides=self.iter_overrides,
             combine_overrides=self.combine_overrides,
         )
@@ -63,7 +65,7 @@ class ExperimentalConfigHandler:
         self.experimental_configs = (
             experimental_config_dict  # Update experimental_configs attribute
         )
-        return experimental_config_dict
+        return experimental_config_dict, output_path
 
     def load_experimental_config(
         self, component_type: str
@@ -127,6 +129,10 @@ class ExperimentalConfigHandler:
             else:
                 self.combine_overrides[key] = value
         self.create_experimental_config_list()  # Update experimental config after updating combine_overrides
+
+    def load_pipeline_visualisation(self):
+
+        draw_dag_graph(config_handler=self, path_outputs=self.output_path)
 
 
 def get_nested_keys_with_list(dictionary: dict):
@@ -312,13 +318,44 @@ def create_total_combined_overrides(
     iter_list = get_iter_overrides(iter_overrides)
 
     if len(comb_list) == 0:
-        return iter_list
+        total_comb = iter_list
     elif len(iter_list) == 0:
-        return comb_list
+        total_comb = comb_list
     else:
         total_comb = list(itertools.product(*[iter_list, comb_list]))
-        total_combined_dicts = combine_list_of_dictionaries(total_comb)
-        return total_combined_dicts
+        total_comb = combine_list_of_dictionaries(total_comb)
+
+    clean_comb = correct_overrides_model_serving_type(total_comb)
+    return clean_comb
+
+
+def correct_overrides_model_serving_type(
+    total_overrides: List[dict],
+) -> List[dict]:
+    """Function to correct for instances where you want to try various model_serving types with different values, but don't want complete iteration being copied.
+
+    Args:
+        total_overrides (List[dict]): List of total overrides you want to overwrite.
+
+    Returns:
+        List[dict]: Returns a list of ovverrides where None has been forced for some specific serving model vqriables.
+    """
+    configurations = copy.deepcopy(total_overrides)
+    for config in configurations:
+        if "extraction.server_model_type" in config.keys():
+            if config["extraction.server_model_type"] != "gliner":
+                config["extraction.gliner_features.gliner_model"] = None
+            if config["extraction.server_model_type"] != "ollama":
+                config["extraction.ollama_features.ollama_ner_model"] = None
+                config["extraction.ollama_features.prompt_template_path"] = (
+                    None
+                )
+            if config["extraction.server_model_type"] != "local":
+                config["extraction.local_features.hf_repo_id"] = None
+                config["extraction.local_features.hf_filename"] = None
+                config["extraction.local_features.prompt_template_path"] = None
+
+    return configurations
 
 
 def create_paths_per_component_per_override(
@@ -418,6 +455,49 @@ def add_path_or_carry_through(
     return data_paths
 
 
+def get_important_key_values(dict: Dict, component_type: str):
+    return {
+        key: value
+        for key, value in dict.items()
+        if (key.startswith(component_type) and value is not None)
+    }
+
+
+def get_path_and_output_from_config(path_dict: Dict, file_prefix: str):
+
+    path_dict = copy.deepcopy(path_dict)
+    output_dict = dict()
+
+    for i, path in enumerate(path_dict.keys()):
+        value = path_dict[path]
+        path_dict[path] = f"{file_prefix}_{i}.json"
+        output_dict[f"{file_prefix}_{i}"] = value
+
+    return path_dict, output_dict
+
+
+def create_path_and_output_dict(synthea_dict, generate_dict, extraction_dict):
+
+    global_config = load_global_config()
+    synthea_path, synthea_output = get_path_and_output_from_config(
+        synthea_dict, global_config.output_paths.synthea_prefix
+    )
+    generate_path, generate_output = get_path_and_output_from_config(
+        generate_dict, global_config.output_paths.generate_prefix
+    )
+    extraction_path, extraction_output = get_path_and_output_from_config(
+        extraction_dict, global_config.output_paths.extraction_prefix
+    )
+
+    combined_path = {**synthea_path, **generate_path, **extraction_path}
+    combined_output = {
+        **synthea_output,
+        **generate_output,
+        **extraction_output,
+    }
+    return combined_path, combined_output
+
+
 def create_and_save_data_paths(total_combined_overrides: List[dict]) -> str:
     """
     Create and save data paths based on combined overrides.
@@ -429,47 +509,35 @@ def create_and_save_data_paths(total_combined_overrides: List[dict]) -> str:
         str: The path where the data paths are saved.
 
     """
-    global_config = load_global_config()
 
-    total_synthea_paths = []
-    total_generate_paths = []
-    total_extraction_paths = []
+    synthea_dict = dict()
+    generate_dict = dict()
+    extraction_dict = dict()
 
     for sub_override in total_combined_overrides:
         synthea_paths, generate_paths, extraction_paths = (
             create_paths_per_component_per_override(sub_override)
         )
 
-        total_synthea_paths.extend(synthea_paths)
-        total_generate_paths.extend(generate_paths)
-        total_extraction_paths.extend(extraction_paths)
-
-    total_synthea_paths = list(set(total_synthea_paths))
-    total_generate_paths = list(set(total_generate_paths))
-    total_extraction_paths = list(set(total_extraction_paths))
-
-    data_paths = {}
-
-    for i, path in enumerate(total_synthea_paths):
-        data_paths[path] = (
-            f"{global_config.output_paths.synthea_prefix}_{i}.json"
+        synthea_values = get_important_key_values(
+            sub_override, component_type="synthea"
+        )
+        generate_values = get_important_key_values(
+            sub_override, component_type="generate"
+        )
+        extraction_values = get_important_key_values(
+            sub_override, component_type="extraction"
         )
 
-    for i, path in enumerate(total_generate_paths):
-        data_paths[path] = (
-            f"{global_config.output_paths.generate_prefix}_{i}.json"
-        )
+        synthea_dict[synthea_paths[0]] = synthea_values
+        generate_dict[generate_paths[0]] = generate_values
+        extraction_dict[extraction_paths[0]] = extraction_values
 
-    for i, path in enumerate(total_extraction_paths):
-        data_paths[path] = (
-            f"{global_config.output_paths.extraction_prefix}_{i}.json"
-        )
+    path_dict, output_dict = create_path_and_output_dict(
+        synthea_dict, generate_dict, extraction_dict
+    )
 
-    experiment_name = total_combined_overrides[0]["outputs.experiment_name"]
-
-    output_path = f"{global_config.output_paths.output_folder}/{experiment_name}/data_paths.json"
-    save_json(data=data_paths, path=output_path)
-    return output_path
+    return path_dict, output_dict
 
 
 def update_experimental_config_value(
@@ -552,9 +620,9 @@ def generate_experimental_config_list(
         iter_overrides=iter_overrides, combine_overrides=combine_overrides
     )
 
-    output_path = create_and_save_data_paths(total_combined_overrides)
-
-    data_paths = load_json(output_path)
+    data_paths, output_paths = create_and_save_data_paths(
+        total_combined_overrides
+    )
 
     experimental_config_list = list()
 
@@ -564,7 +632,7 @@ def generate_experimental_config_list(
         )
         experimental_config_list.append(override_config)
 
-    return experimental_config_list
+    return experimental_config_list, output_paths
 
 
 def get_unique_dicts(
@@ -634,7 +702,7 @@ def create_experimental_config_list(
         Dict[str, List[Union(SyntheaConfig, GenerateConfig, ExtractionConfig)]]
     """
 
-    experimental_configs = generate_experimental_config_list(
+    experimental_configs, output_path = generate_experimental_config_list(
         iter_overrides=iter_overrides, combine_overrides=combine_overrides
     )
 
@@ -653,4 +721,4 @@ def create_experimental_config_list(
         "extraction": remove_duplicates(extraction_list, ExtractionConfig),
     }
 
-    return experimental_config_dict
+    return experimental_config_dict, output_path
