@@ -1,5 +1,11 @@
 from streamlit_annotation_tools import text_labeler
 import streamlit as st
+from src.extraction.extraction import Extraction
+
+import sys
+
+sys.path.append("../../")
+
 
 fake_data = [
     "Clinical Note:\nPatient: Harris Fadel\nNHS Number: 5927778917\nDate of Birth: August 8, 2005\n\nPresentation: Acute bronchitis (disorder)\n\nSymptoms:\n\n* Cough\n* Chest tightness\n* Shortness of breath\n\nMedical History:\n\n* Recent respiratory infection\n\nReview of Systems:\n\n* No reported fever or chills\n* No cough productive of yellow or green mucus\n\nPlan:\n\n* Prescribe antibiotics for 7-10 days\n* Instruct patient to rest and avoid strenuous activities\n* Monitor patient's condition closely and adjust plan as needed.",
@@ -17,13 +23,23 @@ fake_data = [
 # Initialize the session state once at the start of the app
 if "initialized" not in st.session_state:
     st.session_state["initialized"] = True
-    for key in range(len(fake_data)):
-        st.session_state[key] = []
+    for i in range(len(fake_data)):
+        st.session_state[i + 1] = {}
 
 
 def update():
     temp = st.session_state["temp"]
     st.session_state[temp["id"]] = temp["annotations"]
+
+    if isinstance(
+        temp["annotations"], dict
+    ):  # Check if a dictionary, annotate can return an empty array
+        keys = list(temp["annotations"].keys())
+
+        for i in range(len(fake_data)):  # Add keys to all session states
+            for key in keys:
+                if key not in st.session_state[i + 1].keys():
+                    st.session_state[i + 1][key] = []
 
 
 def annotation_tool(data):
@@ -31,24 +47,61 @@ def annotation_tool(data):
     slider_id = st.slider(
         "Select Clinician Note",
         1,
-        len(fake_data) - 1,
+        len(fake_data),
         on_change=update,
         key="my_slider",
     )
-
+    print("here")
     string = data[slider_id - 1]
     labels = st.session_state[slider_id]
+    annotations = text_labeler(string.replace("\n", "  "), labels)
 
-    annotations = text_labeler(string, labels)
-    print(annotations)
     st.session_state["temp"] = {"id": slider_id, "annotations": annotations}
 
-    # button = st.button("Submit Labels")
-    # if button:
-    #     st.session_state[slider_id] = annotations
+    NER = st.button("NER :mag:")
+    if NER:
+        update()  # Update session state with current temp state
+        extract()  # Extract,
+        update()  # Update session state with new extractions
+        st.experimental_rerun()
+
+
+def extract():
+
+    temp = st.session_state["temp"]
+
+    if isinstance(temp["annotations"], dict):
+
+        keys = list(temp["annotations"].keys())
+        string = fake_data[temp["id"] - 1]
+        # print(string)
+        results = Extraction(
+            llm_input=[string], ent_list=keys, save_output=False
+        ).run(server_model_type="gliner")
+
+        for r in results:
+            entities = r["Entities"]
+            for entity in entities:
+
+                a = {
+                    "start": entity["start"] + 1,
+                    "end": entity["end"] + 1,
+                    "label": entity["text"],
+                }
+
+                if a not in st.session_state[temp["id"]][entity["label"]]:
+
+                    if entity["label"] in keys:
+                        st.session_state[temp["id"]][entity["label"]] += [a]
+                    else:
+                        st.session_state[temp["id"]][entity["label"]] = [a]
+
+    print("Extraction Done")
+    return None
 
 
 annotation_tool(fake_data)
+
 
 verbose = False
 if verbose:
