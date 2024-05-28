@@ -57,11 +57,27 @@ class ExperimentalConfig(BaseModel):
     extraction: ExtractionConfig
 
 
-def load_experimental_config() -> ExperimentalConfig:
-    with open("../config/experimental_config.yaml", "r") as config_file:
+def load_experimental_config(config_path: str) -> ExperimentalConfig:
+    """Loads the experimental config with a given configuration path.
+
+    Args:
+        config_path (str): Path to where the experimental config lives.
+
+    Returns:
+        ExperimentalConfig: Returns a pydantic structured config dictionary.
+    """
+    with open(config_path, "r") as config_file:
         config_dict = yaml.safe_load(config_file)
         return ExperimentalConfig.model_validate(config_dict)
 
 
 def reload_as_experimental_config(config_dict: dict) -> ExperimentalConfig:
+    """Reloads the experimental config and ensure the config is validated when it's been transformed.
+
+    Args:
+        config_dict (dict): This is a data dictionary with the same structure as the experimental config.
+
+    Returns:
+        ExperimentalConfig: The experimental config restructured to a pydantic model structure.
+    """
     return ExperimentalConfig.model_validate(config_dict)

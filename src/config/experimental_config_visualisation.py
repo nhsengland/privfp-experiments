@@ -10,8 +10,8 @@ def draw_dag_graph(config_handler: Any, path_outputs: Dict[str, Any]) -> None:
     """Creates a dag graph showing the experimental workflow
 
     Args:
-        config_handler (_type_): This is the config handler that has been defined.
-        path_outputs (_type_): This is the location of the outputs created from the experimental handler.
+        config_handler (ExperimentalConfig): This is the config handler that has been defined.
+        path_outputs (Dict[str, Any]): This is the location of the outputs created from the experimental handler.
     """
     relationships = get_relationships(config_handler)
     positions, figsize_height = get_dag_positions(relationships)
@@ -119,12 +119,16 @@ def get_relationships(config_handler: Any) -> List[Tuple]:
     """
     relationships = []
 
-    for config in config_handler.load_experimental_config("generate"):
+    for config in config_handler.load_component_experimental_config(
+        "generate"
+    ):
         synthea_path = config.synthea_path.split("/")[-1].split(".")[0]
         path_output = config.path_output.split("/")[-1].split(".")[0]
         relationships.append((synthea_path, path_output))
 
-    for config in config_handler.load_experimental_config("extraction"):
+    for config in config_handler.load_component_experimental_config(
+        "extraction"
+    ):
         llm_path = config.llm_path.split("/")[-1].split(".")[0]
         path_output = config.path_output.split("/")[-1].split(".")[0]
         relationships.append((llm_path, path_output))

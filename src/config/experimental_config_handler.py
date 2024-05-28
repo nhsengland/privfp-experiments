@@ -1,6 +1,8 @@
 import copy
 import itertools
 import json
+import os
+from omegaconf import OmegaConf
 from typing import List, Tuple, Any, Dict, Union
 
 from src.config.experimental_config import (
@@ -11,23 +13,53 @@ from src.config.experimental_config import (
     GenerateConfig,
     ExtractionConfig,
 )
+from src.generate.synthea import GenerateSynthea
+from src.generate.llm import GenerateLLM
+from src.extraction.extraction import Extraction
 from src.config.global_config import load_global_config
 from src.config.experimental_config_visualisation import draw_dag_graph
+
+from src.utils import load_json
 
 
 class ExperimentalConfigHandler:
     def __init__(
-        self, iter_overrides: dict = dict(), combine_overrides: dict = dict()
+        self,
+        default_config_path: str,
+        iter_overrides: dict = dict(),
+        combine_overrides: dict = dict(),
     ):
         """
         Initialize the ExperimentalConfigHandler.
 
         Args:
+            default_config_path (str): This defines the location of the default experimental config path.
             iter_overrides (dict, optional): Overrides to define to override each experimental config. Defaults to dict().
             combine_overrides (dict, optional): Configuration to combine before iterating across the config. Defaults to dict().
         """
         self.iter_overrides = iter_overrides
         self.combine_overrides = combine_overrides
+
+        global_config = load_global_config()
+        experiment_name = self.iter_overrides["outputs.experiment_name"]
+        experiment_path = (
+            f"{global_config.output_paths.output_folder}/{experiment_name}"
+        )
+
+        self.experiment_dir_path = experiment_path
+
+        # create the experiment config path
+        experiment_config_filename = default_config_path.split("/")[-1]
+        self.experiment_config_path = (
+            f"{experiment_path}/{experiment_config_filename}"
+        )
+
+        move_experiment_config_if_not_exists(
+            experiment_config_path=self.experiment_config_path,
+            default_config_path=default_config_path,
+        )
+
+        # Move experimental config file to experiment folder if file doesnt exist.
         self.experimental_configs, self.output_path = (
             self.create_experimental_config_list()
         )
@@ -44,6 +76,8 @@ class ExperimentalConfigHandler:
             Dict[str, List[Union(SyntheaConfig, GenerateConfig, ExtractionConfig)]]
         """
         experimental_configs, output_path = generate_experimental_config_list(
+            experiment_dir_path=self.experiment_dir_path,
+            experiment_config_path=self.experiment_config_path,
             iter_overrides=self.iter_overrides,
             combine_overrides=self.combine_overrides,
         )
@@ -67,7 +101,7 @@ class ExperimentalConfigHandler:
         )
         return experimental_config_dict, output_path
 
-    def load_experimental_config(
+    def load_component_experimental_config(
         self, component_type: str
     ) -> List[Union[SyntheaConfig, GenerateConfig, ExtractionConfig]]:
         """
@@ -89,6 +123,23 @@ class ExperimentalConfigHandler:
             raise ValueError(
                 "Invalid component type. Must be synthea, generate, or extraction."
             )
+
+    def run_component_experiment_config(self, component_type: str) -> None:
+
+        if component_type == "synthea":
+            ComponentClass = GenerateSynthea
+        elif component_type == "generate":
+            ComponentClass = GenerateLLM
+        elif component_type == "extraction":
+            ComponentClass = Extraction
+
+        for i, component_config in enumerate(
+            self.load_component_experimental_config(component_type)
+        ):
+            print(f"{component_type} run {i} with config {component_config}")
+            component_output = ComponentClass(component_config).run_or_load()
+            print(component_output, "\n")
+        pass
 
     def update_iter_overrides(self, new_iter_overrides: dict):
         """
@@ -131,8 +182,20 @@ class ExperimentalConfigHandler:
         self.create_experimental_config_list()  # Update experimental config after updating combine_overrides
 
     def load_pipeline_visualisation(self):
+        """This creates a unidirectional DAG that shows the experimental workflow."""
 
         draw_dag_graph(config_handler=self, path_outputs=self.output_path)
+
+    def load_specified_data_file(self, filename: str):
+
+        component_type = filename.split("_")[0]
+        filename_path = (
+            f"{self.experiment_dir_path}/{component_type}/{filename}.json"
+        )
+
+        data_output = load_json(path=filename_path)
+
+        return data_output
 
 
 def get_nested_keys_with_list(dictionary: dict):
@@ -293,12 +356,15 @@ def get_iter_overrides(iter_overrides: dict) -> List[dict]:
 
 
 def create_total_combined_overrides(
-    iter_overrides: dict, combine_overrides: dict
+    experimental_config_path: str,
+    iter_overrides: dict,
+    combine_overrides: dict,
 ) -> List[dict]:
     """
     Generate total combined overrides by combining iteration and combination overrides.
 
     Args:
+        experimental_config_path (str): The path of where the experimental config is located.
         iter_overrides (dict): A dictionary containing iteration overrides.
         combine_overrides (dict): A dictionary containing combination overrides.
 
@@ -307,7 +373,7 @@ def create_total_combined_overrides(
 
     """
 
-    experimental_config = load_experimental_config()
+    experimental_config = load_experimental_config(experimental_config_path)
 
     # Verify configs have the correct inputs requireed.
     verify_keys_exist(experimental_config, combine_overrides)
@@ -559,12 +625,17 @@ def update_experimental_config_value(
 
 
 def create_override_experimental_config(
-    override: dict, data_paths: List[str]
+    experiment_dir_path: str,
+    experiment_config_path: str,
+    override: dict,
+    data_paths: List[str],
 ) -> ExperimentalConfig:
     """
     Create an experimental configuration with overrides and data paths.
 
     Args:
+        experiment_dir_path (str): A path to the location of where the experiment directory lives.
+        experiment_config_path (str): A path to the location of where the experiment config sits.
         override (dict): A dictionary containing overrides to be applied to the experimental configuration.
         data_paths (List[str]): A list of data paths.
 
@@ -573,7 +644,7 @@ def create_override_experimental_config(
 
     """
     experimental_config = copy.deepcopy(
-        load_experimental_config().model_dump()
+        load_experimental_config(experiment_config_path).model_dump()
     )
     global_config = load_global_config()
 
@@ -589,9 +660,10 @@ def create_override_experimental_config(
     synthea_paths, generate_paths, extraction_paths = (
         create_paths_per_component_per_override(override)
     )
-    synthea_path = f"{global_config.output_paths.output_folder}/{global_config.output_paths.synthea_prefix}/{data_paths[synthea_paths[0]]}"
-    generate_path = f"{global_config.output_paths.output_folder}/{global_config.output_paths.synthea_prefix}/{data_paths[generate_paths[0]]}"
-    extraction_path = f"{global_config.output_paths.output_folder}/{global_config.output_paths.synthea_prefix}/{data_paths[extraction_paths[0]]}"
+
+    synthea_path = f"{experiment_dir_path}/{global_config.output_paths.synthea_prefix}/{data_paths[synthea_paths[0]]}"
+    generate_path = f"{experiment_dir_path}/{global_config.output_paths.generate_prefix}/{data_paths[generate_paths[0]]}"
+    extraction_path = f"{experiment_dir_path}/{global_config.output_paths.extraction_prefix}/{data_paths[extraction_paths[0]]}"
 
     override_experiminetal_config.synthea.path_output = synthea_path
     override_experiminetal_config.generate.synthea_path = synthea_path
@@ -603,12 +675,17 @@ def create_override_experimental_config(
 
 
 def generate_experimental_config_list(
-    iter_overrides: dict = dict(), combine_overrides: dict = dict()
+    experiment_dir_path: str,
+    experiment_config_path: str,
+    iter_overrides: dict = dict(),
+    combine_overrides: dict = dict(),
 ) -> List[ExperimentalConfig]:
     """
     Generate a list of experimental configurations based on iteration and combination overrides.
 
     Args:
+        experiment_dir_path (str): path to where the experimental directory is located.
+        experiment_config_path (str): path to where the experimental config sits.
         iter_overrides (dict, optional): A dictionary containing iteration overrides. Defaults to an empty dictionary.
         combine_overrides (dict, optional): A dictionary containing combination overrides. Defaults to an empty dictionary.
 
@@ -617,7 +694,9 @@ def generate_experimental_config_list(
 
     """
     total_combined_overrides = create_total_combined_overrides(
-        iter_overrides=iter_overrides, combine_overrides=combine_overrides
+        experimental_config_path=experiment_config_path,
+        iter_overrides=iter_overrides,
+        combine_overrides=combine_overrides,
     )
 
     data_paths, output_paths = create_and_save_data_paths(
@@ -628,7 +707,10 @@ def generate_experimental_config_list(
 
     for i, override in enumerate(total_combined_overrides):
         override_config = create_override_experimental_config(
-            override, data_paths
+            experiment_dir_path=experiment_dir_path,
+            experiment_config_path=experiment_config_path,
+            override=override,
+            data_paths=data_paths,
         )
         experimental_config_list.append(override_config)
 
@@ -690,11 +772,14 @@ def remove_duplicates(
 
 
 def create_experimental_config_list(
-    iter_overrides: dict = dict(), combine_overrides: dict = dict()
+    experiment_dir_path: str,
+    iter_overrides: dict = dict(),
+    combine_overrides: dict = dict(),
 ) -> Dict[str, List[Union[SyntheaConfig, GenerateConfig, ExtractionConfig]]]:
     """Create a dictionary which holds all the unique configuration you need to run at each point.
 
     Args:
+        experiment_dir_path (str): This defines the path to the experiment directory.
         iter_overrides (dict, optional): This is the overrides you want to define to override each experimental config. Defaults to dict().
         combine_overrides (dict, optional): This is config you want to combine before iterating across the config. Defaults to dict().
 
@@ -703,7 +788,9 @@ def create_experimental_config_list(
     """
 
     experimental_configs, output_path = generate_experimental_config_list(
-        iter_overrides=iter_overrides, combine_overrides=combine_overrides
+        experiment_dir_path=experiment_dir_path,
+        iter_overrides=iter_overrides,
+        combine_overrides=combine_overrides,
     )
 
     synthea_list = list()
@@ -722,3 +809,30 @@ def create_experimental_config_list(
     }
 
     return experimental_config_dict, output_path
+
+
+def move_experiment_config_if_not_exists(
+    experiment_config_path: str, default_config_path: str
+) -> None:
+    """
+    Save the experimental configuration to a specified path if the file does not already exist.
+
+    Args:
+        experiment_config_path (str): The path where the experimental configuration should be saved.
+        default_config_path (str): The path to the default configuration file used to load the initial configuration.
+    """
+    if not os.path.exists(experiment_config_path):
+        # Load the experimental configuration
+        experiment_config = load_experimental_config(default_config_path)
+
+        # Convert the Pydantic model to a dictionary
+        model_dict = experiment_config.dict()
+
+        # Convert the dictionary to an OmegaConf DictConfig
+        config = OmegaConf.create(model_dict)
+
+        # Save the DictConfig to a YAML file
+        OmegaConf.save(config, experiment_config_path)
+        print(f"Configuration saved to {experiment_config_path}")
+    else:
+        print(f"Configuration file already exists at {experiment_config_path}")

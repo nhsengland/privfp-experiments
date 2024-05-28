@@ -23,6 +23,11 @@ class GlobalConfig(BaseModel):
 
 
 def load_global_config() -> GlobalConfig:
+    """Loads the global config from the main config folder.
+
+    Returns:
+        GlobalConfig: Returns the loaded in yaml file with the global config path that has been predefined.
+    """
     with open("../config/global_config.yaml", "r") as config_file:
         config_dict = yaml.safe_load(config_file)
         return GlobalConfig.model_validate(config_dict)

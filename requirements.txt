@@ -20,3 +20,4 @@ graphviz
 mplcursors
 networkx
 plotly
+omegaconf

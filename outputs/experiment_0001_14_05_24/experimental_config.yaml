@@ -1,0 +1,31 @@
+outputs:
+  experiment_name: default
+  save: false
+synthea:
+  population_num: '50'
+  county: West Yorkshire
+  path_output: null
+generate:
+  llm_model_features:
+    llm_model_name: llama2
+    prompt_template_path: llama2_template.json
+  synthea_path: null
+  path_output: null
+extraction:
+  server_model_type: gliner
+  gliner_features:
+    gliner_model: urchade/gliner_medium-v2.1
+  local_features:
+    hf_repo_id: yuuko-eth/UniNER-7B-all-GGUF
+    hf_filename: UniversalNER-7B-all-Q4_K_M.gguf
+    prompt_template_path: universal_ner_template.json
+  ollama_features:
+    ollama_ner_model: zeffmuks/universal-ner
+    prompt_template_path: universal_ner_template.json
+  entity_list:
+  - person
+  - date of bith
+  - nhs number
+  - diagnosis
+  llm_path: null
+  path_output: null
