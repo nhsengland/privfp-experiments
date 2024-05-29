@@ -31,7 +31,8 @@ def load_and_validate_prompt_template(
 
     # Check if required placeholders are present in the template
     for placeholder in required_placeholders:
-        if placeholder not in template:
+        placeholder_string = "{" + placeholder + "}"
+        if placeholder_string not in template:
             raise PromptTemplateError(
                 f"Prompt template must contain '{placeholder}'."
             )
@@ -93,7 +94,8 @@ def save_template_to_json(
     """
     # Check if required placeholders are present in the template
     for placeholder in required_placeholders:
-        if placeholder not in template_str:
+        placeholder_string = "{" + placeholder + "}"
+        if placeholder_string not in template_str:
             raise PromptTemplateError(
                 f"Template must contain '{placeholder}'."
             )
