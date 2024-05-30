@@ -25,6 +25,6 @@ extraction:
     prompt_template_path: universal_ner_template.json
   entity_list:
     - person
-    - date of bith
+    - date of birth
     - nhs number
     - diagnosis

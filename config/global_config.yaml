@@ -1,8 +1,8 @@
 
 output_paths:
   output_folder: ../outputs
-  extraction_template: ../src/config/templates/extraction/
-  generate_template: ../src/config/templates/generate/
+  extraction_template: ../templates/extraction/
+  generate_template: ../templates/generate/
   synthea_prefix: synthea
   generate_prefix: generate
   extraction_prefix: extraction

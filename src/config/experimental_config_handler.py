@@ -186,7 +186,15 @@ class ExperimentalConfigHandler:
 
         draw_dag_graph(config_handler=self, path_outputs=self.output_path)
 
-    def load_specified_data_file(self, filename: str):
+    def load_specified_data_file(self, filename: str) -> Dict[str, Any]:
+        """Loads data file that is labelled on the experimental pipeline dag visualisation.
+
+        Args:
+            filename (str): This is the name of the file without the extension. i.e. you would say generate_0 not generate_0.json
+
+        Returns:
+            (Dict[str, Any]): This returns a dictionary that was created from this step.
+        """
 
         component_type = filename.split("_")[0]
         filename_path = (
