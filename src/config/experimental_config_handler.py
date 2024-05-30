@@ -28,6 +28,7 @@ class ExperimentalConfigHandler:
         default_config_path: str,
         iter_overrides: dict = dict(),
         combine_overrides: dict = dict(),
+        global_config: Any = None,
     ):
         """
         Initialize the ExperimentalConfigHandler.
@@ -36,15 +37,18 @@ class ExperimentalConfigHandler:
             default_config_path (str): This defines the location of the default experimental config path.
             iter_overrides (dict, optional): Overrides to define to override each experimental config. Defaults to dict().
             combine_overrides (dict, optional): Configuration to combine before iterating across the config. Defaults to dict().
+            global_config (Any, optional): This is the Global Config for a pydantic model, if this is set to None the config is read in from a default path.
         """
         self.iter_overrides = iter_overrides
         self.combine_overrides = combine_overrides
 
-        global_config = load_global_config()
+        if global_config is None:
+            self.global_config = load_global_config()
+        else:
+            self.global_config = global_config
+
         experiment_name = self.iter_overrides["outputs.experiment_name"]
-        experiment_path = (
-            f"{global_config.output_paths.output_folder}/{experiment_name}"
-        )
+        experiment_path = f"{self.global_config.output_paths.output_folder}/{experiment_name}"
 
         self.experiment_dir_path = experiment_path
 
@@ -76,6 +80,7 @@ class ExperimentalConfigHandler:
             Dict[str, List[Union(SyntheaConfig, GenerateConfig, ExtractionConfig)]]
         """
         experimental_configs, output_path = generate_experimental_config_list(
+            global_config=self.global_config,
             experiment_dir_path=self.experiment_dir_path,
             experiment_config_path=self.experiment_config_path,
             iter_overrides=self.iter_overrides,
@@ -134,10 +139,14 @@ class ExperimentalConfigHandler:
             ComponentClass = Extraction
 
         for i, component_config in enumerate(
-            self.load_component_experimental_config(component_type)
+            self.load_component_experimental_config(
+                component_type=component_type
+            )
         ):
             print(f"{component_type} run {i} with config {component_config}")
-            component_output = ComponentClass(component_config).run_or_load()
+            component_output = ComponentClass(
+                self.global_config, component_config
+            ).run_or_load()
             print(component_output, "\n")
         pass
 
@@ -550,9 +559,25 @@ def get_path_and_output_from_config(path_dict: Dict, file_prefix: str):
     return path_dict, output_dict
 
 
-def create_path_and_output_dict(synthea_dict, generate_dict, extraction_dict):
+def create_path_and_output_dict(
+    global_config: Any,
+    synthea_dict: Any,
+    generate_dict: Any,
+    extraction_dict: Any,
+) -> Any:
+    """Creates the paths required for each component.
 
-    global_config = load_global_config()
+    Args:
+        global_config (Any): This is a GlobalConfig Pydantic model that is used to define the output folder location.
+        synthea_dict (Dict[str, Any]): This defines the features required fro the synthea component (from the experiment.yaml file.)
+        generate_dict (Dict[str, Any]):This defines the features required fro the generate component (from the experiment.yaml file.)
+        extraction_dict (Dict[str, Any]): This defines the features required fro the extraction component (from the experiment.yaml file.)
+
+    Returns:
+        combined_path (Dict[str, str]): This is a dictionary of string path name to the name of the path.
+        combined_output (Dict[str, Any]): The outputs associated to each path. This is so path names can be linked back to outputs.
+    """
+
     synthea_path, synthea_output = get_path_and_output_from_config(
         synthea_dict, global_config.output_paths.synthea_prefix
     )
@@ -569,14 +594,17 @@ def create_path_and_output_dict(synthea_dict, generate_dict, extraction_dict):
         **generate_output,
         **extraction_output,
     }
-    return combined_path, combined_output
+    return [combined_path, combined_output]
 
 
-def create_and_save_data_paths(total_combined_overrides: List[dict]) -> str:
+def create_and_save_data_paths(
+    global_config: Any, total_combined_overrides: List[dict]
+) -> str:
     """
     Create and save data paths based on combined overrides.
 
     Args:
+        global_config (Any): Pydantic defined global config model read in from a yaml file.
         total_combined_overrides (List[dict]): A list of dictionaries representing total combined overrides.
 
     Returns:
@@ -608,7 +636,10 @@ def create_and_save_data_paths(total_combined_overrides: List[dict]) -> str:
         extraction_dict[extraction_paths[0]] = extraction_values
 
     path_dict, output_dict = create_path_and_output_dict(
-        synthea_dict, generate_dict, extraction_dict
+        global_config=global_config,
+        synthea_dict=synthea_dict,
+        generate_dict=generate_dict,
+        extraction_dict=extraction_dict,
     )
 
     return path_dict, output_dict
@@ -633,6 +664,7 @@ def update_experimental_config_value(
 
 
 def create_override_experimental_config(
+    global_config: Any,
     experiment_dir_path: str,
     experiment_config_path: str,
     override: dict,
@@ -642,6 +674,7 @@ def create_override_experimental_config(
     Create an experimental configuration with overrides and data paths.
 
     Args:
+        global_config (Any): Pydantic model for the Global Config read from a .yaml file.
         experiment_dir_path (str): A path to the location of where the experiment directory lives.
         experiment_config_path (str): A path to the location of where the experiment config sits.
         override (dict): A dictionary containing overrides to be applied to the experimental configuration.
@@ -654,7 +687,6 @@ def create_override_experimental_config(
     experimental_config = copy.deepcopy(
         load_experimental_config(experiment_config_path).model_dump()
     )
-    global_config = load_global_config()
 
     for override_key, override_value in override.items():
         update_experimental_config_value(
@@ -683,6 +715,7 @@ def create_override_experimental_config(
 
 
 def generate_experimental_config_list(
+    global_config: Any,
     experiment_dir_path: str,
     experiment_config_path: str,
     iter_overrides: dict = dict(),
@@ -692,6 +725,7 @@ def generate_experimental_config_list(
     Generate a list of experimental configurations based on iteration and combination overrides.
 
     Args:
+        global_config (Any): Pydantic defined model of the Global Config located at the yaml file.
         experiment_dir_path (str): path to where the experimental directory is located.
         experiment_config_path (str): path to where the experimental config sits.
         iter_overrides (dict, optional): A dictionary containing iteration overrides. Defaults to an empty dictionary.
@@ -708,13 +742,15 @@ def generate_experimental_config_list(
     )
 
     data_paths, output_paths = create_and_save_data_paths(
-        total_combined_overrides
+        global_config=global_config,
+        total_combined_overrides=total_combined_overrides,
     )
 
     experimental_config_list = list()
 
     for i, override in enumerate(total_combined_overrides):
         override_config = create_override_experimental_config(
+            global_config=global_config,
             experiment_dir_path=experiment_dir_path,
             experiment_config_path=experiment_config_path,
             override=override,
@@ -779,46 +815,6 @@ def remove_duplicates(
     return unique_configurations
 
 
-def create_experimental_config_list(
-    experiment_dir_path: str,
-    iter_overrides: dict = dict(),
-    combine_overrides: dict = dict(),
-) -> Dict[str, List[Union[SyntheaConfig, GenerateConfig, ExtractionConfig]]]:
-    """Create a dictionary which holds all the unique configuration you need to run at each point.
-
-    Args:
-        experiment_dir_path (str): This defines the path to the experiment directory.
-        iter_overrides (dict, optional): This is the overrides you want to define to override each experimental config. Defaults to dict().
-        combine_overrides (dict, optional): This is config you want to combine before iterating across the config. Defaults to dict().
-
-    Returns:
-        Dict[str, List[Union(SyntheaConfig, GenerateConfig, ExtractionConfig)]]
-    """
-
-    experimental_configs, output_path = generate_experimental_config_list(
-        experiment_dir_path=experiment_dir_path,
-        iter_overrides=iter_overrides,
-        combine_overrides=combine_overrides,
-    )
-
-    synthea_list = list()
-    generate_list = list()
-    extraction_list = list()
-
-    for config in experimental_configs:
-        synthea_list.append(config.synthea)
-        generate_list.append(config.generate)
-        extraction_list.append(config.extraction)
-
-    experimental_config_dict = {
-        "synthea": remove_duplicates(synthea_list, SyntheaConfig),
-        "generate": remove_duplicates(generate_list, GenerateConfig),
-        "extraction": remove_duplicates(extraction_list, ExtractionConfig),
-    }
-
-    return experimental_config_dict, output_path
-
-
 def move_experiment_config_if_not_exists(
     experiment_config_path: str, default_config_path: str
 ) -> None:
@@ -829,12 +825,15 @@ def move_experiment_config_if_not_exists(
         experiment_config_path (str): The path where the experimental configuration should be saved.
         default_config_path (str): The path to the default configuration file used to load the initial configuration.
     """
+    parent_directory = os.path.dirname(experiment_config_path)
+    os.makedirs(parent_directory, exist_ok=True)
+
     if not os.path.exists(experiment_config_path):
         # Load the experimental configuration
         experiment_config = load_experimental_config(default_config_path)
 
         # Convert the Pydantic model to a dictionary
-        model_dict = experiment_config.dict()
+        model_dict = experiment_config.model_dump()
 
         # Convert the dictionary to an OmegaConf DictConfig
         config = OmegaConf.create(model_dict)

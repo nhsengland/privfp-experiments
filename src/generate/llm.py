@@ -12,38 +12,7 @@ from src.config.prompt_template_handler import (
     load_and_validate_generate_prompt_template,
 )
 from src.utils import file_exists
-from src.config.global_config import load_global_config
-
-global_config = load_global_config()
-
-
-def get_batch(
-    from_variable: List[Dict[str, Any]], from_path: str
-) -> List[Dict[str, str]]:
-    """
-    Get batch data from a variable or a file path containing JSON data.
-
-    Args:
-        from_variable (List[Dict[str, Any]]): Synthea output data.
-        from_path (str): File path to load Synthea from.
-
-    Returns:
-        List[Dict[str, str]]: Batch data with JSON strings.
-
-    Example:
-        >>> from my_module import get_batch
-        >>> data = [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}]
-        >>> batch = get_batch(data, '/path/to/data.json')
-    """
-
-    data = load_json_from_path_or_variable(from_variable, from_path)
-
-    batch = []
-
-    for i in range(len(data)):
-        batch.append({"data": json.dumps(data[i])})
-
-    return batch
+from src.config.global_config import GlobalConfig
 
 
 class GenerateLLM:
@@ -56,6 +25,7 @@ class GenerateLLM:
 
     def __init__(
         self,
+        global_config: GlobalConfig,
         generateconfig: GenerateConfig,
         synthea_input: Union[str, List[Dict[str, Any]]] = None,
     ) -> None:
@@ -63,6 +33,7 @@ class GenerateLLM:
         Initializes GenerateLLM object.
 
         Args:
+            global_config (GlobalConfig): This is a pydantic typing model that contains configuration parameters from global config.
             generateconfig (GenerateConfig): A pydantic typed config model with values of llm_model_name,
                                              prompt_template_path, synthea_path, and path_output.
             synthea_input (List[Dict[str, Any]]): Synthea output data or variable name containing Synthea output data.
@@ -116,3 +87,32 @@ class GenerateLLM:
                 save_json(output, self.path_output)
 
         return output
+
+
+def get_batch(
+    from_variable: List[Dict[str, Any]], from_path: str
+) -> List[Dict[str, str]]:
+    """
+    Get batch data from a variable or a file path containing JSON data.
+
+    Args:
+        from_variable (List[Dict[str, Any]]): Synthea output data.
+        from_path (str): File path to load Synthea from.
+
+    Returns:
+        List[Dict[str, str]]: Batch data with JSON strings.
+
+    Example:
+        >>> from my_module import get_batch
+        >>> data = [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}]
+        >>> batch = get_batch(data, '/path/to/data.json')
+    """
+
+    data = load_json_from_path_or_variable(from_variable, from_path)
+
+    batch = []
+
+    for i in range(len(data)):
+        batch.append({"data": json.dumps(data[i])})
+
+    return batch

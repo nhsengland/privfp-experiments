@@ -20,9 +20,7 @@ from src.utils import (
     download_llm_model_from_hf,
     file_exists,
 )
-from src.config.global_config import load_global_config
-
-global_config = load_global_config()
+from src.config.global_config import GlobalConfig
 
 
 class Extraction:
@@ -32,12 +30,14 @@ class Extraction:
 
     def __init__(
         self,
+        global_config: GlobalConfig,
         extractionconfig: ExtractionConfig,
         llm_input: Optional[List[str]] = None,
     ):
         """Initialising the Extraction Model Class.
 
         Args:
+            global_config (GlobalConfig): This is a pydantic typing model that contains configuration parameters from global config.
             extractionconfig (ExtractionConfig): This is a pydantic typing configuration that contains values on:
                 - server_model_type: The type of way you want to serve the model e.g. ollama, local, or gliner.
                 - local features: Contains two features from huggingface (hf_repo_id and hf_filename.)

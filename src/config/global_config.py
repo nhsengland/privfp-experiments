@@ -22,12 +22,17 @@ class GlobalConfig(BaseModel):
     synthea: SyntheaSettings
 
 
-def load_global_config() -> GlobalConfig:
+def load_global_config(
+    path: str = "../config/global_config.yaml",
+) -> GlobalConfig:
     """Loads the global config from the main config folder.
+
+    Args:
+        path (str, optional): Path to where the global config sits. Defaults to "../config/global_config.yaml".
 
     Returns:
         GlobalConfig: Returns the loaded in yaml file with the global config path that has been predefined.
     """
-    with open("../config/global_config.yaml", "r") as config_file:
+    with open(path, "r") as config_file:
         config_dict = yaml.safe_load(config_file)
         return GlobalConfig.model_validate(config_dict)
