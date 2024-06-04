@@ -1,11 +1,9 @@
+import sys
 from streamlit_annotation_tools import text_labeler
 import streamlit as st
 from src.extraction.extraction import Extraction
 
-import sys
-
 sys.path.append("../../")
-
 
 fake_data = [
     "Clinical Note:\nPatient: Harris Fadel\nNHS Number: 5927778917\nDate of Birth: August 8, 2005\n\nPresentation: Acute bronchitis (disorder)\n\nSymptoms:\n\n* Cough\n* Chest tightness\n* Shortness of breath\n\nMedical History:\n\n* Recent respiratory infection\n\nReview of Systems:\n\n* No reported fever or chills\n* No cough productive of yellow or green mucus\n\nPlan:\n\n* Prescribe antibiotics for 7-10 days\n* Instruct patient to rest and avoid strenuous activities\n* Monitor patient's condition closely and adjust plan as needed.",
@@ -51,7 +49,6 @@ def annotation_tool(data):
         on_change=update,
         key="my_slider",
     )
-    print("here")
     string = data[slider_id - 1]
     labels = st.session_state[slider_id]
     annotations = text_labeler(string.replace("\n", "  "), labels)
@@ -76,7 +73,9 @@ def extract():
         string = fake_data[temp["id"] - 1]
         # print(string)
         results = Extraction(
-            llm_input=[string], ent_list=keys, save_output=False
+            llm_input=[string.replace("\n", "  ")],
+            ent_list=keys,
+            save_output=False,
         ).run(server_model_type="gliner")
 
         for r in results:
@@ -84,8 +83,8 @@ def extract():
             for entity in entities:
 
                 a = {
-                    "start": entity["start"] + 1,
-                    "end": entity["end"] + 1,
+                    "start": entity["start"],
+                    "end": entity["end"],
                     "label": entity["text"],
                 }
 
@@ -101,7 +100,6 @@ def extract():
 
 
 annotation_tool(fake_data)
-
 
 verbose = False
 if verbose:
