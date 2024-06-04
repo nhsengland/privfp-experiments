@@ -13,11 +13,25 @@ from src.utils import (
     save_dataframe_to_csv,
     load_dataframe_from_csv,
 )
-from src.config import (
-    extra_preprocess_functions_per_entity,
-    standardise_functions_per_entity,
-    entity_list,
+from src.standardise_extraction.preprocess_functions import clean_name
+from src.standardise_extraction.standardise_columns.standardise_columns import (
+    extract_first_entity_from_list,
 )
+from src.standardise_extraction.standardise_columns import normalise_columns
+
+from src.old_config import entity_list
+
+
+extra_preprocess_functions_per_entity = {"person": [clean_name.remove_titles]}
+standardise_functions_per_entity = {
+    "person": [extract_first_entity_from_list],
+    "nhs number": [extract_first_entity_from_list],
+    "date of birth": [
+        extract_first_entity_from_list,
+        normalise_columns.normalise_date_column,
+    ],
+    "diagnosis": [extract_first_entity_from_list],
+}
 
 
 class StandardiseExtraction:

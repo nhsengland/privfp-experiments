@@ -1,0 +1,12 @@
+
+output_paths:
+  output_folder: ../outputs
+  extraction_template: ../config/templates/extraction/
+  generate_template: ../config/templates/generate/
+  synthea_prefix: synthea
+  generate_prefix: generate
+  extraction_prefix: extraction
+  standardise_prefix: standardise
+
+synthea:
+  path_synthea: ../../synthea
