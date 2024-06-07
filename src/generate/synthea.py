@@ -47,7 +47,10 @@ class GenerateSynthea:
         self.global_config = global_config
 
     def run_or_load(
-        self, extra_commands: List[str] = list(), resave: bool = False
+        self,
+        extra_commands: List[str] = list(),
+        resave: bool = False,
+        save: bool = True,
     ) -> List[Dict[str, Any]]:
         """
         Run Synthea generation with specific commands, or loads a model from path given.
@@ -55,6 +58,7 @@ class GenerateSynthea:
         Args:
             commands (List[str]): List of commands to run Synthea.
             resave (bool): Whether to resave the output. Defaults to False.
+            Determines whether you want to save any files, if this is false it doesn't save any files. Defaults to True.
 
         Returns:
             List[Dict[str, Any]]: Synthea output as a list of dictionaries.
@@ -74,8 +78,9 @@ class GenerateSynthea:
                 global_config=self.global_config, commands=commands
             )
 
-            if resave or file_exists(self.path_output) is False:
-                save_json(output, self.path_output)
+            if save:
+                if resave or file_exists(self.path_output) is False:
+                    save_json(output, self.path_output)
 
         return output
 

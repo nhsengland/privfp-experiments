@@ -51,7 +51,10 @@ class GenerateLLM:
         )
 
     def run_or_load(
-        self, verbose: bool = False, resave: bool = False
+        self,
+        verbose: bool = False,
+        resave: bool = False,
+        save: bool = True,
     ) -> List[str]:
         """
         Generate or Load synthetic medical notes from Synthea data.
@@ -59,6 +62,7 @@ class GenerateLLM:
         Args:
             verbose (bool): Decides whether verbose is true or false. Defaults to False.
             resave (bool): Decides whether to resave a model or not. Defaults to False.
+            save (bool): Determines whether you want to save any files, if this is false it doesn't save any files. Defaults to True.
 
         Returns:
             List[str]: Generated a list of synthetic medical notes.
@@ -83,8 +87,9 @@ class GenerateLLM:
 
             output = chain.batch(batch)
 
-            if resave or file_exists(self.path_output) is False:
-                save_json(output, self.path_output)
+            if save:
+                if resave or file_exists(self.path_output) is False:
+                    save_json(output, self.path_output)
 
         return output
 
