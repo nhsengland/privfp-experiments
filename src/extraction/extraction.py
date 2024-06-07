@@ -80,21 +80,21 @@ class Extraction:
     def run_or_load(
         self,
         verbose: bool = False,
-        resave: bool = False,
+        save: bool = False,
     ) -> List[Dict[str, Any]]:
         """This returns a list of dictionaries that has an 'Entities' property of a
         list of entity dictionaries for each person.
 
         Args:
             verbose (bool): Determines whether a model ran using langchain is verbose to the user. Defaults to False.
-            resave (bool): Determines whether you want to resave the data on another run. Defaults to False.
+            save (bool): Determines whether you want to save the data on another run. Defaults to False.
 
         Returns:
             List[Dict[str, Any]]: List of dictionaries that has an 'Entities' property of a
                                   list of entity dictionaries for each person.
         """
 
-        if file_exists(self.path_output) and resave is False:
+        if file_exists(self.path_output) and save is False:
             patients_entities = load_json(self.path_output)
         else:
             data = load_json_from_path_or_variable(
@@ -113,7 +113,9 @@ class Extraction:
                 verbose=verbose,
             )
 
-            if resave or file_exists(self.path_output) is False:
+            if save is False:
+                pass
+            else:
                 save_json(data=patients_entities, path=self.path_output)
 
         return patients_entities
