@@ -58,7 +58,7 @@ class GenerateSynthea:
         Args:
             commands (List[str]): List of commands to run Synthea.
             resave (bool): Whether to resave the output. Defaults to False.
-            Determines whether you want to save any files, if this is false it doesn't save any files. Defaults to True.
+            save (bool): Determines whether you want to save any files, if this is false it doesn't save any files. Defaults to True.
 
         Returns:
             List[Dict[str, Any]]: Synthea output as a list of dictionaries.
