@@ -55,6 +55,7 @@ media
 build/
 data/
 models/
+outputs/
 develop-eggs/
 dist/
 downloads/

@@ -1,0 +1,3 @@
+{
+  "prompt_template": "\n    USER: Text: {input_text}\n    ASSISTANT: I\u2019ve read this text.\n    USER: What describes {entity_name} in the text?\n    ASSISTANT: (model's predictions in JSON format)\n    "
+}

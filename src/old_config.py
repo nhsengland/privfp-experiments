@@ -13,22 +13,6 @@ path_output_standardisation = data_folder + "/standardisation.json"
 
 ### GENERATIVE CONFIG: SYNTHEA PATHS ###
 path_synthea = "../../synthea"
-path_csv = path_synthea + "/output/csv"
-path_patients = path_csv + "/patients.csv"
-path_encounters = path_csv + "/encounters.csv"
-
-### GENERATIVE CONFIG: SYNTHEA COLUMNS ###
-cols_patients = ["Id", "BIRTHDATE", "FIRST", "LAST"]
-cols_encounters = ["PATIENT", "ENCOUNTERCLASS", "REASONDESCRIPTION"]
-
-### GENERATIVE CONFIG: SYNTHEA TO LLM LABREL MAPPING ###
-cols = {
-    "NHS_NUMBER": "NHS_NUMBER",
-    "BIRTHDATE": "DATE_OF_BIRTH",
-    "FIRST": "GIVEN_NAME",
-    "LAST": "FAMILY_NAME",
-    "REASONDESCRIPTION": "DIAGNOSIS",
-}
 
 ### EXTRACTION CONFIG: ENTITIES EXTRACTED ###
 entity_list = ["person", "nhs number", "date of birth", "diagnosis"]
