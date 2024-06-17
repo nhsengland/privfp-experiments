@@ -158,20 +158,20 @@ def download_llm_model_from_hf(repo_id: str, filename: str):
     model_folder = "../models"
     create_folder_if_not_exists(model_folder)
 
-    # Check if filename ends with ".gguf"
-    if not filename.endswith(".gguf"):
-        raise ValueError(
-            "Invalid filename format. Filename must end with '.gguf'."
-        )
-
-    file_path = os.path.join(model_folder, filename)
-    if not os.path.exists(file_path):
-        hf_hub_download(
-            repo_id=repo_id,
-            filename=filename,
-            local_dir=model_folder,
-        )
+    # Check if filename ends with ".gguf" or ".pkl"
+    if filename.endswith(".gguf") or filename.endswith(".pkl"):
+        file_path = os.path.join(model_folder, filename)
+        if not os.path.exists(file_path):
+            hf_hub_download(
+                repo_id=repo_id,
+                filename=filename,
+                local_dir=model_folder,
+            )
+        else:
+            print(
+                f"The file '{filename}' already exists in '{model_folder}'. Skipping download."
+            )
     else:
-        print(
-            f"The file '{filename}' already exists in '{model_folder}'. Skipping download."
+        raise ValueError(
+            "Invalid filename format. Filename must end with '.gguf' or '.pkl'."
         )
