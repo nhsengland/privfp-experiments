@@ -53,7 +53,7 @@ class GenerateLLM:
     def run_or_load(
         self,
         verbose: bool = False,
-        resave: bool = False,
+        overwrite: bool = False,
         save: bool = True,
     ) -> List[str]:
         """
@@ -61,14 +61,14 @@ class GenerateLLM:
 
         Args:
             verbose (bool): Decides whether verbose is true or false. Defaults to False.
-            resave (bool): Decides whether to resave a model or not. Defaults to False.
+            overwrite (bool): Decides whether to overwrite a model or not. Defaults to False.
             save (bool): Determines whether you want to save any files, if this is false it doesn't save any files. Defaults to True.
 
         Returns:
             List[str]: Generated a list of synthetic medical notes.
         """
 
-        if file_exists(self.path_output) and resave is False:
+        if file_exists(self.path_output) and not overwrite:
             output = load_json(self.path_output)
         else:
             batch = get_batch(self.synthea_input, self.synthea_path)
@@ -88,7 +88,7 @@ class GenerateLLM:
             output = chain.batch(batch)
 
             if save:
-                if resave or file_exists(self.path_output) is False:
+                if overwrite or file_exists(self.path_output) is False:
                     save_json(output, self.path_output)
 
         return output

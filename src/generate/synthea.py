@@ -49,7 +49,7 @@ class GenerateSynthea:
     def run_or_load(
         self,
         extra_commands: List[str] = list(),
-        resave: bool = False,
+        overwrite: bool = False,
         save: bool = True,
     ) -> List[Dict[str, Any]]:
         """
@@ -57,14 +57,14 @@ class GenerateSynthea:
 
         Args:
             commands (List[str]): List of commands to run Synthea.
-            resave (bool): Whether to resave the output. Defaults to False.
+            overwrite (bool): Whether to overwrite the output. Defaults to False.
             save (bool): Determines whether you want to save any files, if this is false it doesn't save any files. Defaults to True.
 
         Returns:
             List[Dict[str, Any]]: Synthea output as a list of dictionaries.
         """
 
-        if file_exists(self.path_output) and resave is False:
+        if file_exists(self.path_output) and not overwrite:
             output = load_json(self.path_output)
         else:
             # Defines the fixed commands handle by configuration, and allows a user to add additional commands.
@@ -79,7 +79,7 @@ class GenerateSynthea:
             )
 
             if save:
-                if resave or file_exists(self.path_output) is False:
+                if overwrite or not file_exists(self.path_output):
                     save_json(output, self.path_output)
 
         return output
