@@ -83,7 +83,7 @@ class GenerateLLM:
 
             output = chain.batch(batch)
 
-            if resave or file_exists(self.path_output) is False:
+            if resave or not file_exists(self.path_output):
                 save_json(output, self.path_output)
 
         return output
