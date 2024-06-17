@@ -1,0 +1,3 @@
+{
+  "prompt_template": "<|begin_of_text|>\n<|start_header_id|>system<|end_header_id|>\nYou are a medical student answering an exam question about writing clinical notes for patients.\n<|eot_id|>\n\n<|start_header_id|>user<|end_header_id|>\nKeep in mind that your answer will be accessed based on incorporating all the provided information and the quality of prose.\n\n1. Use prose to write an example clinical note for this patient's doctor.\n2. Use less than three sentences.\n3. Do not provide recommendations.\n4. Use the following information:\n\n{data}\n<|eot_id|>\n\n<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n"
+}
