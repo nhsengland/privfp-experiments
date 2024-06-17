@@ -88,7 +88,7 @@ class GenerateLLM:
             output = chain.batch(batch)
 
             if save:
-                if overwrite or file_exists(self.path_output) is False:
+                if overwrite or not file_exists(self.path_output):
                     save_json(output, self.path_output)
 
         return output
