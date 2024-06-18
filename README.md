@@ -89,6 +89,14 @@ In **./notebooks/generative_module** there is a set of notebooks exploring how t
 
 Note that a seed has not been implemented to reproduce the outputs shown.
 
+###  License Agreements
+
+If using Llama models from META, please read and sign the corresponding licence agreements.
+They can be found at the top of the model card on the huggingface website:
+
+- [Llama-3-70B](https://huggingface.co/meta-llama/Meta-Llama-3-70B)
+- [Llama-2-70B](ttps://huggingface.co/meta-llama/Llama-2-70b)
+
 ## Extraction Module
 
 ### Usage
