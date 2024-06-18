@@ -2,10 +2,13 @@
 
 ## Create a suitable environment
 
+This is the main environment used in the repository.
+
 ```bash
 python3.11 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+pip install -r requirements_docs.txt
 ```
 
 Note that a separate Python 3.9 environment is required to run the scispacy notebooks:
