@@ -80,21 +80,23 @@ class Extraction:
     def run_or_load(
         self,
         verbose: bool = False,
-        save: bool = False,
+        overwrite: bool = False,
+        save: bool = True,
     ) -> List[Dict[str, Any]]:
         """This returns a list of dictionaries that has an 'Entities' property of a
         list of entity dictionaries for each person.
 
         Args:
             verbose (bool): Determines whether a model ran using langchain is verbose to the user. Defaults to False.
-            save (bool): Determines whether you want to save the data on another run. Defaults to False.
+            overwrite (bool): Determines whether you want to overwrite the data on another run. Defaults to True.
+            save (bool): Determines whether you want to save any files, if this is false it doesn't save any files. Defaults to True.
 
         Returns:
             List[Dict[str, Any]]: List of dictionaries that has an 'Entities' property of a
                                   list of entity dictionaries for each person.
         """
 
-        if file_exists(self.path_output) and save is False:
+        if file_exists(self.path_output) and not overwrite:
             patients_entities = load_json(self.path_output)
         else:
             data = load_json_from_path_or_variable(
@@ -113,10 +115,9 @@ class Extraction:
                 verbose=verbose,
             )
 
-            if save is False:
-                pass
-            else:
-                save_json(data=patients_entities, path=self.path_output)
+            if save:
+                if overwrite or not file_exists(self.path_output):
+                    save_json(data=patients_entities, path=self.path_output)
 
         return patients_entities
 
