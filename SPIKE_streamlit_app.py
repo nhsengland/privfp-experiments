@@ -23,6 +23,7 @@ if "initialized" not in st.session_state:
     args = parser.parse_args()
     data_path = args.d
 
+    # Read data
     with open(data_path) as file:
         st.session_state["data"] = json.load(file)
 
@@ -33,7 +34,9 @@ data = st.session_state["data"]
 
 
 def update():
-    # This updates the streamlit app with the most up to date information.
+    """
+    This updates the streamlit app with the most up to date information.
+    """
 
     # Load the temporary session state
     temp = st.session_state["temp"]
@@ -50,9 +53,14 @@ def update():
                     st.session_state[i + 1][key] = []
 
 
-def annotation_tool(data):
-    # Builds the annotation tool UI
+def annotation_tool(data: dict):
+    """Builds the annotation tool with Streamlit.
 
+    Args:
+        data (dict): _description_
+    """
+
+    # Initialise slider.
     slider_id = st.slider(
         "Select Clinician Note",
         1,
@@ -60,12 +68,17 @@ def annotation_tool(data):
         on_change=update,
         key="my_slider",
     )
+
     string = data[slider_id - 1]
     labels = st.session_state[slider_id]
+
+    # Pass the string and labels into the annotation tool.
     annotations = text_labeler(string.replace("\n", "  "), labels)
 
+    # Update temporary session state.
     st.session_state["temp"] = {"id": slider_id, "annotations": annotations}
 
+    # Create Named Entity Recognition button.
     NER = st.button("NER :mag:")
     if NER:
         update()  # Update session state with current temp state
@@ -75,24 +88,29 @@ def annotation_tool(data):
 
 
 def extract():
-    # Uses NER to extract entites
+    """Uses NER to extract entites."""
 
+    # Load temporary session state.
     temp = st.session_state["temp"]
 
+    # Check if the annotations are a dictionary.
     if isinstance(temp["annotations"], dict):
 
+        # Extract keys.
         keys = list(temp["annotations"].keys())
         experimental_config.extraction.entity_list = keys
 
         string = data[temp["id"] - 1]
+        # Run extraction.
         results = Extraction(
             global_config=global_config,
             extractionconfig=experimental_config.extraction,
             llm_input=[string.replace("\n", "  ")],
-        ).run_or_load()
+        ).run_or_load(save=False)
 
         for r in results:
             entities = r["Entities"]
+            # Format entity into correct format.
             for entity in entities:
 
                 a = {
@@ -101,6 +119,7 @@ def extract():
                     "label": entity["text"],
                 }
 
+                # Add new entities to session state.
                 if a not in st.session_state[temp["id"]][entity["label"]]:
 
                     if entity["label"] in keys:
