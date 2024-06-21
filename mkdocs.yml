@@ -30,6 +30,11 @@ nav:
     - Open-source Named-Entity Recognition Models: open-source-extraction-exploration/named_entity_research.md
     - De-identification Methods: open-source-extraction-exploration/deidentification_research.md
 
+  - Standardisation:
+    - standardisation-research/index.md
+    - Standardising Entity Types and their Values: standardisation-research/standardising_entity_values.md
+    - Standardising with Knowledge Graphs: standardisation-research/standardising_with_knowledge_graphs.md
+
   - (Py)Correct Match (Scorer Component):
     - correct-match/index.md
     - What is Correct Match?: correct-match/what-is-correct-match.md
