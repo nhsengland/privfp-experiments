@@ -9,8 +9,8 @@ synthea:
 
 generate:
   llm_model_features:
-    llm_model_name: llama2
-    prompt_template_path: llama2_template.json
+    llm_model_name: llama3
+    prompt_template_path: llama3_template.json
 
 extraction:
   server_model_type: gliner
