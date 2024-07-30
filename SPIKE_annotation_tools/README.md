@@ -11,7 +11,7 @@ We have researched these tools for the following reasons:
 To use the streamlit tool, you will need to run the following command in your terminal:
 
 ```console
-streamlit run SPIKE_streamlit_app.py -- --d "example_output/example_pipeline_14_05_24/llm.json"
+streamlit run SPIKE_streamlit_app.py -- --d "example_output/example_pipeline_17_06_24/llm.json"
 ```
 
 The string folling the --d argument should be the path to your data.
