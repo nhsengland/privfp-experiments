@@ -315,6 +315,20 @@
     </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adding-julia-to-path">3.2 
+<span class="md-ellipsis">
+      Adding Julia to Path
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adding-correctmatch">3.3 
+<span class="md-ellipsis">
+      Adding CorrectMatch
+    </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -538,6 +552,20 @@
     </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adding-julia-to-path">3.2 
+<span class="md-ellipsis">
+      Adding Julia to Path
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adding-correctmatch">3.3 
+<span class="md-ellipsis">
+      Adding CorrectMatch
+    </span>
+</a>
+</li>
 </ul>
 </nav>
 </div>
@@ -558,6 +586,21 @@
 <div class="highlight"><span class="filename">Download Julia version 1.8.5 and set default to 1.8.5</span><pre><span></span><code>juliaup<span class="w"> </span>add<span class="w"> </span><span class="m">1</span>.8.5
 juliaup<span class="w"> </span>default<span class="w"> </span><span class="m">1</span>.8.5
 </code></pre></div>
+<h2 id="adding-julia-to-path"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.2</span> Adding Julia to Path</h2>
+<p>You will want to use a text editor such as nano to edit your shell configuration file.</p>
+<div class="highlight"><span class="filename">Opening shell configuration file for Mac</span><pre><span></span><code>nano<span class="w"> </span>~/.bash_profile
+</code></pre></div>
+<div class="highlight"><span class="filename">Opening shell configuration file for WSL</span><pre><span></span><code>nano<span class="w"> </span>~/.bashrc
+</code></pre></div>
+<p>Then on this file you will need to add this line to the bottom of this file
+<div class="highlight"><span class="filename">Adding Julia to path</span><pre><span></span><code>export PATH="$HOME/.julia/juliaup/bin:$PATH"
+</code></pre></div></p>
+<p>You will need to reload the terminal OR you can run the following commands:</p>
+<div class="highlight"><span class="filename">Re-initialising the Shell for Mac</span><pre><span></span><code><span class="nb">source</span><span class="w"> </span>~/.bash_profile
+</code></pre></div>
+<div class="highlight"><span class="filename">Re-initialising the Shell for WSL</span><pre><span></span><code><span class="nb">source</span><span class="w"> </span>~/.bashrc
+</code></pre></div>
+<h2 id="adding-correctmatch"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.3</span> Adding CorrectMatch</h2>
 <div class="highlight"><span class="filename">Add CorrectMatch package to Julia</span><pre><span></span><code>julia<span class="w"> </span>-e<span class="w"> </span><span class="s1">'using Pkg; Pkg.add("CorrectMatch")'</span>
 </code></pre></div>
 </article>
