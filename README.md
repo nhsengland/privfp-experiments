@@ -1,4 +1,6 @@
-# Privacy FingerPrint (PrivFp) - Experiments (Phase 2)
+# Privacy FingerPrint (PrivFp) - Experiments
+## Phase 2
+
 ## NHS England Data Science Team
 
 ### :warning: Warning to Users :warning:
@@ -43,13 +45,14 @@ The main sections of this repository are:
 |   LICENCE                                <- License info for public distribution
 |   mkdocs.yml                             <- MkDocs configuration file
 |   README.md                              <- Quick start guide / explanation of the project
+|   requirements_docs.txt                  <- Requiements needed to run MKdocs locally and develop.
 |   requirements_scispacy.txt              <- Requirements needed to run the scispaCy notebook
 |   requirements.txt                       <- Requirements to run all notebooks except where scispaCy is used
 ```
 
 This diagram illustrates the current state of the project and the structure of each module.
 
-![Project Diagram](./docs/assets/images/privfp_overview_240424.png)
+![Project Diagram](./docs/assets/images/privfp_overview_180624.png)
 
 ## Getting Started
 
