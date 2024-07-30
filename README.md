@@ -92,6 +92,24 @@ In **./notebooks/generative_module** there is a set of notebooks exploring how t
 
 Note that a seed has not been implemented to reproduce the outputs shown.
 
+###  License Agreements
+
+This project uses Llama 2 and Llama 3 models from Meta AI. Usage of these models is governed by the non-commercial license provided by Meta.
+
+#### Llama 2
+
+Llama 2 is licensed under Meta's non-commercial license. For more details, please refer to [META's Llama 2 Licensing page](https://ai.meta.com/llama/license/).
+To sign the corresponding license agreement you can apply for this via [huggingface](https://huggingface.co/meta-llama/Meta-Llama-3-70B).
+
+#### Llama 3
+
+Llama 3 is licensed under Meta's non-commercial license. For more details, please refer to [META's Llama 3 Licensing page](https://llama.meta.com/llama3/license/).
+To sign the corresponding license agreement you can apply for this via [huggingface](https://huggingface.co/meta-llama/Llama-2-70b).
+
+By using these models in this project, you agree to comply with the licensing terms provided by Meta.
+
+For any commercial use or further inquiries, please contact Meta AI directly.
+
 ## Extraction Module
 
 ### Usage

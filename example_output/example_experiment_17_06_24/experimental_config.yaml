@@ -7,8 +7,8 @@ synthea:
   path_output: null
 generate:
   llm_model_features:
-    llm_model_name: llama2
-    prompt_template_path: llama2_template.json
+    llm_model_name: llama3
+    prompt_template_path: llama3_template.json
   synthea_path: null
   path_output: null
 extraction:
