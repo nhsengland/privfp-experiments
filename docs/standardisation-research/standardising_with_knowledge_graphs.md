@@ -110,7 +110,7 @@
 
 ### KnowledgeGraph
 
-[KnowledgeGraph](https://github.com/rahulnyk/knowledge_graph): This demonstrates a framework from going from document to graph. - the codebase would likely need reworking.
+[KnowledgeGraph](https://github.com/rahulnyk/knowledge_graph): This demonstrates a framework from going from document to graph - the codebase would likely need reworking.
 
 1. **[Use Mistral7B OpenOrca hosted by Ollama](https://huggingface.co/Open-Orca/Mistral-7B-OpenOrca)**: For extracting out triplets.
 
@@ -120,11 +120,11 @@
 
 ### Graph_Maker: Requires GROQ
 
-1.  Define your own ontology i.e. your entities and a description of what those entities are.
+1. Define your own ontology i.e. your entities and a description of what those entities are.
 
 2. Run the Graph-maker using a large language model to create your graph.
 
-3. Then you can use this graph and created it over your documents.
+3. Then you can use this graph it has created over your documents.
 
 4. [Tutorial](https://towardsdatascience.com/text-to-knowledge-graph-made-easy-with-graph-maker-f3f890c0dbe8)
 

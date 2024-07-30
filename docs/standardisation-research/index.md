@@ -78,7 +78,7 @@ Graphs can be converted back into triplets so [OpenNRE](https://github.com/thunl
         * **String Comparison between entities**
             * **Limitations:** You would need to determine a cut-off point to determine whether phrases are the same.
         * **Wikification + String Comparison:** Use Wikification, and for values assigned None you could consider String Comparison for a high cut-off point.
-2. **Entity type specific:** We likely want to handle specific entities in a certain way and have a generalised way to begin with)
+2. **Entity type specific:** We likely want to handle specific entities in a certain way and have a generalised way to begin with
     * **Person:** Explore out extending out the different parts that makes a name.
         * **[Probable People](https://github.com/datamade/probablepeople):** A library for parsing and formatting person names.
         *  **[Python Nameparser](https://github.com/derek73/python-nameparser):** An alternative library for parsing human names.
