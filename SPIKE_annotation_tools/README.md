@@ -19,3 +19,9 @@ The string folling the --d argument should be the path to your data.
 # ipyWidgets
 
 To use the ipywidgets tool follow the instructions in the widgets_labelling notebook.
+
+You may need to run the notebook in your browser if the ipyWidget fdoes not compile. Run:
+
+```console
+jupyter notebook --allow-root
+```
