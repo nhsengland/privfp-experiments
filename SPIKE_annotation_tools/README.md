@@ -14,11 +14,11 @@ To use the streamlit tool, you will need to run the following command in your te
 streamlit run SPIKE_streamlit_app.py -- --d "example_output/example_pipeline_17_06_24/llm.json"
 ```
 
-The string folling the --d argument should be the path to your data.
+The string folling the `--d` argument should be the path to your data.
 
 # ipyWidgets
 
-To use the ipywidgets tool follow the instructions in the widgets_labelling notebook.
+To use the ipywidgets tool follow the instructions in the `widgets_labelling` notebook.
 
 You may need to run the notebook in your browser if the ipyWidget fdoes not compile. Run:
 

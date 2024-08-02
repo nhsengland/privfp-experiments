@@ -15,10 +15,10 @@ def file_exists(file_path: str) -> bool:
     Returns:
         bool: Returns a boolean on whether the file exists or not.
     """
-    if file_path is None:
-        return False
-    else:
+    if file_path:
         return os.path.isfile(file_path)
+    else:
+        return False
 
 
 def save_json(
