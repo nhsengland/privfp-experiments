@@ -166,3 +166,4 @@ To contact us raise an issue on Github or via [email](mailto:datascience@nhs.net
 - [Scarlett Kynoch](https://github.com/scarlett-k-nhs)
 - [Xiyao Zhuang](https://github.com/xiyaozhuang)
 - [Dan Schofield](https://github.com/danjscho)
+- [Will Poulett](https://github.com/willpoulett)
