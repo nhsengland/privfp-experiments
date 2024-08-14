@@ -33,4 +33,4 @@ pycorrectmatch:
   privacy_scorer: true
 
 explainers:
-  shap: false
+  shap: true
