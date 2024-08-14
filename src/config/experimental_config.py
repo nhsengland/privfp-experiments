@@ -50,11 +50,21 @@ class OutputsConfig(BaseModel):
     save: bool
 
 
+class Pycorrectmatch(BaseModel):
+    privacy_scorer: bool
+
+
+class Explainers(BaseModel):
+    shap: bool
+
+
 class ExperimentalConfig(BaseModel):
     outputs: OutputsConfig
     synthea: SyntheaConfig
     generate: GenerateConfig
     extraction: ExtractionConfig
+    pycorrectmatch: Pycorrectmatch
+    explainers: Explainers
 
 
 def load_experimental_config(config_path: str) -> ExperimentalConfig:

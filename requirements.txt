@@ -38,6 +38,7 @@ omegaconf==2.3.0
 plotly==5.22.0
 pre-commit==3.6.1
 prompttools==0.0.43
+pycanon[PDF]==1.0.1
 pydantic==2.7.1
 scipy==1.12
 sentencepiece==0.2.0

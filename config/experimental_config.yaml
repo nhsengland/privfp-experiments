@@ -28,3 +28,9 @@ extraction:
     - date of birth
     - nhs number
     - diagnosis
+
+pycorrectmatch:
+  privacy_scorer: true
+
+explainers:
+  shap: false
