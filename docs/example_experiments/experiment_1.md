@@ -52,6 +52,8 @@ The next step of the pipeline essentially turns our extraction data from a json 
 
 Currently, the first instance of an entity in the medical note is the one used for one hot encoding. This has some issues. For example, we know that "NHS Number:" is often extracted as the "nhs number" entity. As this will often appear before the NHS number in medical notes, it is used instead of the true NHS number when we one-hot-encode the data. This issue is something we are aware of, and we have done various research on other methods of standardisation.
 
+One simple fix would be to ensure the NHS Number entitity contains numbers, or does not contain the string "NHS Number".
+
 ## Uniqueness of Standardised Entity Values
 
 Once we have tabular data, we can start exploring the privacy risk of our data. We do this by estimating the uniqueness of each data point. The more unique the data, the more identifiable the individual is likely to be. 
@@ -59,3 +61,32 @@ Once we have tabular data, we can start exploring the privacy risk of our data. 
 The uniqueness is measured using PycorrectMatch, and documentation on how this works can be found at `docs/corect-match/`. To simplify, a score close to 1 means the row is incredibly unique, whilst a score close to 0 is not unique. Currently, the lowest score for any row is 0.998. Therefore, every row is highly reidentifiiable. 
 
 This makes sense, we have not done any anonymisation steps. 
+
+Let us imagine a theoretical anonymisation technique that finds every single NHS number in free text data and replaces it with a blank value. This would mean that in our one hot encoded dataframe, all values in the NHS number column would be one fo two numbers - 0 and 1. 0 would refer to an anonymised NHS number and 1 would refer to no NHS number being present. 
+
+We can alter our transformed dataset using the following line of code:
+
+```python
+anonymised_dataset_1["nhs number"] = [random.randint(0,1) for i in range(len(anonymised_dataset_1))]
+```
+
+Let's take this further and make an even more anonymised dataset where all names are replaced with the initial of their first, and thus the `person` column only contains 26 values.
+
+```python
+anonymised_dataset_1["person"] = [random.randint(0,25) for i in range(len(anonymised_dataset_1))]
+```
+
+For the `date of birth` column let's say that the data in anonymised by removing the day, and only keeping the month and the year. Assuming all patients are between 1 and 80, this would leave 960 possible months of birth, however we would expect lots of duplicates. We run the below code to generate a random list with duplicates:
+
+```python
+list = []
+current_int = 0
+
+for i in range(len(anonymised_dataset_1)):
+    list.append(current_int)
+    if random.randint(0,1):
+        current_int+=1
+
+random.shuffle(list)
+```
+
