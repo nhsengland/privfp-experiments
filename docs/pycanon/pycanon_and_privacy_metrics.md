@@ -14,29 +14,29 @@ To understand the definitions below, we must first understand identifiers, quasi
 
 ### k-Anonymity
 
-As defined in the PyCanon [paper](https://www.nature.com/articles/s41597-022-01894-2), a database verifies k-anonymity if for each row of the database, there are at least k-1 indistinguishable rows with respect to the quasi-identifiers. The value of k deemed acceptable has to be decided beforehand. The probability of identifying an individual in the database using the quasi-identifiers will be at most 1/k.
+As defined in the PyCanon [paper](https://www.nature.com/articles/s41597-022-01894-2), a database verifies k-anonymity if for each row of the database, there are at least `k-1` indistinguishable rows with respect to the quasi-identifiers. The value of `k` deemed acceptable has to be decided beforehand. The probability of identifying an individual in the database using the quasi-identifiers will be at most `1/k`.
 
 ### (α,k)-Anonymity
 
-Given only one sensitive attribute S, it is checked if the database is k-anonymous and the frequency of each possible value of S is lower or equal than α in each equivalence class.
+Given only one sensitive attribute `S`, it is checked if the database is k-anonymous and the frequency of each possible value of `S` is lower or equal than α in each equivalence class.
 
 ### l-Diversity
 
-k-anonymity gets you equivalence classes - sets of records in the dataset which share the same values for their quasi identifiers. l-diversity is an extension of this. In the case of one sensitive attribute, it checks whether there are at least l distinct values for S. l must always be greater than or equal to 1.
+k-anonymity gets you equivalence classes - sets of records in the dataset which share the same values for their quasi identifiers. l-diversity is an extension of this. In the case of one sensitive attribute, it checks whether there are at least `l` distinct values for `S`. `l` must always be greater than or equal to 1.
 
 ### Entropy l-Diversity
 
-A database verifies this condition if the entropy of each equivalence class is greater than log(l). The entropy is defined as:
+A database verifies this condition if the entropy of each equivalence class is greater than `log(l)`. The entropy is defined as:
 
 $$
 H(EC) = - \sum_{s \in D} p(EC,S) \log_2(p(EC,S))
 $$
 
-where H is the entropy, EC is the equivalence class, D is the domain of S, where S is a sensitive attribute, and p((EC,S)) is the fraction of of records in the equivalence class that have S as a sensitive attribute.
+where `H` is the entropy, `EC` is the equivalence class, `D` is the domain of `S`, where `S` is a sensitive attribute, and `p((EC,S))` is the fraction of of records in the equivalence class that have `S` as a sensitive attribute.
 
 ### Recursive (c,l)-Diversity
 
-If a sensitive value is removed from an equivalence class that verifies (c,l) diversity, then (c,l-1) diversity is preserved. PyCanon uses the technique defined in this [paper](https://ieeexplore.ieee.org/document/1617392). If there are n different values of of a sensitive attribute in an equivalence class, (c,l)-diversity is verified by looking at the the number of times the i-th most frequent values appear in the equivalence class.
+If a sensitive value is removed from an equivalence class that verifies (c,l) diversity, then (c,l-1) diversity is preserved. PyCanon uses the technique defined in this [paper](https://ieeexplore.ieee.org/document/1617392). If there are `n` different values of of a sensitive attribute in an equivalence class, (c,l)-diversity is verified by looking at the the number of times the i-th most frequent values appear in the equivalence class.
 
 For a more detailed explanation see the official [paper](https://www.nature.com/articles/s41597-022-01894-2).
 
@@ -46,19 +46,19 @@ These two techniques can be used in order to control the distance between the di
 
 ### t-Closeness
 
-A database with one sensitive attribute S verifies t-closeness if all the equivalence classes verify it. An equivalence class verifies t-closeness if the distribution of the values of S are at a distance no closer than t from the distribution of the sensitive attribute in the whole database.
+A database with one sensitive attribute `S` verifies t-closeness if all the equivalence classes verify it. An equivalence class verifies t-closeness if the distribution of the values of `S` are at a distance no closer than `t` from the distribution of the sensitive attribute in the whole database.
 
 In PyCanon, [Earth Mover's distance](https://ieeexplore.ieee.org/document/4221659) is used. See this paper and the PyCanon [paper](https://www.nature.com/articles/s41597-022-01894-2) for more information.
 
 ### δ-Disclosure Privacy
 
-For a dataset with only one sensitive attribute S, the δ-disclosure privacy is verified if:
+For a dataset with only one sensitive attribute `S`, the δ-disclosure privacy is verified if:
 
 $$
 \log\left(\frac{p(EC,S)}{p(D,S)}\right) < \delta_s,
 $$
 
-for every sensitive attribute in the dataset, and every equivalence class. p(EC,S) is the fraction of records with S as a sensitive attribute in the equivalence class EC, and D is the dataset.
+for every sensitive attribute in the dataset, and every equivalence class. `p(EC,S)` is the fraction of records with `S` as a sensitive attribute in the equivalence class `EC`, and `D` is the dataset.
 
 ## Other Metrics
 
@@ -66,7 +66,7 @@ There are various other methods for measuring privacy which are not included in 
 
 ### k-Map
 
-Like k-Anonymity, k-Map requires a list of quasi-identifiers. It also requires a larger re-identification dataset. This could be an original dataset before anonymisation, or another larger dataset of everyone living in the UK, for example a census. Your data satisfies k-map if every combination of values for the quasi identifiers appears at least k times in the re-identification dataset. Calculating k-Map is very computationally expensive.
+Like k-Anonymity, k-Map requires a list of quasi-identifiers. It also requires a larger re-identification dataset. This could be an original dataset before anonymisation, or another larger dataset of everyone living in the UK, for example a census. Your data satisfies k-map if every combination of values for the quasi identifiers appears at least `k` times in the re-identification dataset. Calculating k-Map is very computationally expensive.
 
 ### δ-Presence
 
