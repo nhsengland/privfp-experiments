@@ -2,6 +2,7 @@ from typing import Tuple, Callable
 import shap
 import pandas as pd
 import numpy as np
+from src.config.experimental_config import Explainers
 
 
 class PrivacyRiskExplainer:
@@ -15,11 +16,26 @@ class PrivacyRiskExplainer:
     number of features.
     """
 
-    def __init__(self, prediction: Callable, n_features: int):
-        self.prediction = prediction
-        self.mask = np.array([1] * n_features).reshape(1, n_features)
-        self.unmasked_index = []
-        self.explainer = shap.Explainer(self.prediction, self.mask)
+    def __init__(
+        self,
+        prediction: Callable,
+        n_features: int,
+        explainer_config: Explainers,
+    ):
+
+        Explainers.model_validate(explainer_config.model_dump())
+
+        if explainer_config.shap:
+
+            self.prediction = prediction
+            self.mask = np.array([1] * n_features).reshape(1, n_features)
+            self.unmasked_index = []
+            self.explainer = shap.Explainer(self.prediction, self.mask)
+
+        else:
+            raise ValueError(
+                "Error, you have set the use of explainers.shap to false in `config/experimental_config.yaml`"
+            )
 
     def explain(
         self, data: pd.DataFrame

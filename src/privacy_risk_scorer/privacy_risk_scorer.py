@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from julia.api import Julia
 from typing import Dict, List
+from src.config.experimental_config import Pycorrectmatch
 
 
 class PrivacyRiskScorer:
@@ -11,17 +12,30 @@ class PrivacyRiskScorer:
     population uniqueness, fits a Gaussian copula and calculates individual uniqueness scores.
     """
 
-    def __init__(self):
-        path_julia = os.popen("which julia").read().strip()
-        julia.install(julia=path_julia)
-        Julia(compiled_modules=False, runtime=path_julia)
-        import correctmatch  # noqa E402
+    def __init__(
+        self,
+        scorer_config: Pycorrectmatch,
+    ) -> None:
 
-        correctmatch.precompile()
+        Pycorrectmatch.model_validate(scorer_config.model_dump())
 
-        self.correctmatch = correctmatch
-        self.fitted_model = None
-        self.size = 0
+        if scorer_config.privacy_scorer:
+
+            path_julia = os.popen("which julia").read().strip()
+            julia.install(julia=path_julia)
+            Julia(compiled_modules=False, runtime=path_julia)
+            import correctmatch  # noqa E402
+
+            correctmatch.precompile()
+
+            self.correctmatch = correctmatch
+            self.fitted_model = None
+            self.size = 0
+
+        else:
+            raise ValueError(
+                "Error, you have set the use of pycorrectmatch.privacy_scorer to false in `config/experimental_config.yaml`"
+            )
 
     def calculate_population_uniqueness(self, df: pd.DataFrame) -> float:
         return self.correctmatch.uniqueness(df.values)

@@ -28,3 +28,18 @@ extraction:
     - date of birth
     - nhs number
     - diagnosis
+
+pycorrectmatch:
+  privacy_scorer: true
+
+explainers:
+  shap: true
+
+pycanon:
+  identifiers:
+    - nhs number
+  quasi_identifiers:
+    - date of birth
+    - person
+  sensitive_attributes:
+    - diagnosis

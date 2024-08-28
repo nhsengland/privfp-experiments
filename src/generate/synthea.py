@@ -195,6 +195,7 @@ def create_synthea_output(
     Returns:
         List[Dict[str, Any]]: Synthea output as a list of dictionaries.
     """
+
     cwd = os.getcwd()
     os.chdir(global_config.synthea.path_synthea)
 
