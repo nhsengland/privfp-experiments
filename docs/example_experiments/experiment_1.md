@@ -21,7 +21,7 @@ print(len(NHS_number_set))
 
 This returns 954. 
 
-## Using a LLM to Generate Synthetic Nedical Notes
+## Using a LLM to Generate Synthetic Medical Notes
 
 We will use LLama 3 to turn each synthea output into a synthetic medical note. As of August 2024, this is not the most up-to-date LLama model. Llama 3.1 is available for download and our pipeline allows for this to be easily changed if you would like. 
 
@@ -38,13 +38,33 @@ As a reminder, these NHS numbers are synthetic. Incredibly, these 4 different st
 
 ## Re-extracting Entities from the Patient Medical Notes
 
-We run extraction using Gliner as our Named Entity Extraction Model. Again, focussing on just NHs Numbers, we find that a total of 1006 NHS Numbers are extracted from our 954  reviews, with only 104 being within the original NHS Number set we previously defined. 
+We run extraction using Gliner as our Named Entity Extraction Model. Again, focussing on just NHS Numbers, we find that a total of 1006 NHS Numbers are extracted from our 954  reviews, with only 104 being within the original NHS Number set we previously defined. 
 
 This means that multiple NHS numbers are extracted from some notes. We find that 308 reviews contain more than two NHS number entities extracted. We find that this is always the number representing the NHS number, alongside the text "NHS Number". This leaves us with a new conclusion, lots of NHS number are not being extracted from reviews. 
 
 We find that 256 reviews do not have an NHS number extracted. Given that the NHS numbers are so diverse in structure, it is hard to know whether they are missed due to strange structure, or they are not generated at all.
 
-Looking at the first 10 occasions where no NHS number was extracted, there is never an NHS number generated. The medical note only contains the patient name and date of birth.  
+Looking at the first 10 occasions where no NHS number was extracted, there is never an NHS number generated. The medical note only contains the patient name and date of birth.
+
+We can also use Gliner to investigate whether other entities are in the reviews. Let us consider adding: `email`, `gender` and `phone number`.
+
+We can add them to the entitiy extraction entitiy list using the following code snippet:
+
+```python
+experimental_config.extraction.entity_list = [
+    "nhs number",
+    "person",
+    "date of birth",
+    "diagnosis",
+    "email",
+    "gender",
+    "phone number"
+]
+```
+
+We find that Gliner was unable to extract any emails, but found 144 genders and 172 phone numbers. Interestingly, a lot of extracted phone numbers had previously been labelled as NHS Numbers. In fact, the total number of NHS numbers extracted fell from 1006 to 811. In some scenarios, the string "NHS Number" was labelled as a phone number. 
+
+These interesting quirks when adding new entities support the use of our [annotation tool](../../SPIKE_annotation_tools/README.md). With this tool, you can annotate clinical notes and add new entities, alongside the entity extraction model. This tool will help you fine tune the best names to give your entities. For example, `mobile` may have been more effective than `phone number`.
 
 ## Normalising Entities Extracted for Scoring
 
@@ -90,3 +110,32 @@ for i in range(len(anonymised_dataset_1)):
 random.shuffle(list)
 ```
 
+This has a large effect on our score. Previously, the lowest score was 0.998, whereas now it is 0.040. The data is still heavily skewed towards 1, meaning the majority of individuals are still identifiable. 
+
+## Privacy Risk Explainer: SHAP
+
+SHAP is a measure of feature importance of a machine learning model by assigning each feature an importance value for each prediction. For the entire prediction, alongside individual results, SHAP will return which variables have the greatest effect on the privacy risk score.
+
+For the non-anonymised dataset using only the entities "person", "nhs number", "date of birth" and "diagnosis", the global SHAP values are:
+
+![SHAP Image](../assets/images/global_shap_image_1.png)
+
+The `date of birth` entity has the greatest effect on predictions, followed by `diagnosis`, `person` and `nhs number`.
+
+If we apply the anonymisation steps we described above, we see the effect this has on the global SHAP values:
+
+![SHAP Image](../assets/images/global_shap_image_2.png)
+
+We see that `person` and `NHS number` now have no effect on the Privacy Risk Score. This makes sense given or anonymisation steps. 
+
+## Traditional Metrics
+
+Finally, our pipeline offers the ability to use traditional privacy metrics via [PyCanon](../pycanon/pycanon_and_privacy_metrics.md). These traditional metrics include k Anonymity, t closeness and l diversity. 
+
+With and without any anonymisation techniques we get the following values:
+
+- K-Anonymity:  1
+- t-Closeness:  0.8568292393497093
+- l-Diversity:  1
+
+This implies that even with the anonymisation of some of our sensitive values, there still exist specific records that are likely reidentifiable. Further to this, the t closeness, which measures the spread of sensitive values in the sensitive value column.
