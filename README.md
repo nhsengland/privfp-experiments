@@ -110,6 +110,15 @@ By using these models in this project, you agree to comply with the licensing te
 
 For any commercial use or further inquiries, please contact Meta AI directly.
 
+#### Llama 3.1
+
+Llama 3.1 is licensed under Meta's non-commercial license. For more details, please refer to [META's Llama 3.1 Licensing page](https://llama.meta.com/llama3_1/license/).
+To sign the corresponding license agreement you can apply for this via [huggingface](https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct).
+
+By using these models in this project, you agree to comply with the licensing terms provided by Meta.
+
+For any commercial use or further inquiries, please contact Meta AI directly.
+
 ## Extraction Module
 
 ### Usage
