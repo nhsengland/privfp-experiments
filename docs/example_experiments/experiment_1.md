@@ -23,28 +23,48 @@ This returns 954.
 
 ## Using a LLM to Generate Synthetic Medical Notes
 
-We will use LLama 3 to turn each synthea output into a synthetic medical note. As of August 2024, this is not the most up-to-date LLama model. Llama 3.1 is available for download and our pipeline allows for this to be easily changed if you would like. 
+We have the ability to use multiple LLM's in our pipeline. In this experiment, we will use [Llama 3](https://ollama.com/library/llama3:8b) and [LLama 3.1](https://ollama.com/library/llama3.1), both with 8 billion parameters.
 
-Inspecting the outputs we notice a lot of notes start with: "Here is a clinical note..." or "Clinical Note:". Clearly, our prompt needs some fine-tuning if we want our notes to be more realistic. this is again easy to change within our pipeline. 
+We will use each model to turn each synthea output into a synthetic medical note.  
 
-There is massive variation in the structure of the free text data. If we only take NHS numbers as an example, we see them in multiple different forms. for example:
+Inspecting the outputs of both, we notice a lot of notes start with: "Here is a clinical note..." or "Clinical Note:". Clearly, our prompt needs some fine-tuning if we want our notes to be more realistic. This is again easy to change within our pipeline. 
 
-- 9274572891
-- 19632-85395
-- 34732-45-801
-- 32 64 12 45 56
+As a reminder, these NHS numbers are synthetic. In further examples we see full stops, dashes and commas seperating parts of the NHS number. This makes it impossible to use simple techniques like regular expressions to extract all NHS numbers, and so we must rely on more advanced methods of entity extraction. 
 
-As a reminder, these NHS numbers are synthetic. Incredibly, these 4 different structures come from the first 4 LLM outputs. In further examples we see full stops, dashes and commas seperating parts of the NHS number. This makes it impossible to use simple techniques like regular expressions to extract all NHS numbers, and so we must rely on more advanced methods of entity extraction. 
+As we expect NHS numbers to be of a consistent format, we can run a quick test using regular expressions to see whether we can extract some NHS numbers. If NHS numbers keep the correct format, we expect to see a 10 digit number in the clinical note. We can use the following python code to count the number of times a 10 digit number appears.
+
+```python
+import re
+
+nhs_numbers_found = 0
+pattern = r'\b\d{10}\b'
+
+for note in output_llm:
+    if re.search(pattern, note):
+        nhs_numbers_found += 1
+```
+
+Using LLama 3.1 we find 473 NHS Numbers are returned. Surprisingly , LLama 3 returns 895 NHS Numbers. 
 
 ## Re-extracting Entities from the Patient Medical Notes
 
-We run extraction using Gliner as our Named Entity Extraction Model. Again, focussing on just NHS Numbers, we find that a total of 1006 NHS Numbers are extracted from our 954  reviews, with only 104 being within the original NHS Number set we previously defined. 
+![Bar Chart showing the number of entities extracted](../assets/images/experiment_1_extracted_entities.png)
 
-This means that multiple NHS numbers are extracted from some notes. We find that 308 reviews contain more than two NHS number entities extracted. We find that this is always the number representing the NHS number, alongside the text "NHS Number". This leaves us with a new conclusion, lots of NHS number are not being extracted from reviews. 
+We run extraction using Gliner as our Named Entity Extraction Model. Looking at the plot above, typically more entities are extracted from clinical notes from Llama 3 compared to Llama 3.1. This is most obvious with the `NHS Numbers` entity. 
 
-We find that 256 reviews do not have an NHS number extracted. Given that the NHS numbers are so diverse in structure, it is hard to know whether they are missed due to strange structure, or they are not generated at all.
+We also note that there are always duplicate entities extracted, and often well over 954 entities extracted. Taking `NHS numbers` from the Llama 3 notes as an example, this means that multiple NHS numbers are extracted from some notes. Of the 532 reviews that contain more than two NHS number entities extracted, the majority of these come from strings containing "NHS number" or similar, with 441 entities having the value "NHS Number". 886 reviews contain some NHS number entity. 
 
-Looking at the first 10 occasions where no NHS number was extracted, there is never an NHS number generated. The medical note only contains the patient name and date of birth.
+Again using our Llama 3 example, looking at the 68 occasions where no NHS number was extracted, there are 9 NHS numbers generated that can be picked up using our regular expression from earlier. One example of such a note is:
+
+```
+Here is a clinical note for Fannie Stroman's doctor:
+
+Patient 8136111200, Fannie Stroman, born July 1st, 1970, was seen in the clinic today. She has been diagnosed with perennial allergic rhinitis and presents with ongoing symptoms of nasal congestion, itchy eyes, and sneezing throughout the year.
+```
+
+None of the notes contain any text relating to "NHS number".
+
+### Additional Entities
 
 We can also use Gliner to investigate whether other entities are in the reviews. Let us consider adding: `email`, `gender` and `phone number`.
 
@@ -62,7 +82,9 @@ experimental_config.extraction.entity_list = [
 ]
 ```
 
-We find that Gliner was unable to extract any emails, but found 144 genders and 172 phone numbers. Interestingly, a lot of extracted phone numbers had previously been labelled as NHS Numbers. In fact, the total number of NHS numbers extracted fell from 1006 to 811. In some scenarios, the string "NHS Number" was labelled as a phone number. 
+![Bar Chart showing the number of entities extracted](../assets/images/experiment_1_extracted_entities_ext.png)
+
+In both Llama 3 and 3.1, we find that Gliner was unable to extract any emails, but examples of genders and  phone numbers. Interestingly, the counts for the original entities, such as 'NHS Number' have fallen when additional entities were added. For example, it may be that some NHS numbers were mistaken as phone numbers.
 
 These interesting quirks when adding new entities support the use of our [annotation tool](../../SPIKE_annotation_tools/README.md). With this tool, you can annotate clinical notes and add new entities, alongside the entity extraction model. This tool will help you fine tune the best names to give your entities. For example, `mobile` may have been more effective than `phone number`.
 
@@ -78,7 +100,7 @@ One simple fix would be to ensure the NHS Number entitity contains numbers, or d
 
 Once we have tabular data, we can start exploring the privacy risk of our data. We do this by estimating the uniqueness of each data point. The more unique the data, the more identifiable the individual is likely to be. 
 
-The uniqueness is measured using PycorrectMatch, and documentation on how this works can be found at `docs/corect-match/`. To simplify, a score close to 1 means the row is incredibly unique, whilst a score close to 0 is not unique. Currently, the lowest score for any row is 0.998. Therefore, every row is highly reidentifiiable. 
+The uniqueness is measured using PycorrectMatch, and documentation on how this works can be found at `docs/corect-match/`. To simplify, a score close to 1 means the row is incredibly unique, whilst a score close to 0 is not unique. Currently, the lowest score for any row is 0.999. Therefore, every row is highly reidentifiiable. 
 
 This makes sense, we have not done any anonymisation steps. 
 
@@ -110,13 +132,13 @@ for i in range(len(anonymised_dataset_1)):
 random.shuffle(list)
 ```
 
-This has a large effect on our score. Previously, the lowest score was 0.998, whereas now it is 0.040. The data is still heavily skewed towards 1, meaning the majority of individuals are still identifiable. 
+This has a small on our score. Previously, the lowest score was 0.998, whereas now it is 0.950. The data is still heavily skewed towards 1, meaning the majority of individuals are still highly  identifiable. 
 
 ## Privacy Risk Explainer: SHAP
 
 SHAP is a measure of feature importance of a machine learning model by assigning each feature an importance value for each prediction. For the entire prediction, alongside individual results, SHAP will return which variables have the greatest effect on the privacy risk score.
 
-For the non-anonymised dataset using only the entities "person", "nhs number", "date of birth" and "diagnosis", the global SHAP values are:
+For the non-anonymised Llama 3 dataset using only the entities "person", "nhs number", "date of birth" and "diagnosis", the global SHAP values are:
 
 ![SHAP Image](../assets/images/global_shap_image_1.png)
 
@@ -126,7 +148,7 @@ If we apply the anonymisation steps we described above, we see the effect this h
 
 ![SHAP Image](../assets/images/global_shap_image_2.png)
 
-We see that `person` and `NHS number` now have no effect on the Privacy Risk Score. This makes sense given or anonymisation steps. 
+We see that `person` and `NHS number` now have very little effect on the Privacy Risk Score. This makes sense given or anonymisation steps. 
 
 ## Traditional Metrics
 
@@ -135,7 +157,7 @@ Finally, our pipeline offers the ability to use traditional privacy metrics via 
 With and without any anonymisation techniques we get the following values:
 
 - K-Anonymity:  1
-- t-Closeness:  0.8568292393497093
+- t-Closeness:  0.8521494940083337
 - l-Diversity:  1
 
-This implies that even with the anonymisation of some of our sensitive values, there still exist specific records that are likely reidentifiable. Further to this, the t closeness, which measures the spread of sensitive values in the sensitive value column.
+This implies that even with the anonymisation of some of our sensitive values, there still exist specific records that are likely reidentifiable. Further to this, the t closeness, which measures the spread of sensitive values in the sensitive value column remains constant as we have not applied any anonymisation steps to it.
