@@ -161,3 +161,24 @@ With and without any anonymisation techniques we get the following values:
 - l-Diversity:  1
 
 This implies that even with the anonymisation of some of our sensitive values, there still exist specific records that are likely reidentifiable. Further to this, the t closeness, which measures the spread of sensitive values in the sensitive value column remains constant as we have not applied any anonymisation steps to it.
+
+## Future Work
+
+The are various additional routes of investigation you could go down that we have not covered in this document.
+
+- **How can we improve the prompt?** Excluding syntax, the prompt for project has not been changed since its initial creation for Llama 2. Since then, prompt engineering has almost become it's own field and there are many techniques for optimising your prompt, such as few-shot prompting and chain of thought. Could we ensure all the relevant information is included in each clincial note, do we occasionaly want some information to be in strange formats?
+
+- **Are there better language models we can use?** We have been using the Llama series of LLMs, but could others such as Google's Gemma be a good fit?
+
+- **How can we improve standarisation in free text?** Are there steps we can take to put entities in free text, such as dates, in consistent forms to improve extraction? See our documentation [here](../standardisation-research/standardising_entity_values.md).
+
+- **How can we improve standarisation after extraction?** We have seen that often the text `NHS Number` is extracted alongside the real NHS number in a clinical note, currently we only use the first extracted entity. Are there smarter ways to deal with this? See our documentation [here](../standardisation-research/standardising_with_knowledge_graphs.md).
+
+- **Are there better ways to score our privacy risk?** Is PyCorrectMatch the best option? We have some research [here](../pycanon/pycanon_and_privacy_metrics.md).
+
+- **How effective are traditional privacy risks?** How can we better compare our privacy risk score to traditional metrics?
+
+- **How does the size of a dataset effect the privacy risk?** Do more clincial notes always result in less identifiable records?
+
+There are various other experiments you can run, this is only a small sample. 
+
