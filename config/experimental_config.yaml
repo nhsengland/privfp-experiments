@@ -9,7 +9,7 @@ synthea:
 
 generate:
   llm_model_features:
-    llm_model_name: llama3
+    llm_model_name: llama3.1:8b
     prompt_template_path: llama3_template.json
 
 extraction:
