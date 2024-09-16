@@ -4,10 +4,13 @@ repo_name: privfp-experiments
 
 nav:
   - Home: index.md
+
   - Background:
     - background/index.md
     - PrivFp Background: background/privfp-background.md
+    - Experiment 1.0: background/experiment-1point0.md
     - Decision Log: background/decision-log.md
+
   - Setup:
     - setup/index.md
     - 1. HomeBrew Installation: setup/homebrew-install.md
@@ -17,7 +20,7 @@ nav:
     - 5. Install Ollama and set-up Large Language Models: setup/llm.md
     - 6. Install UniversalNER Locally: setup/extraction.md
 
-  - Open source LLM exploration:
+  - Open LLMs (Generate):
     - open-source-llm-exploration/index.md
     - Searching for open source LLMs: open-source-llm-exploration/search.md
     - Setting up open source LLMs: open-source-llm-exploration/setup.md
@@ -25,22 +28,22 @@ nav:
     - Evaluating generated outputs: open-source-llm-exploration/evaluation.md
     - Metrics to assess the quality of generated outputs: open-source-llm-exploration/metrics.md
 
-  - Open source extraction exploration:
+  - Open Extraction (Structure):
     - open-source-extraction-exploration/index.md
     - Open-source Named-Entity Recognition Models: open-source-extraction-exploration/named_entity_research.md
     - De-identification Methods: open-source-extraction-exploration/deidentification_research.md
 
-  - Standardisation:
+  - Standardisation (Structure):
     - standardisation-research/index.md
     - Standardising Entity Types and their Values: standardisation-research/standardising_entity_values.md
     - Standardising with Knowledge Graphs: standardisation-research/standardising_with_knowledge_graphs.md
 
-  - (Py)Correct Match (Scorer Component):
+  - (Py)CorrectMatch (Scorer):
     - correct-match/index.md
     - What is Correct Match?: correct-match/what-is-correct-match.md
     - How does Correct Match Work?: correct-match/how-correct-match-works.md
 
-  - SHAP(Explainer Component):
+  - SHAP (Explainer):
     - shap-explainer/index.md
     - What is SHAP and Why use it?: shap-explainer/what-is-shap-and-why-use-it.md
     - How does SHAP Work and can be Applied?: shap-explainer/how-does-shap-work-and-be-applied.md
