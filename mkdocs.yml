@@ -8,7 +8,7 @@ nav:
   - Background:
     - background/index.md
     - PrivFp Background: background/privfp-background.md
-    - Experiment 1.0: example-experiments/experiment-1point0.md
+    - Experiment 1.0: background/experiment-1point0.md
     - Decision Log: background/decision-log.md
 
   - Setup:
