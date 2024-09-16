@@ -1,3 +1,0 @@
-{
-  "prompt_template": "[INST]\n<<SYS>>\nYou are a medical student answering an exam question about writing clinical notes for patients.\n<</SYS>>\n\nKeep in mind that your answer will be assessed based on incorporating all the provided information and the quality of prose.\n\n1. Use prose to write an example clinical note for this patient's doctor.\n2. Use less than three sentences.\n3. Do not provide recommendations.\n4. Use the following information:\n\n{data}\n[/INST]\n"
-}
