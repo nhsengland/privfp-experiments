@@ -1,5 +1,4 @@
-# Privacy FingerPrint (PrivFp) - Experiments
-## Phase 2
+# Privacy FingerPrint (PrivFp) - Phase Two - Experiments
 
 ## NHS England Data Science Team
 
@@ -68,22 +67,28 @@ Assuming you have set up SSH credentials with this repository the package can be
 
 or via HTTPS or the GitHub CLI.
 
-### Set-up
+### Setup
 
-All of the set-up for this repository is located on the [mkdocs](https://nhsengland.github.io/privfp-experiments/). In brief, the docs covers installations on:
+All of the setup for this repository is located on the [mkdocs](https://nhsengland.github.io/privfp-experiments/). In brief, the docs cover:
 
 1. HomeBrew Installation
 2. Julia Installation for (py)CorrectMatch
-3. Environment Set-up
+3. Environment Setup
 4. Setting up Synthea
 5. Install Ollama and set-up Large Language Models
-6. Install UniversalNER Locally
+6. `[OPTIONAL]` Install UniversalNER Locally
+
+### Pipelines and Experiments
+
+For those wanting to familiarise themselves with how PrivFp can be used, we have a notebook stepping through the pipeline [here](./notebooks/full_pipeline_example.ipynb).
+
+Further, we run an `Experiment 1.0` and include a write up in the docs [here](https://nhsengland.github.io/privfp-experiments/background/experiment-1point0/).
 
 ## Generative Module
 
 ### Usage
 
-In **./notebooks/generative_module** there is a set of notebooks exploring how to run inference using different methods for different use cases.
+In `./notebooks/generative_module` there is a set of notebooks exploring how to run inference using different methods for different use cases.
 
 ### Outputs
 
@@ -92,49 +97,44 @@ In **./notebooks/generative_module** there is a set of notebooks exploring how t
 
 Note that a seed has not been implemented to reproduce the outputs shown.
 
-###  License Agreements
+### Model License Agreements
 
-This project uses Llama 2 and Llama 3 models from Meta AI. Usage of these models is governed by the non-commercial license provided by Meta.
+This project currently uses the Llama families of models from Meta AI as default. Usage of these models is governed by the license provided by Meta.
+
+By using these models in this project, you agree to comply with the licensing terms provided by Meta.
+
+For any large commercial use or further inquiries, please contact Meta AI directly.
 
 #### Llama 2
 
-Llama 2 is licensed under Meta's non-commercial license. For more details, please refer to [META's Llama 2 Licensing page](https://ai.meta.com/llama/license/).
-To sign the corresponding license agreement you can apply for this via [huggingface](https://huggingface.co/meta-llama/Meta-Llama-3-70B).
+Llama 2 is licensed under Meta's community license. For more details, please refer to [META's Llama 2 Licensing page](https://ai.meta.com/llama/license/). To sign the corresponding license agreement you can apply for this via [huggingface](https://huggingface.co/meta-llama/Llama-2-70b).
 
 #### Llama 3
 
-Llama 3 is licensed under Meta's non-commercial license. For more details, please refer to [META's Llama 3 Licensing page](https://llama.meta.com/llama3/license/).
-To sign the corresponding license agreement you can apply for this via [huggingface](https://huggingface.co/meta-llama/Llama-2-70b).
-
-By using these models in this project, you agree to comply with the licensing terms provided by Meta.
-
-For any commercial use or further inquiries, please contact Meta AI directly.
+Llama 3 is licensed under Meta's community license. For more details, please refer to [META's Llama 3 Licensing page](https://llama.meta.com/llama3/license/).
+To sign the corresponding license agreement you can apply for this via [huggingface](https://huggingface.co/meta-llama/Meta-Llama-3-70B).
 
 #### Llama 3.1
 
-Llama 3.1 is licensed under Meta's non-commercial license. For more details, please refer to [META's Llama 3.1 Licensing page](https://llama.meta.com/llama3_1/license/).
+Llama 3.1 is licensed under Meta's community license. For more details, please refer to [META's Llama 3.1 Licensing page](https://llama.meta.com/llama3_1/license/).
 To sign the corresponding license agreement you can apply for this via [huggingface](https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct).
-
-By using these models in this project, you agree to comply with the licensing terms provided by Meta.
-
-For any commercial use or further inquiries, please contact Meta AI directly.
 
 ## Extraction Module
 
 ### Usage
 
-In **./notebooks/extraction_module/ner_exploration** there is a set of notebooks exploring how to implement a range of named-entity-recognition models.
+Although more recently we have moved to use [`GLiNER`](https://github.com/urchade/GLiNER) as the base NER model, in `./notebooks/extraction_module/ner_exploration` there is a set of notebooks exploring how to implement a range of named entity recognition (NER) models.
 
-- **numind_NER.ipynb** explores a NER model created by Numind.
-- **spacy_and_scispacy.ipynb** explores a range of NER models released by spaCy. (A different environment will be required to run SciSpacy.)
-- **spanMarker.ipynb** explores NER spanMarker model set-up and a possible integration with spaCy models.
-- **uniNER_quantised.ipynb** requires a quantised version of UniversalNER:
+- `numind_NER.ipynb` explores a NER model created by Numind.
+- `spacy_and_scispacy.ipynb` explores a range of NER models released by spaCy. (A different environment will be required to run SciSpacy.)
+- `spanMarker.ipynb` explores NER spanMarker model set-up and a possible integration with spaCy models.
+- `uniNER_quantised.ipynb` requires a quantised version of UniversalNER:
 
 The quantised model was created by cloning [llama.cpp repo](https://github.com/ggerganov/llama.cpp) and quantising the Universal-NER/UniNER-7B-type locally to a `quantized_q4_1.gguf` format.
 
 The llama.cpp repo has guidance on their repo in their **Prepare and Quantize** section. Alternatively their is a [medium article](https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-llama-cpp-66e2a7c51300) that goes through all of this in a step-by-step process.
 
-- **uniNER_api.ipynb** explores the deployment of UniversalNER using an API. (This involves using the [llama.cpp repo](https://github.com/ggerganov/llama.cpp) to server a quantised model.)
+- `uniNER_api.ipynb` explores the deployment of UniversalNER using an API. (This involves using the [llama.cpp repo](https://github.com/ggerganov/llama.cpp) to server a quantised model.)
 
 Extra guidance on serving a model in this repo is outlined in the [llama.cpp serving documentation](https://github.com/ggerganov/llama.cpp/blob/master/examples/server/README.md).
 
@@ -153,13 +153,11 @@ _See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidance._
 
 ## Licence
 
-Unless stated otherwise, the codebase is released under [the MIT Licence][mit].
-This covers both the codebase and any sample code in the documentation.
+Unless stated otherwise, the codebase is released under [the MIT Licence][mit]. This covers both the codebase and any sample code in the documentation.
 
 _See [LICENSE](./LICENSE) for more information._
 
-The documentation is [© Crown copyright][copyright] and available under the terms
-of the [Open Government 3.0][ogl] licence.
+The documentation is [© Crown copyright][copyright] and available under the terms of the [Open Government 3.0][ogl] licence.
 
 [mit]: LICENCE
 [copyright]: http://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/
@@ -170,9 +168,9 @@ of the [Open Government 3.0][ogl] licence.
 **This repository is maintained by NHS England Data Science Team**.
 To contact us raise an issue on Github or via [email](mailto:datascience@nhs.net).
 
-## Contributors
+## Contributors (Alphabetical)
 
-- [Scarlett Kynoch](https://github.com/scarlett-k-nhs)
-- [Xiyao Zhuang](https://github.com/xiyaozhuang)
 - [Dan Schofield](https://github.com/danjscho)
+- [Scarlett Kynoch](https://github.com/scarlett-k-nhs)
 - [Will Poulett](https://github.com/willpoulett)
+- [Xiyao Zhuang](https://github.com/xiyaozhuang)
