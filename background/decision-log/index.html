@@ -273,32 +273,11 @@
 </li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-<span class="md-ellipsis">
-    Decision Log
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
 <a class="md-nav__link md-nav__link--active" href="./">
 <span class="md-ellipsis">
     Decision Log
   </span>
 </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#decisions">4.1 
-<span class="md-ellipsis">
-      Decisions
-    </span>
-</a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -578,19 +557,6 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#decisions">4.1 
-<span class="md-ellipsis">
-      Decisions
-    </span>
-</a>
-</li>
-</ul>
 </nav>
 </div>
 </div>
@@ -598,12 +564,49 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="decision-log"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.</span> Decision Log</h1>
-<h2 id="decisions"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.1</span> Decisions</h2>
 <p>Here we collect decisions made throughout the project, focused on tooling, techniques, and frameworks - any limitations associated with such choices we attempt to catalogue alongside.</p>
-<ul>
-<li><strong>19/03/24</strong> - Made a decision log <img alt="📗" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d7.svg" title=":green_book:"/></li>
-<li>...</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th><strong>Date</strong></th>
+<th><em>Decision Description</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>19/03/24</strong></td>
+<td><em>Made a decision log</em> <img alt="📗" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d7.svg" title=":green_book:"/></td>
+</tr>
+<tr>
+<td><strong>02/05/24</strong></td>
+<td><em>Integrate lightweight NER models and serving methods</em> <img alt="🫖" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1fad6.svg" title=":teapot:"/></td>
+</tr>
+<tr>
+<td><strong>04/06/24</strong></td>
+<td><em>Configuration approach integrated</em> <img alt="🧮" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9ee.svg" title=":abacus:"/></td>
+</tr>
+<tr>
+<td><strong>29/07/24</strong></td>
+<td><em>Add newer Llama 3 model options</em> <img alt="🦙" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f999.svg" title=":llama:"/><img alt="🦙" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f999.svg" title=":llama:"/><img alt="🦙" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f999.svg" title=":llama:"/></td>
+</tr>
+<tr>
+<td><strong>02/08/24</strong></td>
+<td><em>Merge in exploration on annotation tooling as spike</em> <img alt="📝" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4dd.svg" title=":pencil:"/></td>
+</tr>
+<tr>
+<td><strong>28/08/24</strong></td>
+<td><em>Integrate pycanon for access to other privacy metrics</em></td>
+</tr>
+<tr>
+<td><strong>09/09/24</strong></td>
+<td><em>Add newer Llama 3.1 model options</em> <img alt="🦙" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f999.svg" title=":llama:"/><img alt="🦙" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f999.svg" title=":llama:"/><img alt="🦙" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f999.svg" title=":llama:"/><img alt="👉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f449.svg" title=":point_right:"/><img alt="🦙" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f999.svg" title=":llama:"/></td>
+</tr>
+<tr>
+<td><strong>16/09/24</strong></td>
+<td><em>Discussion of Experiment 1.0 included</em></td>
+</tr>
+</tbody>
+</table>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>

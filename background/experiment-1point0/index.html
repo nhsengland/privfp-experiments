@@ -854,7 +854,7 @@
 </code></pre></div>
 <p>Using notes produced by <code>LLama 3.1</code> we find <code>473</code> NHS Numbers are returned and perhaps somewhat surprisingly, notes produced by <code>LLama 3</code> returns <code>895</code> NHS Numbers. </p>
 <h2 id="re-extracting-entities-from-the-patient-medical-notes"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.3</span> Re-extracting Entities from the Patient Medical Notes</h2>
-<p>We run extraction using <code>GliNER</code> as our Named Entity Extraction Model. Looking at the plot below, typically more entities are extracted from clinical notes from <code>Llama 3</code> compared to <code>Llama 3.1</code>. This is most obvious with the 'NHS Numbers' entity. </p>
+<p>We run extraction using <code>GLiNER</code> as our Named Entity Extraction Model. Looking at the plot below, typically more entities are extracted from clinical notes from <code>Llama 3</code> compared to <code>Llama 3.1</code>. This is most obvious with the 'NHS Numbers' entity. </p>
 <p><img alt="Bar Chart showing the number of entities extracted" src="../../assets/images/experiment_1_extracted_entities.png"/></p>
 <p>We also note that there are often duplicate entities extracted, and thus the total counts are well over <code>954</code>. Taking NHS Numbers from the <code>Llama 3</code> notes as an example, this means that multiple 'NHS Number' entities are extracted from some notes. Of the <code>532</code> notes that contain more than two 'NHS Number' entities, the majority of these come from strings containing "NHS Number" or similar, with <code>441</code> entities having the exact value "NHS Number". <code>886</code> reviews contain some 'NHS Number' entity. </p>
 <p>Again using our <code>Llama 3</code> example, looking at the <code>68</code> occasions where no 'NHS Number' was extracted, there are <code>9</code> NHS Numbers generated that can be picked up using our regular expression from earlier. One example of such a note is:</p>
@@ -864,7 +864,7 @@ Patient 8136111200, Fannie Stroman, born July 1st, 1970, was seen in the clinic 
 </code></pre></div>
 <p>None of the other notes contain any text relating to "NHS Number".</p>
 <h3 id="additional-entities"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.3.1</span> Additional Entities</h3>
-<p>We can also use <code>GliNER</code> to investigate whether other entities are in the notes. Let us consider adding: <code>Email</code>, <code>Gender</code> and <code>Phone Number</code>.</p>
+<p>We can also use <code>GLiNER</code> to investigate whether other entities are in the notes. Let us consider adding: <code>Email</code>, <code>Gender</code> and <code>Phone Number</code>.</p>
 <p>We can add them to the entity extraction <code>entity_list</code> using the following code snippet:</p>
 <div class="highlight"><pre><span></span><code><span class="n">experimental_config</span><span class="o">.</span><span class="n">extraction</span><span class="o">.</span><span class="n">entity_list</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">"nhs number"</span><span class="p">,</span>
@@ -876,7 +876,7 @@ Patient 8136111200, Fannie Stroman, born July 1st, 1970, was seen in the clinic 
     <span class="s2">"phone number"</span>
 <span class="p">]</span>
 </code></pre></div>
-<p>In both <code>Llama 3</code> and <code>3.1</code>, we find that <code>GliNER</code> was unable to extract any emails, but examples of genders and  phone numbers. Interestingly, the counts for the original entities, such as 'NHS Number' have fallen when additional entities were added (see plot below). For example, it may be that some NHS numbers were mistaken as phone numbers.</p>
+<p>In both <code>Llama 3</code> and <code>3.1</code>, we find that <code>GLiNER</code> was unable to extract any emails, but examples of genders and  phone numbers. Interestingly, the counts for the original entities, such as 'NHS Number' have fallen when additional entities were added (see plot below). For example, it may be that some NHS numbers were mistaken as phone numbers.</p>
 <p><img alt="Bar Chart showing the number of entities extracted" src="../../assets/images/experiment_1_extracted_entities_ext.png"/></p>
 <p>These interesting quirks when adding new entities support the use of our <a href="../../SPIKE_annotation_tools/README.md">annotation tool</a>. With this tool, you can annotate the notes and add new entities, alongside the entity extraction model. This tool can also help fine-tune the best names to give your entities. For example, <code>mobile number</code> may have been more effective than <code>phone number</code> in some cases.</p>
 <h2 id="normalising-entities-extracted-for-scoring"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.4</span> Normalising Entities Extracted for Scoring</h2>
