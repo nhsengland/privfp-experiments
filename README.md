@@ -82,7 +82,7 @@ All of the setup for this repository is located on the [mkdocs](https://nhsengla
 
 For those wanting to familiarise themselves with how PrivFp can be used, we have a notebook stepping through the pipeline [here](./notebooks/full_pipeline_example.ipynb). 
 
-Further, we run an `experiment 1.0` and included a write up in the docs [here](https://nhsengland.github.io/privfp-experiments/background/experiment-1point0/).
+Further, we run an `Experiment 1.0` and include a write up in the docs [here](https://nhsengland.github.io/privfp-experiments/background/experiment-1point0/).
 
 ## Generative Module
 
