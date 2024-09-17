@@ -52,7 +52,7 @@ Using notes produced by `LLama 3.1` we find `473` NHS Numbers are returned and p
 
 ## Re-extracting Entities from the Patient Medical Notes
 
-We run extraction using `GliNER` as our Named Entity Extraction Model. Looking at the plot below, typically more entities are extracted from clinical notes from `Llama 3` compared to `Llama 3.1`. This is most obvious with the 'NHS Numbers' entity. 
+We run extraction using `GLiNER` as our Named Entity Extraction Model. Looking at the plot below, typically more entities are extracted from clinical notes from `Llama 3` compared to `Llama 3.1`. This is most obvious with the 'NHS Numbers' entity. 
 
 ![Bar Chart showing the number of entities extracted](../assets/images/experiment_1_extracted_entities.png)
 
@@ -70,7 +70,7 @@ None of the other notes contain any text relating to "NHS Number".
 
 ### Additional Entities
 
-We can also use `GliNER` to investigate whether other entities are in the notes. Let us consider adding: `Email`, `Gender` and `Phone Number`.
+We can also use `GLiNER` to investigate whether other entities are in the notes. Let us consider adding: `Email`, `Gender` and `Phone Number`.
 
 We can add them to the entity extraction `entity_list` using the following code snippet:
 
@@ -86,7 +86,7 @@ experimental_config.extraction.entity_list = [
 ]
 ```
 
-In both `Llama 3` and `3.1`, we find that `GliNER` was unable to extract any emails, but examples of genders and  phone numbers. Interestingly, the counts for the original entities, such as 'NHS Number' have fallen when additional entities were added (see plot below). For example, it may be that some NHS numbers were mistaken as phone numbers.
+In both `Llama 3` and `3.1`, we find that `GLiNER` was unable to extract any emails, but examples of genders and  phone numbers. Interestingly, the counts for the original entities, such as 'NHS Number' have fallen when additional entities were added (see plot below). For example, it may be that some NHS numbers were mistaken as phone numbers.
 
 ![Bar Chart showing the number of entities extracted](../assets/images/experiment_1_extracted_entities_ext.png)
 

@@ -123,7 +123,7 @@ To sign the corresponding license agreement you can apply for this via [huggingf
 
 ### Usage
 
-In `./notebooks/extraction_module/ner_exploration` there is a set of notebooks exploring how to implement a range of named entity recognition (NER) models.
+Although more recently we have moved to use [`GLiNER`](https://github.com/urchade/GLiNER) as the base NER mode, in `./notebooks/extraction_module/ner_exploration` there is a set of notebooks exploring how to implement a range of named entity recognition (NER) models.
 
 - `numind_NER.ipynb` explores a NER model created by Numind.
 - `spacy_and_scispacy.ipynb` explores a range of NER models released by spaCy. (A different environment will be required to run SciSpacy.)
