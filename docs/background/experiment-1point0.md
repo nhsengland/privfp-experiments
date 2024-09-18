@@ -1,6 +1,6 @@
 # Experiment 1.0
 
-*This version of `Experiment 1.0` was run using the repo at commit [INSERT git SHA](), and looks to explore generic clinical notes containing four entities: `NHS Number`, `Person`, `Date of Birth`, and `Diagnosis`.  We also explore extracting further common entities which weren't explicitly injected.*
+*This version of `Experiment 1.0` was run using the repo at commit [`da9cc98`](https://github.com/nhsengland/privfp-experiments/commit/da9cc9877052cd66275315ce0f6bf7edf7dd360b), and looks to explore generic clinical notes containing four entities: `NHS Number`, `Person`, `Date of Birth`, and `Diagnosis`.  We also explore extracting further common entities which weren't explicitly injected.*
 
 Let's run an experiment with the Privacy Fingerprint (PrivFp) pipeline to understand each modular component, and explore some of the things we can do within each section.
 
