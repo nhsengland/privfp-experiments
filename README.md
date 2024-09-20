@@ -51,7 +51,7 @@ The main sections of this repository are:
 
 This diagram illustrates the current state of the project and the structure of each module.
 
-![Project Diagram](./docs/assets/images/privfp_overview_180624.png)
+![Project Diagram](./docs/assets/images/privfp_overview_200924.png)
 
 ## Getting Started
 
