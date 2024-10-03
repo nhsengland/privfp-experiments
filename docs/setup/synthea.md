@@ -26,7 +26,6 @@ java -version
     If you are using WSL, ensure you git clone Synthea using WSL. If you want to work in your local C: drive you can access this drive via the /mnt/c folder in your wsl terminal. For more information click [here](https://learn.microsoft.com/en-us/windows/wsl/faq).
 
 ``` shell title="Open a terminal in a projects directory"
-git clone https://github.com/nhsengland/privfp-experiments.git
 git clone https://github.com/synthetichealth/synthea.git
 git clone https://github.com/synthetichealth/synthea-international.git
 ```
